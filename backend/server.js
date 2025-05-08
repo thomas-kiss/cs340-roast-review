@@ -21,19 +21,18 @@ const PORT = 6664;
 
 // READ ROUTES
 
-// Users
 app.get('/users', async (req, res) => {
-    try {
-        const query = `
-            SELECT userID, userName, email, firstName, lastName, location, joinDate
-            FROM Users;
-        `;
-        const [users] = await db.query(query);
-        res.status(200).json({ users });
-    } catch (error) {
-        console.error("Error fetching users:", error);
-        res.status(500).send("An error occurred while fetching users.");
-    }
+  try {
+      const query = `
+          SELECT userID, userName, email, firstName, lastName, location, joinDate
+          FROM Users;
+      `;
+      const [users] = await db.query(query);
+      res.status(200).json({ users });
+  } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).send("An error occurred while fetching users.");
+  }
 });
 
 // Brew methods
