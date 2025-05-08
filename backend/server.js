@@ -56,12 +56,36 @@ app.get('/brew-methods', async (req, res) => {
 
 app.get('/coffee-reviews', async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM CoffeeReviews');
+    const query = `
+      SELECT 
+        CoffeeReviews.coffeeReviewID,
+        CoffeeReviews.reviewDate,
+        CoffeeReviews.aroma,
+        CoffeeReviews.flavor,
+        CoffeeReviews.afterTaste,
+        CoffeeReviews.body,
+        CoffeeReviews.acidity,
+        CoffeeReviews.reviewNotes,
+        Users.userID,
+        Users.userName,
+        CoffeeBeans.coffeeBeanID,
+        CoffeeBeans.roastName,
+        BrewMethods.brewMethodID,
+        BrewMethods.name
+      FROM CoffeeReviews 
+      JOIN Users ON CoffeeReviews.userID = Users.userID
+      JOIN  CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
+      JOIN BrewMethods ON CoffeeReviews.brewMethodID = BrewMethods.brewMethodID;
+    `;
+    
+    const [rows] = await db.query(query);
     res.json({ coffeeReviews: rows });
   } catch (err) {
+    console.error('Error fetching coffee reviews:', err);
     res.status(500).json({ error: 'Failed to fetch coffee reviews' });
   }
 });
+
 
 app.post('/coffee-reviews', async (req, res) => {
   try {
