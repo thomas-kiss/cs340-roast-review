@@ -156,6 +156,53 @@ app.delete('/coffee-reviews/:id', async (req, res) => {
   }
 });
 
+// New route to fetch coffeebeans
+app.get('/coffeebeans', async (req, res) => {
+    try {
+        const query = `
+            SELECT brandName as Brand, roastName as "Roast Name", singleOriginCountry as "Origin", roastLevel as Roast, providedTastingNotes as "Tasting Notes"
+            FROM CoffeeBeans;
+        `;
+        const [coffeeBeans] = await db.query(query);
+        res.status(200).json({ coffeeBeans });
+    } catch (error) {
+        console.error("Error fetching coffeebeans:", error);
+        res.status(500).send("An error occurred while fetching coffeebeans.");
+    }
+});
+
+// New route to fetch varietals
+app.get('/varietals', async (req, res) => {
+    try {
+        const query = `
+            SELECT *
+            FROM Varietals;
+        `;
+        const [varietals] = await db.query(query);
+        res.status(200).json({ varietals });
+    } catch (error) {
+        console.error("Error fetching varietals:", error);
+        res.status(500).send("An error occurred while fetching varietals.");
+    }
+});
+
+// New route to fetch coffee bean varietals intersection data 
+app.get('/coffeebeansvarietals', async (req, res) => {
+    try {
+        const query = `
+            SELECT *
+            FROM CoffeeBeansVarietals;
+        `;
+        const [coffeebeansvarietals] = await db.query(query);
+        res.status(200).json({ coffeebeansvarietals });
+    } catch (error) {
+        console.error("Error fetching coffee beans by varietals:", error);
+        res.status(500).send("An error occurred while fetching coffee beans by varietals.");
+    }
+});
+
+
+
 // ########################################
 // ########## LISTENER
 
