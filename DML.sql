@@ -1,4 +1,6 @@
---Coffee Beans-- 
+-------------------------------------
+-- CoffeeBeans
+-------------------------------------
 
 --CREATE--
 --add a new coffee bean
@@ -17,3 +19,8 @@ UPDATE CoffeeBeans SET brandName = :brandNameInput, roastName = :roastNameInput,
 
 -- delete coffee bean data upon submission of Delete action on Coffee Bean form. Also deletes coffeebeanIDs from CoffeeBeanVarietals table due to cascade.
 DELETE FROM CoffeeBeans WHERE brandName = :brandName_selected_from_CoffeBean_page AND roastName = :roastName_selected_from_CoffeeBean_page
+
+
+-------------------------------------
+-- CoffeeReviews
+-------------------------------------
