@@ -47,7 +47,8 @@ function CoffeeBeansVarietals({ backendURL }) {
                         {coffeebeansvarietals.length > 0 && Object.keys(coffeebeansvarietals[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
-                        <th></th> {/* For action buttons */}
+                        <th>Update</th> 
+                        <th>Delete</th> 
                     </tr>
                 </thead>
 
