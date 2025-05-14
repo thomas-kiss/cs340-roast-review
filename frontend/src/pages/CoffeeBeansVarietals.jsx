@@ -5,7 +5,7 @@ import UpdateCoffeeBeanVarietalForm from '../components/UpdateCoffeeBeanVarietal
 
 function CoffeeBeansVarietals({ backendURL }) {
 
-    // Set up state variables to store user data
+    // Set up state variables to store coffeebeansvarietals data
     const [coffeebeansvarietals, setCoffeeBeansVarietals] = useState([]);
     
     // Function to fetch data from the backend
@@ -19,7 +19,7 @@ function CoffeeBeansVarietals({ backendURL }) {
             // Convert the response into JSON format
             const data = await response.json();
             
-            // Extract users from the response
+            // Extract coffeebeansvarietals from the response
             fetchedCoffeeBeansVarietals = data.coffeebeansvarietals;
 
         } catch (error) {
@@ -27,7 +27,7 @@ function CoffeeBeansVarietals({ backendURL }) {
             console.log(error);
         }
 
-        // Update the state with the fetched users
+        // Update the state with the fetched coffeebeansvarietals
         setCoffeeBeansVarietals(fetchedCoffeeBeansVarietals);
     };
 
@@ -43,7 +43,7 @@ function CoffeeBeansVarietals({ backendURL }) {
             <table>
                 <thead>
                     <tr>
-                        {/* Dynamically create table headers from the keys of the first user */}
+                        {/* Dynamically create table headers from the keys of the first coffeebeanvarietal */}
                         {coffeebeansvarietals.length > 0 && Object.keys(coffeebeansvarietals[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
@@ -53,7 +53,7 @@ function CoffeeBeansVarietals({ backendURL }) {
                 </thead>
 
                 <tbody>
-                    {/* Map through the users array and display each user in a table row */}
+                    {/* Map through the coffeebeansvarietals array and display each coffeebeanvarietal in a table row */}
                     {coffeebeansvarietals.map((coffeebeanvarietal, index) => (
                         <TableRow
                             key={index}
