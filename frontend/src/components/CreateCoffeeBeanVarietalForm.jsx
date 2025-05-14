@@ -1,35 +1,27 @@
-const UpdateCoffeeBeanVarietalForm = ({ coffeebeansvarietals, backendURL, refreshCoffeeBeanVarietal }) => {
+const CreateCoffeeBeanVarietalForm = ({ backendURL, refreshCoffeeBeansVarietals }) => {
+
     return (
         <>
-            <h2>Update a Coffee Bean by Varietal Relationship</h2>
+            <h2>Create a Coffee Bean by Varietal Relationship</h2>
+
             <form className='cuForm'>
-                <label htmlFor="update_coffeeBeanVarietal_ID">Relationship to Update </label>
-                <select
-                    name="update_coffeeBeanVarietal_ID"
-                    id="update_coffeeBeanVarietal_ID"
-                >
-                    <option value="">Select a Relationship</option>
-                    {coffeebeansvarietals.map((coffeebeanvarietal) => (
-                        <option key={coffeebeanvarietal.coffeebeanvarietalID} value={coffeebeanvarietal.coffeebeanvarietalID}>
-                            {coffeebeanvarietal.coffeebeanvarietalID}
-                        </option>
-                    ))}
+                <label htmlFor="create_coffeeBeanVarietal_coffeeBeanID">Coffee Bean Brand Name: </label>
+                <select name="select_coffeeBeanBrandName" id="select_coffeeBeanBrandName">
+                    <option value="">Select a Brand</option>
+                    required
                 </select>
 
-                <label htmlFor="update_coffeeBeanVarietal_coffeeBeanID">Coffee Bean ID: </label>
-                <input
-                    type="text"
-                    name="update_coffeeBeanVarietal_coffeeBeanID"
-                    id="update_coffeeBeanVarietal_coffeeBeanID"
-                />
+            <label htmlFor="create_coffeeBeanVarietal_coffeeBeanID">Coffee Bean Roast Name: </label>
+                <select name="select_coffeeBeanRoastName" id="select_coffeeBeanRoastName">
+                     <option value="">Select a Roast</option>
+                    required
+                </select>
 
-                <label htmlFor="update_coffeeBeanVarietal_varietalID">Varietal ID: </label>
-                <input
-                    type="text"
-                    name="update_coffeeBeanVarietal_varietalID"
-                    id="update_coffeeBeanVarietal_varietalID"
-                />
-
+                <label htmlFor="create_coffeeBeanVarietal_VarietalID">Varietal Name: </label>
+                <select name="select_varietal_name" id="select_varietal_name">
+                     <option value="">Select a Varietal</option>
+                    required
+                </select>
 
                 <input type="submit" />
             </form>
@@ -37,4 +29,4 @@ const UpdateCoffeeBeanVarietalForm = ({ coffeebeansvarietals, backendURL, refres
     );
 };
 
-export default UpdateCoffeeBeanVarietalForm;
+export default CreateCoffeeBeanVarietalForm;
