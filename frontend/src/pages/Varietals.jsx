@@ -47,7 +47,8 @@ function Varietals({ backendURL }) {
                         {varietals.length > 0 && Object.keys(varietals[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
-                        <th></th> {/* For action buttons */}
+                        <th>Update</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
 
