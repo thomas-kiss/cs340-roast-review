@@ -1,63 +1,74 @@
-import { useState, useEffect } from 'react';  
+import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
-import CreateBrewMethodForm from '../components/CreateBrewMethodForm';
-import UpdateBrewMethodForm from '../components/UpdateBrewMethodForm';
+import CreateCoffeeBeanForm from '../components/CreateCoffeeBeanForm';
+import UpdateCoffeeBeanForm from '../components/UpdateCoffeeBeanForm';
 
-function BrewMethodPage({ backendURL }) {
 
-    const [brewMethods, setBrewMethods] = useState([]);
+function CoffeeBeans({ backendURL }) {
+
+    // Set up state variables to store coffee bean data
+    const [coffeeBeans, setCoffeeBeans] = useState([]);
     
+    // Function to fetch data from the backend
     const getData = async function () {
-        let fetchedBrewMethods = [];
+        let fetchedCoffeeBeans = [];
 
         try {
-            const response = await fetch(backendURL + '/brew-methods');
+            // Make a GET request to the backend
+            const response = await fetch(backendURL + '/coffeebeans');
             
+            // Convert the response into JSON format
             const data = await response.json();
             
-            fetchedBrewMethods = data.brewMethods;
+            // Extract coffee beans from the response
+            fetchedCoffeeBeans = data.coffeeBeans;
 
         } catch (error) {
+            // If the API call fails, print the error to the console
             console.log(error);
         }
 
-        setBrewMethods(fetchedBrewMethods);
+        // Update the state with the fetched coffee beans
+        setCoffeeBeans(fetchedCoffeeBeans);
     };
 
+    // Load table on page load
     useEffect(() => {
         getData();
     }, []);
 
     return (
         <>
-            <h1>Brew Methods</h1>
+            <h1>Coffee Beans</h1>
 
             <table>
                 <thead>
                     <tr>
-                        {brewMethods.length > 0 && Object.keys(brewMethods[0]).map((header, index) => (
+                        {/* Dynamically create table headers from the keys of the first coffee bean */}
+                        {coffeeBeans.length > 0 && Object.keys(coffeeBeans[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
-                        <th></th> 
+                        <th></th> {/* For action buttons */}
                     </tr>
                 </thead>
 
                 <tbody>
-                    {brewMethods.map((brewMethod, index) => (
+                    {/* Map through the coffee beans array and display each coffee bean in a table row */}
+                    {coffeeBeans.map((coffeeBeans, index) => (
                         <TableRow
                             key={index}
-                            rowObject={brewMethod}
+                            rowObject={coffeeBeans}
                             backendURL={backendURL}
-                            refreshUsers={getData}
+                            refreshCoffeeBeans={getData}
                         />
                     ))}
                 </tbody>
             </table>
+            <CreateCoffeeBeanForm backendURL={backendURL} refreshCoffeeBeans={getData} />
+            <UpdateCoffeeBeanForm coffeeBeans={coffeeBeans} backendURL={backendURL} refreshCoffeeBeans={getData} />
 
-            <CreateBrewMethodForm backendURL={backendURL} refreshUsers={getData} />
-            <UpdateBrewMethodForm brewMethods={brewMethods} backendURL={backendURL} refreshBrewMethods={getData} />
         </>
     );
 }
 
-export default BrewMethodPage;
+export default CoffeeBeans;
