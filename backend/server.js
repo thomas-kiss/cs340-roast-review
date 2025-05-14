@@ -106,7 +106,7 @@ app.get('/coffeebeans', async (req, res) => {
 app.get('/varietals', async (req, res) => {
     try {
         const query = `
-            SELECT *
+            SELECT name as "Name"
             FROM Varietals;
         `;
         const [varietals] = await db.query(query);
@@ -121,8 +121,10 @@ app.get('/varietals', async (req, res) => {
 app.get('/coffeebeansvarietals', async (req, res) => {
     try {
         const query = `
-            SELECT *
-            FROM CoffeeBeansVarietals;
+            SELECT CoffeeBeans.brandName as "Brand Name", CoffeeBeans.roastName as "Roast Name", Varietals.name as "Varietal Name" 
+            FROM CoffeeBeans
+            JOIN CoffeeBeansVarietals on CoffeeBeans.coffeeBeanID = CoffeeBeansVarietals.coffeeBeanID
+            JOIN Varietals on Varietals.varietalID = CoffeeBeansVarietals.varietalID 
         `;
         const [coffeebeansvarietals] = await db.query(query);
         res.status(200).json({ coffeebeansvarietals });
