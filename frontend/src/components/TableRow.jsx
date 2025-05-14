@@ -6,7 +6,9 @@ const TableRow = ({ rowObject, backendURL, refreshCoffeeBean }) => {
             {Object.values(rowObject).map((value, index) => (
                 <td key={index}>{value}</td>
             ))}
-            <button type="submit" > Update </button>
+            <td>
+                <button type="submit" > Update </button>
+            </td>
             <DeleteCoffeeBeanForm rowObject={rowObject} backendURL={backendURL} refreshCoffeeBeans={refreshCoffeeBean} />
         </tr>
     );
