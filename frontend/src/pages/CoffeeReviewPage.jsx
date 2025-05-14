@@ -31,7 +31,8 @@ function CoffeeReviewPage({ backendURL }) {
               {Object.keys(coffeeReviews[0]).map((header, index) => (
                 <th key={index}>{header}</th>
               ))}
-              <th>Actions</th>
+              <th>Update</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
