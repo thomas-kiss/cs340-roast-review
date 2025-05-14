@@ -25,7 +25,14 @@ const PORT = 45583;
 app.get('/users', async (req, res) => {
     try {
         const query = `
-            SELECT userID, userName, email, firstName, lastName, location, joinDate
+            SELECT 
+                userID AS "User ID", 
+                userName AS "User Name", 
+                email AS "Email", 
+                firstName AS "First Name", 
+                lastName AS "Last Name", 
+                location AS "Location", 
+                joinDate AS "Join Date"
             FROM Users;
         `;
         const [users] = await db.query(query);
@@ -40,9 +47,12 @@ app.get('/users', async (req, res) => {
 app.get('/brew-methods', async (req, res) => {
     try {
         const query = `
-            SELECT brewMethodID, name, description
+            SELECT 
+                brewMethodID AS "Brew Method ID",
+                name AS "Brew Method Name",
+                description AS "Description"
             FROM BrewMethods;
-        `;
+    `;
         const [brewMethods] = await db.query(query);
         res.status(200).json({ brewMethods });
     } catch (error) {
@@ -57,25 +67,25 @@ app.get('/brew-methods', async (req, res) => {
 app.get('/coffee-reviews', async (req, res) => {
   try {
     const query = `
-      SELECT 
-        CoffeeReviews.coffeeReviewID,
-        CoffeeReviews.reviewDate,
-        CoffeeReviews.aroma,
-        CoffeeReviews.flavor,
-        CoffeeReviews.afterTaste,
-        CoffeeReviews.body,
-        CoffeeReviews.acidity,
-        CoffeeReviews.reviewNotes,
-        Users.userID,
-        Users.userName,
-        CoffeeBeans.coffeeBeanID,
-        CoffeeBeans.roastName,
-        BrewMethods.brewMethodID,
-        BrewMethods.name
-      FROM CoffeeReviews 
-      JOIN Users ON CoffeeReviews.userID = Users.userID
-      JOIN  CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
-      JOIN BrewMethods ON CoffeeReviews.brewMethodID = BrewMethods.brewMethodID;
+        SELECT 
+            CoffeeReviews.coffeeReviewID AS "Review ID",
+            CoffeeReviews.reviewDate AS "Review Date",
+            CoffeeReviews.aroma AS "Aroma",
+            CoffeeReviews.flavor AS "Flavor",
+            CoffeeReviews.afterTaste AS "Aftertaste",
+            CoffeeReviews.body AS "Body",
+            CoffeeReviews.acidity AS "Acidity",
+            CoffeeReviews.reviewNotes AS "Notes",
+            Users.userID AS "User ID",
+            Users.userName AS "User Name",
+            CoffeeBeans.coffeeBeanID AS "Bean ID",
+            CoffeeBeans.roastName AS "Roast Name",
+            BrewMethods.brewMethodID AS "Brew Method ID",
+            BrewMethods.name AS "Brew Method"
+        FROM CoffeeReviews 
+        JOIN Users ON CoffeeReviews.userID = Users.userID
+        JOIN CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
+        JOIN BrewMethods ON CoffeeReviews.brewMethodID = BrewMethods.brewMethodID;
     `;
     
     const [rows] = await db.query(query);
