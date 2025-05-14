@@ -1,13 +1,13 @@
-import DeletePersonForm from './DeletePersonForm';
+import DeleteCoffeeBeanForm from './DeleteCoffeeBeanForm';
 
-const TableRow = ({ rowObject, backendURL, refreshPeople }) => {
+const TableRow = ({ rowObject, backendURL, refreshCoffeeBean }) => {
     return (
         <tr>
             {Object.values(rowObject).map((value, index) => (
                 <td key={index}>{value}</td>
             ))}
             
-            <DeletePersonForm rowObject={rowObject} backendURL={backendURL} refreshPeople={refreshPeople} />
+            <DeleteCoffeeBeanForm rowObject={rowObject} backendURL={backendURL} refreshCoffeeBeans={refreshCoffeeBean} />
         </tr>
     );
 };
