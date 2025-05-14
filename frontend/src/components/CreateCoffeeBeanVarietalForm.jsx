@@ -1,31 +1,40 @@
-const CreateCoffeeBeanVarietalForm = ({ backendURL, refreshCoffeeBeansVarietals }) => {
-
+const UpdateCoffeeBeanVarietalForm = ({ coffeebeansvarietals, backendURL, refreshCoffeeBeanVarietal }) => {
     return (
         <>
-            <h2>Create a Coffee Bean by Varietal</h2>
-
+            <h2>Update a Coffee Bean by Varietal Relationship</h2>
             <form className='cuForm'>
-                <label htmlFor="create_coffeeBeanVarietal_coffeeBeanID">Coffee Bean ID: </label>
+                <label htmlFor="update_coffeeBeanVarietal_ID">Relationship to Update </label>
+                <select
+                    name="update_coffeeBeanVarietal_ID"
+                    id="update_coffeeBeanVarietal_ID"
+                >
+                    <option value="">Select a Relationship</option>
+                    {coffeebeansvarietals.map((coffeebeanvarietal) => (
+                        <option key={coffeebeanvarietal.coffeebeanvarietalID} value={coffeebeanvarietal.coffeebeanvarietalID}>
+                            {coffeebeanvarietal.coffeebeanvarietalID}
+                        </option>
+                    ))}
+                </select>
+
+                <label htmlFor="update_coffeeBeanVarietal_coffeeBeanID">Coffee Bean ID: </label>
                 <input
                     type="text"
-                    name="create_coffeeBeanVarietal_coffeeBeanID"
-                    id="create_coffeeBeanVarietal_coffeeBeanID"
-                    required
-                    maxLength={11}
+                    name="update_coffeeBeanVarietal_coffeeBeanID"
+                    id="update_coffeeBeanVarietal_coffeeBeanID"
                 />
 
-                <label htmlFor="create_coffeeBeanVarietal_VarietalID">Varietal ID: </label>
+                <label htmlFor="update_coffeeBeanVarietal_varietalID">Varietal ID: </label>
                 <input
                     type="text"
-                    name="create_coffeeBeanVarietal_VarietalID"
-                    id="create_coffeeBeanVarietal_VarietalID"
-                    maxLength={11}
-                    required
+                    name="update_coffeeBeanVarietal_varietalID"
+                    id="update_coffeeBeanVarietal_varietalID"
                 />
+
+
                 <input type="submit" />
             </form>
         </>
     );
 };
 
-export default CreateCoffeeBeanVarietalForm;
+export default UpdateCoffeeBeanVarietalForm;
