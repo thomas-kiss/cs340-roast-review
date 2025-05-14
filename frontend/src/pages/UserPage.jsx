@@ -38,7 +38,8 @@ function UserPage({ backendURL }) {
                         {users.length > 0 && Object.keys(users[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
-                        <th></th> 
+                        <th>Update</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
 
