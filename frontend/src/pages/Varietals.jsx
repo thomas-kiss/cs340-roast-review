@@ -5,7 +5,7 @@ import UpdateVarietalsForm from '../components/UpdateVarietalsForm';
 
 function Varietals({ backendURL }) {
 
-    // Set up state variables to store user data
+    // Set up state variables to store varietal data
     const [varietals, setVarietals] = useState([]);
     
     // Function to fetch data from the backend
@@ -19,7 +19,7 @@ function Varietals({ backendURL }) {
             // Convert the response into JSON format
             const data = await response.json();
             
-            // Extract users from the response
+            // Extract varietals from the response
             fetchedVarietals = data.varietals;
 
         } catch (error) {
@@ -27,7 +27,7 @@ function Varietals({ backendURL }) {
             console.log(error);
         }
 
-        // Update the state with the fetched users
+        // Update the state with the fetched varietals
         setVarietals(fetchedVarietals);
     };
 
@@ -43,7 +43,7 @@ function Varietals({ backendURL }) {
             <table>
                 <thead>
                     <tr>
-                        {/* Dynamically create table headers from the keys of the first user */}
+                        {/* Dynamically create table headers from the keys of the first varietal */}
                         {varietals.length > 0 && Object.keys(varietals[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
@@ -53,7 +53,7 @@ function Varietals({ backendURL }) {
                 </thead>
 
                 <tbody>
-                    {/* Map through the users array and display each user in a table row */}
+                    {/* Map through the varietals array and display each varietal in a table row */}
                     {varietals.map((varietals, index) => (
                         <TableRow
                             key={index}

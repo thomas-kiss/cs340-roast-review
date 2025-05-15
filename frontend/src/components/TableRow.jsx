@@ -9,6 +9,13 @@ Note: This was done after the update button was already added to the Table row, 
 AI Source URL: https://chatgpt.com
 */
 
+/*
+Citation for use of CS340 Starter Code 
+Date: 05/07/2036
+Adapted from CS340 Starter App Code
+Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+*/
+
 import DeleteCoffeeBeanForm from './DeleteCoffeeBeanForm';
 
 const TableRow = ({ rowObject, backendURL, refreshCoffeeBean, onUpdateClick }) => {

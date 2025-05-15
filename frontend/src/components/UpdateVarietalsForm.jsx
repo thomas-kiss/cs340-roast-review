@@ -1,7 +1,7 @@
 const UpdateVarietalsForm = ({ varietals, backendURL, refreshVarietals }) => {
     return (
         <>
-            <h2>Update a User</h2>
+            <h2>Update a Varietal</h2>
             <form className='cuForm'>
                 <label htmlFor="update_varietal_id">Varietal to Update: </label>
                 <select

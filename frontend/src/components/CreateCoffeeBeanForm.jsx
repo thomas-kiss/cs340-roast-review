@@ -5,7 +5,7 @@ const CreateCoffeeBeanForm = ({ backendURL, refreshCoffeeBeans }) => {
             <h2>Create a Coffee Bean</h2>
 
             <form className='cuForm'>
-                <label htmlFor="create_coffeeBean_brandName">Brand: </label>
+                <label htmlFor="create_coffeeBean_brandName">Brand Name: </label>
                 <input
                     type="text"
                     name="create_coffeeBean_brandName"
@@ -23,7 +23,7 @@ const CreateCoffeeBeanForm = ({ backendURL, refreshCoffeeBeans }) => {
                     required
                 />
 
-                <label htmlFor="create_coffeeBean_singleOriginCountry">Country of Origin (single origin only): </label>
+                <label htmlFor="create_coffeeBean_singleOriginCountry">Origin: </label>
                 <input
                     type="text"
                     name="create_coffeeBean_singleOriginCountry"
@@ -39,7 +39,7 @@ const CreateCoffeeBeanForm = ({ backendURL, refreshCoffeeBeans }) => {
                     maxLength={45}
                 />
 
-                <label htmlFor="create_coffeeBean_providedTastingNotes">Tasting Notes: </label>
+                <label htmlFor="create_coffeeBean_providedTastingNotes">Provided Tasting Notes: </label>
                 <input
                     type="text"
                     name="create_coffeeBean_providedTastingNotes"
