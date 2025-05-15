@@ -14,7 +14,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45583;
+const PORT = 45581;
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -25,13 +25,13 @@ const PORT = 45583;
 app.get('/users', async (req, res) => {
     try {
         const query = `
-            SELECT 
-                userID AS "User ID", 
-                userName AS "User Name", 
-                email AS "Email", 
-                firstName AS "First Name", 
-                lastName AS "Last Name", 
-                location AS "Location", 
+            SELECT
+                userID AS "User ID",
+                userName AS "Username",
+                email AS "Email",
+                firstName AS "First Name",
+                lastName AS "Last Name",
+                location AS "Location",
                 joinDate AS "Join Date"
             FROM Users;
         `;
@@ -47,12 +47,12 @@ app.get('/users', async (req, res) => {
 app.get('/brew-methods', async (req, res) => {
     try {
         const query = `
-            SELECT 
+            SELECT
                 brewMethodID AS "Brew Method ID",
                 name AS "Brew Method Name",
                 description AS "Description"
-            FROM BrewMethods;
-    `;
+                FROM BrewMethods;
+        `;
         const [brewMethods] = await db.query(query);
         res.status(200).json({ brewMethods });
     } catch (error) {
@@ -67,8 +67,8 @@ app.get('/brew-methods', async (req, res) => {
 app.get('/coffee-reviews', async (req, res) => {
   try {
     const query = `
-        SELECT 
-            CoffeeReviews.coffeeReviewID AS "Review ID",
+      SELECT 
+CoffeeReviews.coffeeReviewID AS "Review ID",
             CoffeeReviews.reviewDate AS "Review Date",
             CoffeeReviews.aroma AS "Aroma",
             CoffeeReviews.flavor AS "Flavor",
@@ -82,10 +82,10 @@ app.get('/coffee-reviews', async (req, res) => {
             CoffeeBeans.roastName AS "Roast Name",
             BrewMethods.brewMethodID AS "Brew Method ID",
             BrewMethods.name AS "Brew Method"
-        FROM CoffeeReviews 
-        JOIN Users ON CoffeeReviews.userID = Users.userID
-        JOIN CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
-        JOIN BrewMethods ON CoffeeReviews.brewMethodID = BrewMethods.brewMethodID;
+      FROM CoffeeReviews 
+      JOIN Users ON CoffeeReviews.userID = Users.userID
+      JOIN CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
+      JOIN BrewMethods ON CoffeeReviews.brewMethodID = BrewMethods.brewMethodID;
     `;
     
     const [rows] = await db.query(query);
@@ -101,7 +101,14 @@ app.get('/coffee-reviews', async (req, res) => {
 app.get('/coffeebeans', async (req, res) => {
     try {
         const query = `
-            SELECT brandName as Brand, roastName as "Roast Name", singleOriginCountry as "Origin", roastLevel as Roast, providedTastingNotes as "Tasting Notes"
+            SELECT 
+            coffeebeanID as "Coffee Bean ID",
+            brandName as "Brand Name", 
+            roastName as "Roast Name", 
+            singleOriginCountry as "Origin", 
+            roastLevel as "Roast Level", 
+            providedTastingNotes as 
+            "Provided Tasting Notes"
             FROM CoffeeBeans;
         `;
         const [coffeeBeans] = await db.query(query);
@@ -116,7 +123,9 @@ app.get('/coffeebeans', async (req, res) => {
 app.get('/varietals', async (req, res) => {
     try {
         const query = `
-            SELECT name as "Name"
+            SELECT 
+            varietalID as "Varietal ID", 
+            name as "Name"
             FROM Varietals;
         `;
         const [varietals] = await db.query(query);
@@ -131,7 +140,13 @@ app.get('/varietals', async (req, res) => {
 app.get('/coffeebeansvarietals', async (req, res) => {
     try {
         const query = `
-            SELECT CoffeeBeans.brandName as "Brand Name", CoffeeBeans.roastName as "Roast Name", Varietals.name as "Varietal Name" 
+            SELECT 
+            CoffeeBeansVarietals.coffeebeanvarietalID as "Coffee Bean by Varietal Relationship ID",
+            CoffeeBeans.coffeeBeanID as "Coffee Bean ID", 
+            CoffeeBeans.brandName as "Brand Name", 
+            CoffeeBeans.roastName as "Roast Name", 
+            Varietals.varietalID as "Varietal ID",
+            Varietals.name as "Varietal Name" 
             FROM CoffeeBeans
             JOIN CoffeeBeansVarietals on CoffeeBeans.coffeeBeanID = CoffeeBeansVarietals.coffeeBeanID
             JOIN Varietals on Varietals.varietalID = CoffeeBeansVarietals.varietalID 
