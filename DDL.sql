@@ -1,19 +1,35 @@
-/* Group: Group 2
+/* 
+Course: OSU CS340 Intro to Databases
+Group: Group 2
 Team Name: Team 2
 Project Title: Roast Review
 Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 
+/*
+Citation for PL/SQL wrapper
+Date: 05/20/2025
+Adapted from provided canvas code
+Source URL:https://canvas.oregonstate.edu/courses/1999601/assignments/10006390?module_item_id=25352972
+*/
+
 /* 
-Citation for SET statements
+Citation for SET statement
 Date: 05/01/2025
 Copied from provided canvas code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/assignments/10006385?module_item_id=25352941
 */
 
+DROP PROCEDURE IF EXISTS sp_load_coffeedb; 
+DELIMITER // 
+
+-- Proc will be called to load the coffee database and when the user presses the RESET button in the UI, 
+-- which will reset the schema back to its original state.
+CREATE PROCEDURE sp_load_coffeedb()
+BEGIN
+    
 SET FOREIGN_KEY_CHECKS = 0; 
-SET AUTOCOMMIT = 0; 
 
 DROP TABLE IF EXISTS Users; 
 
@@ -293,11 +309,14 @@ VALUES (
     (SELECT userID from Users where userName = 'cat909')
 ); 
 
-/* Citation for Set and commit
+/* Citation for Set
 Date: 05/01/2025
 Copied from provided canvas code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/assignments/10006385?module_item_id=25352941
 */ 
 
 SET FOREIGN_KEY_CHECKS = 1; 
-COMMIT;
+
+END //
+
+DELIMITER ; 
