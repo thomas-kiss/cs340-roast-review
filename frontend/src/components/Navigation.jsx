@@ -15,13 +15,13 @@ function Navigation() {
             <span style={{ display: 'inline-block', width: '20px' }}></span>
             <button onClick={async () => {
                 try {
-                    const response = await fetch(`${backendURL}/api/reset`, { method: 'POST' });
+                    const response = await fetch(`${backendURL}/reset`, { method: 'POST' });
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    const data = await response.json();
-                    alert(data.message || "Reset successful");
-                    window.location.reload(); // Reload to reflect fresh data
+                    const message = await response.text();
+                    alert(message || "Reset successful");
+                    window.location.reload();
                 } catch (err) {
                     console.error("Error resetting:", err);
                     alert("Reset failed.");

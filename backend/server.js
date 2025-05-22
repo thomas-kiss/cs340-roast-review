@@ -186,13 +186,13 @@ app.post('/brew-methods/create', async (req, res) => {
 
 // RESET DATABASE
 
-app.post('/api/reset', async (req, res) => {
+app.post('/reset', async (req, res) => {
     try {
         await db.query('CALL sp_load_coffeedb();');
-        res.status(200).json({ message: 'Database reset successfully.' });
+        res.status(200).send('Database reset successfully using sp_load_coffeedb.');
     } catch (error) {
         console.error('Error resetting database:', error);
-        res.status(500).json({ error: 'Failed to reset database.' });
+        res.status(500).send('Error resetting database.');
     }
 });
 
