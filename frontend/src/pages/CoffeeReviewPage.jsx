@@ -41,6 +41,9 @@ function Reviews({ backendURL }) {
     const [reviews, setReviews] = useState([]);
     const [selectedReview, setSelectedReview] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [brewMethods, setBrewMethods] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [coffeeBeans, setCoffeeBeans] = useState([]);
 
     const getData = async function () {
         let fetchedReviews = [];
@@ -56,8 +59,53 @@ function Reviews({ backendURL }) {
         setReviews(fetchedReviews);
     };
 
+        const getCoffeeBeansData = async function () {
+        let fetchedCoffeeBeans = [];
+
+        try {
+            const response = await fetch(backendURL + '/coffeebeans');
+            const data = await response.json();
+            fetchedCoffeeBeans = data.coffeeBeans || [];  // <-- Correct property from backend response
+        } catch (error) {
+            console.log(error);
+        }
+
+        setCoffeeBeans(fetchedCoffeeBeans);
+    };
+
+    const getUsersData = async function () {
+        let fetchedUsers = [];
+
+        try {
+            const response = await fetch(backendURL + '/users');
+            const data = await response.json();
+            fetchedUsers = data.users || [];  // <-- Correct property from backend response
+        } catch (error) {
+            console.log(error);
+        }
+
+        setUsers(fetchedUsers);
+    };
+
+    const getBrewMethodData = async function () {
+        let fetchedBrewMethods = [];
+
+        try {
+            const response = await fetch(backendURL + '/brew-methods');
+            const data = await response.json();
+            fetchedBrewMethods = data.brewMethods || [];  // <-- Correct property from backend response
+        } catch (error) {
+            console.log(error);
+        }
+
+        setBrewMethods(fetchedBrewMethods);
+    };
+
     useEffect(() => {
         getData();
+        getUsersData();
+        getBrewMethodData();
+        getCoffeeBeansData();
     }, []);
 
     const handleOpenUpdateForm = (review) => {
@@ -93,68 +141,13 @@ function Reviews({ backendURL }) {
                     ))}
                 </tbody>
             </table>
-
-            <CreateCoffeeReviewForm backendURL={backendURL} refreshCoffeeReviews={getData} />
-
-
-function Reviews({ backendURL }) {
-    const [reviews, setReviews] = useState([]);
-    const [selectedReview, setSelectedReview] = useState(null);
-    const [showUpdateForm, setShowUpdateForm] = useState(false);
-
-    const getData = async function () {
-        let fetchedReviews = [];
-
-        try {
-            const response = await fetch(backendURL + '/coffee-reviews');
-            const data = await response.json();
-            fetchedReviews = data.coffeeReviews || [];  // <-- Correct property from backend response
-        } catch (error) {
-            console.log(error);
-        }
-
-        setReviews(fetchedReviews);
-    };
-
-    useEffect(() => {
-        getData();
-    }, []);
-
-    const handleOpenUpdateForm = (review) => {
-        console.log(review);
-        setSelectedReview(review);
-        setShowUpdateForm(true);
-    };
-
-    return (
-        <>
-            <h1>Coffee Reviews</h1>
-
-            <table>
-                <thead>
-                    <tr>
-                        {reviews.length > 0 &&
-                            Object.keys(reviews[0]).map((header, index) => (
-                                <th key={index}>{header}</th>
-                            ))}
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reviews.map((review, index) => (
-                        <TableRow
-                            key={index}
-                            rowObject={review}
-                            backendURL={backendURL}
-                            refreshCoffeeBeans={getData}
-                            onUpdateClick={handleOpenUpdateForm}
-                        />
-                    ))}
-                </tbody>
-            </table>
-
-            <CreateCoffeeReviewForm backendURL={backendURL} refreshCoffeeReviews={getData} />
+             {coffeeBeans.length>0 && brewMethods.length>0 && users.length>0 && (
+            <CreateCoffeeReviewForm backendURL={backendURL} refreshCoffeeReviews={getData}
+            roastNameList ={[...new Set(coffeeBeans.map(bean => bean["Roast Name"]))]}
+            brewMethodList={brewMethods.map(brews => brews["Brew Method Name"])}
+            userList={users.map(user => user["Username"])}
+             />
+            )}
 
             {showUpdateForm && selectedReview && (
                 <div className="update-form">
@@ -170,4 +163,3 @@ function Reviews({ backendURL }) {
 }
 
 export default Reviews;
-

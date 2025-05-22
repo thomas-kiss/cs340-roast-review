@@ -15,8 +15,9 @@ Prompts used to modify the DeleteForm reference
 "How to modify existing code to route dynamically to different Delete forms [code snippet]" "I have multiple 
 pages and multiple delete forms. Will this proposed option work at that scale?"
 AI Source URL: https://chatgpt.com
-/*
+*/
 
+/*
 Citation for use of CS340 Starter Code 
 Date: 05/07/2036
 Adapted from CS340 Starter App Code

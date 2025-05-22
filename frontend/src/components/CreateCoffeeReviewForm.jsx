@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans, brewMethods, users }) {
+function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameList, brewMethodList, userList }) {
   const [formData, setFormData] = useState({
     reviewDate: '',
     aroma: '',
@@ -14,12 +14,6 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
     userID: '',
   });
 
-  // Add an effect to check if the data is available
-  useEffect(() => {
-    if (!coffeeBeans || !brewMethods || !users) {
-      console.error('Missing required data (coffeeBeans, brewMethods, or users)');
-    }
-  }, [coffeeBeans, brewMethods, users]);
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -121,15 +115,11 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         required
       >
         <option value="">Select Coffee Bean</option>
-        {coffeeBeans && coffeeBeans.length > 0 ? (
-          coffeeBeans.map(bean => (
-            <option key={bean.coffeeBeanID} value={bean.coffeeBeanID}>
-              {bean.name}
-            </option>
-          ))
-        ) : (
-          <option value="">Loading Coffee Beans...</option>
-        )}
+                    {roastNameList.map((roast, index)=> (
+                        <option key={index} value={roast}>
+                            {roast}
+                        </option>
+                    ))}
       </select>
 
       <label htmlFor="brewMethodID">Brew Method: </label>
@@ -141,15 +131,11 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         required
       >
         <option value="">Select Brew Method</option>
-        {brewMethods && brewMethods.length > 0 ? (
-          brewMethods.map(method => (
-            <option key={method.brewMethodID} value={method.brewMethodID}>
-              {method.name}
-            </option>
-          ))
-        ) : (
-          <option value="">Loading Brew Methods...</option>
-        )}
+                    {brewMethodList.map((brewname, index)=> (
+                        <option key={index} value={brewname}>
+                            {brewname}
+                        </option>
+                    ))}
       </select>
 
       <label htmlFor="userID">User: </label>
@@ -161,15 +147,11 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         required
       >
         <option value="">Select User</option>
-        {users && users.length > 0 ? (
-          users.map(user => (
-            <option key={user.userID} value={user.userID}>
-              {user.username}
-            </option>
-          ))
-        ) : (
-          <option value="">Loading Users...</option>
-        )}
+                    {userList.map((username, index)=> (
+                        <option key={index} value={username}>
+                            {username}
+                        </option>
+                    ))}
       </select>
 
       <button type="submit">Submit</button>
