@@ -6,11 +6,18 @@ Project Title: Roast Review
 Group Members: Thomas Kiss, Katlin Hopkins
 */
 
+
+/*
+Citation for CREATE BrewMethod Procedure 
+Date: 05/21/2025
+Adapted from provided canvas code:
+Implementing CUD operations in your app
+Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+*/
+
 DELIMITER //
 
--- #############################
--- CREATE Brew Method
--- #############################
+-- CREATE BrewMethod Procedure
 
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
 

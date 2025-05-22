@@ -1,3 +1,20 @@
+/* 
+Course: OSU CS340 Intro to Databases
+Group: Group 2
+Team Name: Team 2
+Project Title: Roast Review
+Group Members: Thomas Kiss, Katlin Hopkins
+*/
+
+
+/*
+Citation for CREATE BrewMethod and RESET Database
+Date: 05/21/2025
+Adapted from provided canvas code:
+Implementing CUD operations in your app
+Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+*/
+
 // ########################################
 // ########## SETUP
 
@@ -19,9 +36,9 @@ const PORT = 45583;
 // ########################################
 // ########## ROUTE HANDLERS
 
-// READ ROUTES
 
-// Users
+// GET Users
+
 app.get('/users', async (req, res) => {
     try {
         const query = `
@@ -43,7 +60,9 @@ app.get('/users', async (req, res) => {
     }
 });
 
-// Brew methods
+
+// GET Brew methods
+
 app.get('/brew-methods', async (req, res) => {
     try {
         const query = `
@@ -61,8 +80,8 @@ app.get('/brew-methods', async (req, res) => {
     }
 });
 
-// testing
-// ------------------ COFFEE REVIEWS ROUTES ------------------
+
+// GET CoffeeReviews
 
 app.get('/coffee-reviews', async (req, res) => {
   try {
@@ -97,7 +116,8 @@ CoffeeReviews.coffeeReviewID AS "Review ID",
 });
 
 
-// New route to fetch coffeebeans
+// GET CoffeeBeans
+
 app.get('/coffeebeans', async (req, res) => {
     try {
         const query = `
@@ -119,7 +139,9 @@ app.get('/coffeebeans', async (req, res) => {
     }
 });
 
-// New route to fetch varietals
+
+// GET Varietals
+
 app.get('/varietals', async (req, res) => {
     try {
         const query = `
@@ -136,7 +158,9 @@ app.get('/varietals', async (req, res) => {
     }
 });
 
-// New route to fetch coffee bean varietals intersection data 
+
+// GET CoffeeBeansVarietals
+
 app.get('/coffeebeansvarietals', async (req, res) => {
     try {
         const query = `
@@ -159,12 +183,13 @@ app.get('/coffeebeansvarietals', async (req, res) => {
     }
 });
 
+
 // CREATE Brew Method
+
 app.post('/brew-methods/create', async (req, res) => {
     try {
         const data = req.body;
 
-        // Optionally validate inputs here
         if (!data.name || !data.description) {
             return res.status(400).json({ error: 'Name and description are required' });
         }
@@ -184,7 +209,7 @@ app.post('/brew-methods/create', async (req, res) => {
     }
 });
 
-// RESET DATABASE
+// RESET Database
 
 app.post('/reset', async (req, res) => {
     try {

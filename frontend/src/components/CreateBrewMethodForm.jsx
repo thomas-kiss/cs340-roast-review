@@ -1,3 +1,12 @@
+/*
+Citation for CREATE BrewMethodForm
+Date: 05/21/2025
+Adapted from provided canvas code:
+Implementing CUD operations in your app
+Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+*/
+
+
 import React, { useState } from 'react';
 
 const CreateBrewMethodForm = ({ backendURL, refreshBrewMethods }) => {
