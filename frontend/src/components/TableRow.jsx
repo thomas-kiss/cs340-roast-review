@@ -9,16 +9,22 @@ Note: This was done after the update button was already added to the Table row, 
 AI Source URL: https://chatgpt.com
 */
 
+/*Citation for use of AI Tools
+Date: 05/21/2025
+Prompts used to modify the DeleteForm reference
+"How to modify existing code to route dynamically to different Delete forms [code snippet]" "I have multiple 
+pages and multiple delete forms. Will this proposed option work at that scale?"
+AI Source URL: https://chatgpt.com
 /*
+
 Citation for use of CS340 Starter Code 
 Date: 05/07/2036
 Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
-import DeleteCoffeeBeanForm from './DeleteCoffeeBeanForm';
 
-const TableRow = ({ rowObject, backendURL, refreshCoffeeBean, onUpdateClick }) => {
+const TableRow = ({ rowObject, backendURL, onUpdateClick, DeleteForm }) => {
     return (
         <tr>
             {Object.values(rowObject).map((value, index) => (
@@ -27,7 +33,7 @@ const TableRow = ({ rowObject, backendURL, refreshCoffeeBean, onUpdateClick }) =
             <td>
                 <button onClick={()=> onUpdateClick(rowObject)}>Update</button>
             </td>
-            <DeleteCoffeeBeanForm rowObject={rowObject} backendURL={backendURL} refreshCoffeeBeans={refreshCoffeeBean} />
+                <DeleteForm rowObject={rowObject} backendURL={backendURL} />
         </tr>
     );
 };

@@ -33,16 +33,16 @@ const UpdateCoffeeBeanForm = ({ selectedCoffeeBean, backendURL, refreshCoffeeBea
         <>
             <h2>Update a Coffee Bean</h2>
             <form className='cuForm'>
-                <label htmlFor="update_coffeeBean_id">Coffee Bean ID: </label>
+
+                <label htmlFor="update_coffeeBeans_ID">Coffee Bean ID: </label>
                 <input
                     type="text"
-                    name="update_coffeeBean_id"
-                    id="update_coffeeBean_id"
-                    //value line copied from AI code, see citation above
+                    name="update_coffeeBeans_ID"
+                    id="update_coffeeBeans_ID"
                     value={coffeeBeanID || ""}
                     readOnly
                 />
-                
+
                 <label htmlFor="update_coffeeBeans_brandName">Brand Name: </label>
                 <input
                     type="text"
@@ -80,13 +80,13 @@ const UpdateCoffeeBeanForm = ({ selectedCoffeeBean, backendURL, refreshCoffeeBea
                 />
 
                 <label htmlFor="update_coffeeBeans_proviedTastingNotes">Provided Tasting Notes: </label>
-                <input
-                    type="text"
+                <textarea
                     name="update_coffeeBeans_proviedTastingNotes"
                     id="update_coffeeBeans_proviedTastingNotes"
                     value ={providedTastingNotes || ""}
                     maxLength={500}
                 />
+
 
                 <input type="submit" />
             </form>

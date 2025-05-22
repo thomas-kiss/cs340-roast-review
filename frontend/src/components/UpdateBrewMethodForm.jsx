@@ -42,7 +42,8 @@ const UpdateBrewMethodForm = ({ selectedBrewMethod, backendURL, refreshBrewMetho
                     type="text"
                     id="update_brew_method_id"
                     name="update_brew_method_id"
-                    //value line copied from AI code, see citation above
+
+                    //value line and readOnly copied from AI code, see citation above
                     value={brewMethodID || ""}
                     readOnly
                 />

@@ -27,6 +27,7 @@ import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateBrewMethodForm from '../components/CreateBrewMethodForm';
 import UpdateBrewMethodForm from '../components/UpdateBrewMethodForm';
+import DeleteBrewMethodForm from '../components/DeleteBrewMethodForm';
 
 function BrewMethodPage({ backendURL }) {
 
@@ -92,7 +93,9 @@ function BrewMethodPage({ backendURL }) {
                             rowObject={brewMethod}
                             backendURL={backendURL}
                             refreshUsers={getData}
-                            onUpdateClick={() => handleUpdateClick(brewMethod)} // Pass update handler
+                            onUpdateClick={() => handleUpdateClick(brewMethod)}
+                            DeleteForm={DeleteBrewMethodForm} // Pass update handler
+
                         />
                     ))}
                 </tbody>

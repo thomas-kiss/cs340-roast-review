@@ -27,6 +27,8 @@ import { useState, useEffect } from 'react';  // Importing useState and useEffec
 import TableRow from '../components/TableRow';
 import CreateUserForm from '../components/CreateUserForm';
 import UpdateUserForm from '../components/UpdateUserForm';
+import DeleteUserForm from '../components/DeleteUserForm';
+
 
 
 function UserPage({ backendURL }) {
@@ -70,7 +72,6 @@ function UserPage({ backendURL }) {
 
     // Handler to open the update form and pass selected user data
     const handleOpenUpdateForm = (user) => {
-        console.log(user);
         setSelectedUser(user);
         setShowUpdateForm(true);
     }
@@ -101,6 +102,8 @@ function UserPage({ backendURL }) {
                             refreshHandler={getData}  // Function to refresh user data after changes
                             onUpdateClick={handleOpenUpdateForm}  // Pass update button click handler
                             type="user"
+                            DeleteForm={DeleteUserForm}
+
                         />
                     ))}
                 </tbody>
