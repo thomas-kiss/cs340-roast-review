@@ -19,40 +19,40 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
-import CreateCoffeeBeanForm from '../components/CreateCoffeeBeanForm';
-import UpdateCoffeeBeanForm from '../components/UpdateCoffeeBeanForm';
+import CreateVarietalForm from '../components/CreateVarietalForm';
+import UpdateVarietalsForm from '../components/UpdateVarietalsForm';
+import DeleteVarietalForm from '../components/DeleteVarietalForm';
 
+function VarietalPage({ backendURL }) {
 
-function CoffeeBeans({ backendURL }) {
+    // Set up state variables to store varietal data
+    const [varietals, setVarietals] = useState([]);
 
-    // Set up state variables to store coffee bean data
-    const [coffeeBeans, setCoffeeBeans] = useState([]);
-    
     //the two CONST definitions are from AI code, see citation above
-    const [selectedCoffeeBean, setSelectedCoffeeBean] = useState(null); 
+    const [selectedVarietal, setSelectedVarietal] = useState(null); 
     const [showUpdateForm, setShowUpdateForm] = useState(false); 
     
     // Function to fetch data from the backend
     const getData = async function () {
-        let fetchedCoffeeBeans = [];
+        let fetchedVarietals = [];
 
         try {
             // Make a GET request to the backend
-            const response = await fetch(backendURL + '/coffeebeans');
+            const response = await fetch(backendURL + '/varietals');
             
             // Convert the response into JSON format
             const data = await response.json();
             
-            // Extract coffee beans from the response
-            fetchedCoffeeBeans = data.coffeeBeans;
+            // Extract varietals from the response
+            fetchedVarietals = data.varietals;
 
         } catch (error) {
             // If the API call fails, print the error to the console
             console.log(error);
         }
 
-        // Update the state with the fetched coffee beans
-        setCoffeeBeans(fetchedCoffeeBeans);
+        // Update the state with the fetched varietals
+        setVarietals(fetchedVarietals);
     };
 
     // Load table on page load
@@ -61,50 +61,52 @@ function CoffeeBeans({ backendURL }) {
     }, []);
 
     //CONST from AI code, see citation above
-    const handleOpenUpdateForm = (coffeeBean) => {
-        console.log(coffeeBean);
-        setSelectedCoffeeBean(coffeeBean); 
+    const handleOpenUpdateForm = (varietal) => {
+        setSelectedVarietal(varietal); 
         setShowUpdateForm(true);
     }
 
     return (
         <>
-            <h1>Coffee Beans</h1>
+            <h1>Varietals</h1>
 
             <table>
                 <thead>
                     <tr>
-                        {/* Dynamically create table headers from the keys of the first coffee bean */}
-                        {coffeeBeans.length > 0 && Object.keys(coffeeBeans[0]).map((header, index) => (
+                        {/* Dynamically create table headers from the keys of the first varietal */}
+                        {varietals.length > 0 && Object.keys(varietals[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
-                        <th>Update</th> 
-                        <th>Delete</th> 
+                        <th>Update</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
 
-
                 <tbody>
-                    {/* Map through the coffee beans array and display each coffee bean in a table row */}
-                    {coffeeBeans.map((coffeeBeans, index) => (
+                    {/* Map through the varietals array and display each varietal in a table row */}
+                    {varietals.map((varietals, index) => (
                         <TableRow
                             key={index}
-                            rowObject={coffeeBeans}
+                            rowObject={varietals}
                             backendURL={backendURL}
-                            refreshCoffeeBeans={getData}
+                            refreshVarietals={getData}
                             //onUpdateClick from AI code, see citation above 
                             onUpdateClick={handleOpenUpdateForm}
+                            DeleteForm={DeleteVarietalForm}
                         />
                     ))}
                 </tbody>
             </table>
-            <CreateCoffeeBeanForm backendURL={backendURL} refreshCoffeeBeans={getData} />
-           {showUpdateForm && selectedCoffeeBean && (
+
+            <CreateVarietalForm backendURL={backendURL} refreshVarietals={getData} />
+
+                                   
+           {showUpdateForm && selectedVarietal && (
             <div className="update-form">
-                <UpdateCoffeeBeanForm
-                selectedCoffeeBean={selectedCoffeeBean}
+                <UpdateVarietalsForm
+                selectedVarietal={selectedVarietal}
                 backendURL={backendURL}
-                refreshCoffeeBeans={getData}
+                refreshVarietals={getData}
             />
             </div>
            )}
@@ -112,4 +114,6 @@ function CoffeeBeans({ backendURL }) {
     );
 }
 
-export default CoffeeBeans;
+export default VarietalPage;
+
+// line 102 through 109 generated by AI

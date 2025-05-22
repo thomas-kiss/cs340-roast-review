@@ -1,0 +1,153 @@
+/*Citation for use of AI Tools
+Date: 05/14/2025
+Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. 
+Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.
+“how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
+“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
+“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
+AI Source URL: https://chatgpt.com
+*/
+
+/*
+Citation for use of CS340 Starter Code 
+Date: 05/07/2036
+Adapted from CS340 Starter App Code
+Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+*/
+
+
+import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
+import TableRow from '../components/TableRow';
+import CreateCoffeeBeanVarietalForm from '../components/CreateCoffeeBeanVarietalForm';
+import UpdateCoffeeBeanVarietalForm from '../components/UpdateCoffeeBeanVarietalForm';
+import DeleteCoffeeBeanVarietalForm from '../components/DeleteCoffeeBeanVarietalForm';
+
+function CoffeeBeanVarietalPage({ backendURL }) {
+
+    // Set up state variables to store coffeebeansvarietals data
+    const [coffeebeansvarietals, setCoffeeBeansVarietals] = useState([]);
+
+    //the two CONST definitions are from AI code, see citation above
+    const [selectedCoffeeBeanVarietal, setSelectedCoffeeBeanVarietal] = useState(null); 
+    const [showUpdateForm, setShowUpdateForm] = useState(false); 
+
+    const [varietals, setVarietals] = useState([]);
+    const [coffeeBeans, setCoffeeBeans] = useState([]);
+    
+    // Function to fetch data from the backend
+    const getData = async function () {
+        let fetchedCoffeeBeansVarietals = [];
+
+        try {
+            // Make a GET request to the backend
+            const response = await fetch(backendURL + '/coffeebeansvarietals');
+            
+            // Convert the response into JSON format
+            const data = await response.json();
+            
+            // Extract coffeebeansvarietals from the response
+            fetchedCoffeeBeansVarietals = data.coffeebeansvarietals;
+
+        } catch (error) {
+            // If the API call fails, print the error to the console
+            console.log(error);
+        }
+             setCoffeeBeansVarietals(fetchedCoffeeBeansVarietals);
+    };
+    const getCoffeeBeanData = async function () {
+        let fetchedCoffeeBeans = [];
+        try {
+            const response = await fetch(backendURL+'/coffeebeans');
+            const data = await response.json();
+            fetchedCoffeeBeans = data.coffeeBeans;
+        } catch (error) {
+            console.error(error);
+        }
+               setCoffeeBeans(fetchedCoffeeBeans);
+        
+    };
+    const getVarietalData = async function () {
+        let fetchedVarietals = [];
+        try {
+            const response = await fetch(backendURL+'/varietals');
+            const data = await response.json();
+            fetchedVarietals = data.varietals
+        } catch (error) {
+            console.error(error);
+        }
+        setVarietals(fetchedVarietals);
+    };
+
+        // Update the state with the fetched coffeebeansvarietals
+
+    // Load table on page load
+    useEffect(() => {
+        getData();
+        getCoffeeBeanData();
+        getVarietalData();
+    }, []);
+
+    
+
+    //CONST from AI code, see citation above
+    const handleOpenUpdateForm = (coffeebeanvarietal) => {
+        setSelectedCoffeeBeanVarietal(coffeebeanvarietal); 
+        setShowUpdateForm(true);
+    }
+
+    return (
+        <>
+            <h1>Coffee Beans by Varietals</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        {/* Dynamically create table headers from the keys of the first coffeebeanvarietal */}
+                        {coffeebeansvarietals.length > 0 && Object.keys(coffeebeansvarietals[0]).map((header, index) => (
+                            <th key={index}>{header}</th>
+                        ))}
+                        <th>Update</th> 
+                        <th>Delete</th> 
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {/* Map through the coffeebeansvarietals array and display each coffeebeanvarietal in a table row */}
+                    {coffeebeansvarietals.map((coffeebeanvarietal, index) => (
+                        <TableRow
+                            key={index}
+                            rowObject={coffeebeanvarietal}
+                            backendURL={backendURL}
+                            refreshedCoffeeBeansVarietals={getData}
+                            //onUpdateClick from AI code, see citation above 
+                            onUpdateClick={handleOpenUpdateForm}
+                            DeleteForm={DeleteCoffeeBeanVarietalForm}
+                        />
+                    ))}
+                </tbody>
+            </table>
+                {coffeeBeans.length>0 && varietals.length > 0 && (
+            <CreateCoffeeBeanVarietalForm backendURL={backendURL} refreshCoffeeBeansVarietals={getData}
+                brandNameList ={[...new Set(coffeeBeans.map(bean => bean["Brand Name"]))]}
+                roastNameList={coffeeBeans.map(bean => bean["Roast Name"])}
+                varietalNameList={varietals.map(varietal => varietal["Name"])}
+            />
+                )}
+           {showUpdateForm && selectedCoffeeBeanVarietal && (
+            <div className="update-form">
+                <UpdateCoffeeBeanVarietalForm
+                selectedCoffeeBeanVarietal={selectedCoffeeBeanVarietal}
+                backendURL={backendURL}
+                refreshCoffeeBeanVarietal={getData}
+        
+            />
+            </div>
+           )}
+        </>
+    );
+}
+
+export default CoffeeBeanVarietalPage;
+
+// line 101 through 108 generated by AI
