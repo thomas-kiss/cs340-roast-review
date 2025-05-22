@@ -36,6 +36,7 @@ const TableRow = ({ rowObject, backendURL, onUpdateClick, DeleteForm }) => {
                 <DeleteForm rowObject={rowObject} backendURL={backendURL} />
         </tr>
     );
+
 };
 
 export default TableRow;

@@ -21,8 +21,6 @@ Date: 05/07/2025
 Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
-
-
 import { useState, useEffect } from 'react';  
 import TableRow from '../components/TableRow';
 import CreateBrewMethodForm from '../components/CreateBrewMethodForm';
@@ -31,88 +29,74 @@ import DeleteBrewMethodForm from '../components/DeleteBrewMethodForm';
 
 function BrewMethodPage({ backendURL }) {
 
-    // State to store list of brew methods
-    const [brewMethods, setBrewMethods] = useState([]);
-    
-    // State to track currently selected brew method for update form
-    const [selectedBrewMethod, setSelectedBrewMethod] = useState(null);
+  // State to store list of brew methods
+  const [brewMethods, setBrewMethods] = useState([]);
+  
+  // State to track currently selected brew method for update form
+  const [selectedBrewMethod, setSelectedBrewMethod] = useState(null);
 
-    /**
-     * Fetch brew methods from backend API.
-     * On success, update brewMethods state.
-     */
-    const getData = async function () {
-        let fetchedBrewMethods = [];
+  // Fetch brew methods from backend API
+  const getData = async () => {
+    try {
+      const response = await fetch(`${backendURL}/brew-methods`);
+      const data = await response.json();
+      setBrewMethods(data.brewMethods || []);
+    } catch (error) {
+      console.error('Error fetching brew methods:', error);
+      setBrewMethods([]);
+    }
+  };
 
-        try {
-            const response = await fetch(backendURL + '/brew-methods');
-            const data = await response.json();
-            fetchedBrewMethods = data.brewMethods;
+  // Handler when Update button is clicked for a brew method
+  const handleUpdateClick = (brewMethod) => {
+    setSelectedBrewMethod(brewMethod);
+  };
 
-        } catch (error) {
-            console.log(error);
-        }
+  // Fetch data on component mount
+  useEffect(() => {
+    getData();
+  }, []);
 
-        setBrewMethods(fetchedBrewMethods);
-    };
+  return (
+    <>
+      <h1>Brew Methods</h1>
 
-    /**
-     * Handler invoked when user clicks "Update" button on a brew method row.
-     * Sets the selected brew method to show in the update form.
-     * 
-     * @param {object} brewMethod - The brew method object to update
-     */
-    const handleUpdateClick = (brewMethod) => {
-        setSelectedBrewMethod(brewMethod);
-    };
+      <table>
+        <thead>
+          <tr>
+            {brewMethods.length > 0 && Object.keys(brewMethods[0]).map((header, index) => (
+              <th key={index}>{header}</th>
+            ))}
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
 
-    // On mount, fetch brew methods
-    useEffect(() => {
-        getData();
-    }, []);
+        <tbody>
+          {brewMethods.map((brewMethod, index) => (
+            <TableRow
+              key={index}
+              rowObject={brewMethod}
+              backendURL={backendURL}
+              refreshBrewMethods={getData}  // <-- unified prop name
+              onUpdateClick={handleUpdateClick} // Pass handler directly
+              DeleteForm={DeleteBrewMethodForm} // Pass update handler
+            />
+          ))}
+        </tbody>
+      </table>
 
-    return (
-        <>
-            <h1>Brew Methods</h1>
+      <CreateBrewMethodForm backendURL={backendURL} refreshBrewMethods={getData} />
 
-            <table>
-                <thead>
-                    <tr>
-                        {brewMethods.length > 0 && Object.keys(brewMethods[0]).map((header, index) => (
-                            <th key={index}>{header}</th>
-                        ))}
-                        <th>Update</th> 
-                        <th>Delete</th> 
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {brewMethods.map((brewMethod, index) => (
-                        <TableRow
-                            key={index}
-                            rowObject={brewMethod}
-                            backendURL={backendURL}
-                            refreshUsers={getData}
-                            onUpdateClick={() => handleUpdateClick(brewMethod)}
-                            DeleteForm={DeleteBrewMethodForm} // Pass update handler
-
-                        />
-                    ))}
-                </tbody>
-            </table>
-
-            <CreateBrewMethodForm backendURL={backendURL} refreshUsers={getData} />
-
-            {/* Conditionally render UpdateBrewMethodForm if a brew method is selected */}
-            {selectedBrewMethod && (
-                <UpdateBrewMethodForm
-                    selectedBrewMethod={selectedBrewMethod}
-                    backendURL={backendURL}
-                    refreshBrewMethods={getData}
-                />
-            )}
-        </>
-    );
+      {selectedBrewMethod && (
+        <UpdateBrewMethodForm
+          selectedBrewMethod={selectedBrewMethod}
+          backendURL={backendURL}
+          refreshBrewMethods={getData}
+        />
+      )}
+    </>
+  );
 }
 
 export default BrewMethodPage;

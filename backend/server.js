@@ -1,3 +1,20 @@
+/* 
+Course: OSU CS340 Intro to Databases
+Group: Group 2
+Team Name: Team 2
+Project Title: Roast Review
+Group Members: Thomas Kiss, Katlin Hopkins
+*/
+
+
+/*
+Citation for CREATE BrewMethod and RESET Database
+Date: 05/21/2025
+Adapted from provided canvas code:
+Implementing CUD operations in your app
+Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+*/
+
 // ########################################
 // ########## SETUP
 
@@ -14,14 +31,14 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45581;
+const PORT = 45583;
 
 // ########################################
 // ########## ROUTE HANDLERS
 
-// READ ROUTES
 
-// Users
+// GET Users
+
 app.get('/users', async (req, res) => {
     try {
         const query = `
@@ -43,7 +60,9 @@ app.get('/users', async (req, res) => {
     }
 });
 
-// Brew methods
+
+// GET Brew methods
+
 app.get('/brew-methods', async (req, res) => {
     try {
         const query = `
@@ -61,8 +80,8 @@ app.get('/brew-methods', async (req, res) => {
     }
 });
 
-// testing
-// ------------------ COFFEE REVIEWS ROUTES ------------------
+
+// GET CoffeeReviews
 
 app.get('/coffee-reviews', async (req, res) => {
   try {
@@ -97,7 +116,8 @@ CoffeeReviews.coffeeReviewID AS "Review ID",
 });
 
 
-// New route to fetch coffeebeans
+// GET CoffeeBeans
+
 app.get('/coffeebeans', async (req, res) => {
     try {
         const query = `
@@ -119,7 +139,9 @@ app.get('/coffeebeans', async (req, res) => {
     }
 });
 
-// New route to fetch varietals
+
+// GET Varietals
+
 app.get('/varietals', async (req, res) => {
     try {
         const query = `
@@ -136,7 +158,9 @@ app.get('/varietals', async (req, res) => {
     }
 });
 
-// New route to fetch coffee bean varietals intersection data 
+
+// GET CoffeeBeansVarietals
+
 app.get('/coffeebeansvarietals', async (req, res) => {
     try {
         const query = `
@@ -156,6 +180,44 @@ app.get('/coffeebeansvarietals', async (req, res) => {
     } catch (error) {
         console.error("Error fetching coffee beans by varietals:", error);
         res.status(500).send("An error occurred while fetching coffee beans by varietals.");
+    }
+});
+
+
+// CREATE Brew Method
+
+app.post('/brew-methods/create', async (req, res) => {
+    try {
+        const data = req.body;
+
+        if (!data.name || !data.description) {
+            return res.status(400).json({ error: 'Name and description are required' });
+        }
+
+        const query = `CALL sp_CreateBrewMethod(?, ?, @new_id);`;
+        const [[[result]]] = await db.query(query, [data.name, data.description]);
+
+        console.log(`Created new brew method ID: ${result.new_id}`);
+
+        res.status(200).json({
+            message: 'Brew method created successfully',
+            brewMethodID: result.new_id
+        });
+    } catch (error) {
+        console.error("Error creating brew method:", error);
+        res.status(500).send("An error occurred while creating the brew method.");
+    }
+});
+
+// RESET Database
+
+app.post('/reset', async (req, res) => {
+    try {
+        await db.query('CALL sp_load_coffeedb();');
+        res.status(200).send('Database reset successfully using sp_load_coffeedb.');
+    } catch (error) {
+        console.error('Error resetting database:', error);
+        res.status(500).send('Error resetting database.');
     }
 });
 
