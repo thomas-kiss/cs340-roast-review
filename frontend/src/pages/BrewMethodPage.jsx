@@ -95,6 +95,7 @@ function BrewMethodPage({ backendURL }) {
                             refreshUsers={getData}
                             onUpdateClick={() => handleUpdateClick(brewMethod)}
                             DeleteForm={DeleteBrewMethodForm} // Pass update handler
+
                         />
                     ))}
                 </tbody>

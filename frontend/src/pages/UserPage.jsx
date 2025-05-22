@@ -30,6 +30,7 @@ import UpdateUserForm from '../components/UpdateUserForm';
 import DeleteUserForm from '../components/DeleteUserForm';
 
 
+
 function UserPage({ backendURL }) {
 
     // State to store user data fetched from the backend
@@ -102,6 +103,7 @@ function UserPage({ backendURL }) {
                             onUpdateClick={handleOpenUpdateForm}  // Pass update button click handler
                             type="user"
                             DeleteForm={DeleteUserForm}
+
                         />
                     ))}
                 </tbody>

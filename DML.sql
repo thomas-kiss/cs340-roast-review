@@ -1,4 +1,6 @@
-/* Group: Group 2
+/* 
+Course: OSU CS340 Intro to Databases
+Group: Group 2
 Team Name: Team 2
 Project Title: Roast Review
 Group Members: Thomas Kiss, Katlin Hopkins
@@ -21,7 +23,7 @@ SELECT userID, userName, email, firstName, lastName, location, joinDate
 FROM Users;
  
 -- UPDATE --  
--- get a single user's data for Update User form
+-- get a single user's data for Update User form based on click of Update button on record's row
 SELECT userID, userName, email, firstName, lastName, location, joinDate  
 FROM Users  
 WHERE userID = @userID_selected_from_User_page;
@@ -32,7 +34,7 @@ SET userName = @userNameInput, email = @emailInput, firstName = @firstNameInput,
 WHERE userID = @userID_selected_from_User_page;
  
 -- DELETE --
--- delete a user data upon submission of Delete action on User form
+-- delete a user data upon submission of Delete action on User form based on click of Delete button on record's row
 DELETE FROM Users WHERE userID = @userID_selected_from_User_page;
  
  
@@ -50,7 +52,7 @@ SELECT brewMethodID, name, description
 FROM BrewMethods;
  
 -- UPDATE --
--- get a single brew method data for Update Brew Method form
+-- get a single brew method data for Update Brew Method form based on click of Update on the record's row
 SELECT brewMethodID, name, description  
 FROM BrewMethods  
 WHERE brewMethodID = @brewMethodID_selected_from_page;
@@ -61,7 +63,7 @@ SET name = @nameInput, description = @descriptionInput
 WHERE brewMethodID = @brewMethodIDInput;
  
 -- DELETE --
--- delete a brew method data upon submission of Delete action on Brew Method form
+-- delete a brew method data upon submission of Delete action on Brew Method form based on click of Delete on the record's row
 DELETE FROM BrewMethods WHERE brewMethodID = @brewMethodID_selected_from_page;
  
  
@@ -72,24 +74,38 @@ DELETE FROM BrewMethods WHERE brewMethodID = @brewMethodID_selected_from_page;
 -- get UserNames from Users table to populate UserName dropdown
 SELECT userName FROM Users;
  
--- get userID from Users table based on UserName selected, to be used in the Insert into CoffeeReviews query
-SELECT userID FROM Users WHERE userName = @userName_selected_from_coffeeReviewsForm;
- 
 -- get names from BrewMethods table to populate Brew Method dropdown
 SELECT name FROM BrewMethods;
  
--- get brewMethodID from BrewMethods table based on name selected, to be used in the Insert into CoffeeReviews query
-SELECT brewMethodID FROM BrewMethods WHERE name = @name_selected_from_coffeeReviewsForm;
  
 -- get roastName from CoffeeBeans table to populate Coffee Bean dropdown
 SELECT roastName FROM CoffeeBeans;
  
--- get coffeeBeanID based on roastName selected, to be used in the Insert into CoffeeReviews query
-SELECT coffeeBeanID FROM CoffeeBeans WHERE roastName = @roastName_selected_from_coffeeReviewsForm;
- 
 -- add a new coffee review 
-INSERT INTO CoffeeReviews (reviewDate, aroma, flavor, afterTaste, body, acidity, reviewNotes, coffeeBeanID, brewMethodID, userID)  
-VALUES (@reviewDateInput, @aromaInput, @flavorInput, @afterTasteInput, @bodyInput, @acidityInput, @reviewNotesInput, @coffeeBeanIDInput, @brewMethodIDInput, @userIDInput);
+INSERT INTO CoffeeReviews 
+ (reviewDate, 
+ aroma, 
+ flavor, 
+ afterTaste, 
+ body, 
+ acidity, 
+ reviewNotes, 
+ coffeeBeanID, 
+ brewMethodID, 
+ userID)  
+
+ VALUES 
+ (@reviewDateInput, 
+ @aromaInput, 
+ @flavorInput, 
+ @afterTasteInput, 
+ @bodyInput, 
+ @acidityInput, 
+ @reviewNotesInput, 
+ (SELECT coffeeBeanID from CoffeeBeans WHERE roastName = @roastName_selected_from_UpdateFormDropDown), 
+ (SELECT brewMethodID from BrewMethods WHERE name = @brewmethod_name_selected_from_UpdateFormDropDown), 
+ (SELECT userID from Users WHERE userName = @userName_selected_from_UpdateFormDropDown)
+ );
  
 -- READ --
 -- get all coffee reviews for Coffee Reviews page
@@ -110,7 +126,7 @@ SELECT
     BrewMethods.name
 FROM CoffeeReviews
 JOIN Users ON CoffeeReviews.userID = Users.userID
-JOIN  CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
+JOIN CoffeeBeans ON CoffeeReviews.coffeeBeanID = CoffeeBeans.coffeeBeanID
 JOIN BrewMethods ON CoffeeReviews.brewMethodID = BrewMethods.brewMethodID;
  
 -- UPDATE --
@@ -128,9 +144,9 @@ SET reviewDate = @reviewDateInput,
     body = @bodyInput,
     acidity = @acidityInput,
     reviewNotes = @reviewNotesInput,
-    coffeeBeanID = @coffeeBeanIDInput,
-    brewMethodID = @brewMethodIDInput,
-    userID = @userIDInput
+    coffeeBeanID = (SELECT coffeeBeanID from CoffeeBeans WHERE roastName = @roastName_selected_from_UpdateFormDropDown),
+    brewMethodID = (SELECT brewMethodID from BrewMethods WHERE name = @brewmethod_name_selected_from_UpdateFormDropDown),
+    userID = (SELECT userID from Users WHERE userName = @userName_selected_from_UpdateFormDropDown)
 WHERE coffeeReviewID = @coffeereviewID_selected_from_CoffeeReviews_page;
  
 -- DELETE --
@@ -144,58 +160,60 @@ WHERE coffeeReviewID = @coffeeReviewID_selected_from_CoffeeReviews_page;
 
 -- Create --
 --add a new coffee bean
-INSERT INTO CoffeeBeans (brandName, roastName, singleOriginCountry, roastLevel, providedTastingNotes) VALUES (@brandNameInput, @roastNameInput, @singleOriginCountryInput, @roastLevelInput, @providedTastingNotesInput)
+INSERT INTO CoffeeBeans (brandName, roastName, singleOriginCountry, roastLevel, providedTastingNotes) VALUES (@brandNameInput, @roastNameInput, @singleOriginCountryInput, @roastLevelInput, @providedTastingNotesInput);
 
 -- Read --
   
 --get all coffee beans for the Coffee Bean page
-SELECT brandName as Brand, roastName as "Roast Name", singleOriginCountry as "Origin", roastLevel as Roast, providedTastingNotes as "Tasting Notes" FROM CoffeeBeans
+SELECT coffeeBeanID, brandName, roastName, singleOriginCountry, roastLevel, providedTastingNotes FROM CoffeeBeans;
 
 -- Update --
 
---get the list of coffeeBeanIDs to populate the list of choices
-SELECT coffeeBeanID from CoffeeBeans
-
---get a single coffee bean record based on selection of coffeeBeanID
-SELECT brandName as Brand, roastName as "Roast Name", singleOriginCountry as "Origin", roastLevel as Roast, providedTastingNotes as "Tasting Notes" FROM CoffeeBeans WHERE coffeeBeanID = @coffeeBeanID_selected_from_updateCoffeeBeanForm
+--get a single coffee bean record based on the click of Update button on record's row
+SELECT 
+ coffeeBeanID, 
+ brandName, 
+ roastName, 
+ singleOriginCountry, 
+ roastLevel, 
+ providedTastingNotes 
+FROM CoffeeBeans
+WHERE coffeeBeanID = @coffeeBeanID_selected_from_CoffeeBean_Page;
 
 --update data based on submission of Update Coffee Bean form
-UPDATE CoffeeBeans SET brandName = @brandNameInput, roastName = @roastNameInput, singleOriginCountry = @singleOriginCountryInput, roastLevel = @roastLevelInput, providedTastingNotes = @providedTastingNotesInput WHERE coffeeBeanID = @coffeeBeanID_selected_from_updateCoffeeBeanForm
+UPDATE CoffeeBeans SET brandName = @brandNameInput, roastName = @roastNameInput, singleOriginCountry = @singleOriginCountryInput, roastLevel = @roastLevelInput, providedTastingNotes = @providedTastingNotesInput WHERE coffeeBeanID = @coffeeBeanID_selected_from_CoffeeBean_Page;
 
 -- Delete --
   
 -- delete coffee bean data upon submission of Delete action on Coffee Bean form
-DELETE FROM CoffeeBeans WHERE coffeeBeanID = @coffeeBeanID_selected_from_CoffeeBean_page
+DELETE FROM CoffeeBeans WHERE coffeeBeanID = @coffeeBeanID_selected_from_CoffeeBean_page;
 
-
+ 
   
 --** Varietals **--
 
 -- Create --
 
 --add a new varietal
-INSERT INTO Varietals (name) VALUES (@nameInput)
+INSERT INTO Varietals (name) VALUES (@nameInput);
 
 -- Read --
 
 --get all varietals for the Varietals page 
-SELECT * from Varietals
+SELECT varietalID, name from Varietals;
 
 -- Update --
 
---get a list of varietals for the drop down choice of varietals to update
-SELECT varietalID FROM Varietals
-
---get data for the varietal that was chosen from the drop down, to then update
-SELECT varietalName from Varietals WHERE varietalID = @varietalID_selected_from_updateVarietalsForm
+--get data for the varietal that was chosen via click of Update button on record row
+SELECT name from Varietals WHERE varietalID = @varietalID_selected_from_Varietals_Page;
 
 --update the values based on submission of the Update Varietals Form
-UPDATE Varietals SET name = @nameInput WHERE varietalID = @varietalID_selected_from_updateVarietalsForm
+UPDATE Varietals SET name = @nameInput WHERE varietalID = @varietalID_selected_from_Varietals_Page;
 
 -- Delete --
 
 -- delete the varietal data upon submission of delete action on Varietals form
-DELETE FROM Varietals WHERE varietalID = @varietalID_selected_from_Varietals_Page
+DELETE FROM Varietals WHERE varietalID = @varietalID_selected_from_Varietals_Page;
   
 
 
@@ -204,24 +222,48 @@ DELETE FROM Varietals WHERE varietalID = @varietalID_selected_from_Varietals_Pag
 -- Create --
 
 --add a new coffeeBeanVarietal relationship
-INSERT INTO CoffeeBeansVarietals (cofffeeBeanID, varietalID) VALUES (@coffeeBeanIDInput, @varietalIDInput)
+INSERT INTO CoffeeBeansVarietals (coffeeBeanID, varietalID) VALUES (@coffeeBeanIDInput, @varietalIDInput);
 
 -- Read --
 
 --get all varietals for the Varietals page 
-SELECT * from CoffeeBeansVarietals
+SELECT
+ CoffeeBeansVarietals.coffeeBeanVarietalID, 
+ CoffeeBeansVarietals.coffeeBeanID, 
+ CoffeeBeans.brandName, 
+ CoffeeBeans.roastName, 
+ CoffeeBeansVarietals.varietalID,
+ Varietals.name
+ FROM CoffeeBeansVarietals
+ JOIN CoffeeBeans on CoffeeBeansVarietals.coffeeBeanID = CoffeeBeans.coffeeBeanID
+ JOIN Varietals on CoffeeBeansVarietals.varietalID = Varietals.varietalID;
 
 -- Update --
 
---get a list of varietals for the drop down choice of coffeebeanvarietals to update
-SELECT coffeeBeanVarietalID FROM CoffeeBeansVarietals
+--get a list of coffee bean brand names for the drop down choices when updating the coffeebeanvarietal relationship
+SELECT brandName FROM CoffeeBeans;
 
---get data for the coffeebeanvarietal that was chosen from the drop down, to then update
-SELECT coffeeBeanID, varietalID from CoffeeBeanVarietals WHERE coffeeBeanVarietalID = @coffeeBeanVarietalID_selected_from_UpdateCoffeeBeanVarietalForm
+--get a list of coffee bean roast names for the drop down choices when updating the coffeebeanvarietal relationship
+SELECT roastName FROM CoffeeBeans;
+
+--get a list of varietal names for the drop down choices when updating the coffeebeanvarietal relationship
+SELECT name FROM Varietals;
+
+ 
+--get data for the coffeebeanvarietal that was chosen from the Update button on the record's row
+SELECT coffeeBeanVarietalID, CoffeeBeans.brandName, CoffeeBeans.roastName, Varietals.name
+ FROM CoffeeBeansVarietals
+ JOIN CoffeeBeans on CoffeeBeansVarietals.coffeeBeanID = CoffeeBeans.coffeeBeanID
+ JOIN Varietals on CoffeeBeansVarietals.varietalID = Varietals.varietalID
+ WHERE coffeeBeanVarietalID = @coffeeBeanVarietalID_selected_from_CoffeeBeansVarietals_Page;
 
 --update the values based on submission of the Update Varietals Form
-UPDATE coffeeBeanID, varietalID SET coffeeBeanID = @coffeeBeanIDInput, varietalID = @varietalInput WHERE coffeeBeanVarietalID = @coffeeBeanVarietalID_selected_from_UpdateCoffeeBeanVarietalForm
+UPDATE CoffeeBeansVarietals
+ SET 
+ coffeeBeanID = (SELECT coffeeBeanID from CoffeeBeans WHERE brandName = @brandName_selected_from_UpdateFormDropDown AND roastName = @roastName_selected_from_UpdateFormDropDown),
+ varietalID = (SELECT varietalID from Varietals WHERE name = @varietal_name_selected_from_UpdateFormDropDown)
+ WHERE coffeeBeanVarietalID = @coffeeBeanVarietalID_selected_from_CoffeeBeanVarietal_Page;
 
 -- Delete --
 -- delete the coffeebeanvarietal data upon submission of delete action on CoffeeBeansVarietals form
-DELETE FROM CoffeeBeansVarietals WHERE coffeeBeanVarietalID = @coffeeBeanVarietalID_selected_from_UpdateCoffeeBeanVarietalForm
+DELETE FROM CoffeeBeansVarietals WHERE coffeeBeanVarietalID = @coffeeBeanVarietalID_selected_from_UpdateCoffeeBeanVarietal_Page;

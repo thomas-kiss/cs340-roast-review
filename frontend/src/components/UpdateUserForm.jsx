@@ -43,6 +43,7 @@ const UpdateUserForm = ({ selectedUser }) => {
                     type="text"
                     id="update_user_id"
                     name="update_user_id"
+
                     //value line and readOnly copied from AI code, see citation above
                     value={userID || ""}
                     readOnly

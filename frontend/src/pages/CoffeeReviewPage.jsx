@@ -96,6 +96,66 @@ function Reviews({ backendURL }) {
 
             <CreateCoffeeReviewForm backendURL={backendURL} refreshCoffeeReviews={getData} />
 
+
+function Reviews({ backendURL }) {
+    const [reviews, setReviews] = useState([]);
+    const [selectedReview, setSelectedReview] = useState(null);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+
+    const getData = async function () {
+        let fetchedReviews = [];
+
+        try {
+            const response = await fetch(backendURL + '/coffee-reviews');
+            const data = await response.json();
+            fetchedReviews = data.coffeeReviews || [];  // <-- Correct property from backend response
+        } catch (error) {
+            console.log(error);
+        }
+
+        setReviews(fetchedReviews);
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const handleOpenUpdateForm = (review) => {
+        console.log(review);
+        setSelectedReview(review);
+        setShowUpdateForm(true);
+    };
+
+    return (
+        <>
+            <h1>Coffee Reviews</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        {reviews.length > 0 &&
+                            Object.keys(reviews[0]).map((header, index) => (
+                                <th key={index}>{header}</th>
+                            ))}
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reviews.map((review, index) => (
+                        <TableRow
+                            key={index}
+                            rowObject={review}
+                            backendURL={backendURL}
+                            refreshCoffeeBeans={getData}
+                            onUpdateClick={handleOpenUpdateForm}
+                        />
+                    ))}
+                </tbody>
+            </table>
+
+            <CreateCoffeeReviewForm backendURL={backendURL} refreshCoffeeReviews={getData} />
+
             {showUpdateForm && selectedReview && (
                 <div className="update-form">
                     <UpdateCoffeeReviewForm
@@ -110,3 +170,4 @@ function Reviews({ backendURL }) {
 }
 
 export default Reviews;
+
