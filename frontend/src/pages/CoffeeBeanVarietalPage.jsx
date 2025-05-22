@@ -134,13 +134,15 @@ function CoffeeBeanVarietalPage({ backendURL }) {
                 varietalNameList={varietals.map(varietal => varietal["Name"])}
             />
                 )}
-           {showUpdateForm && selectedCoffeeBeanVarietal && (
+           {showUpdateForm && selectedCoffeeBeanVarietal && coffeeBeans.length>0 && varietals.length >0 && (
             <div className="update-form">
                 <UpdateCoffeeBeanVarietalForm
                 selectedCoffeeBeanVarietal={selectedCoffeeBeanVarietal}
                 backendURL={backendURL}
                 refreshCoffeeBeanVarietal={getData}
-        
+                brandNameList ={[...new Set(coffeeBeans.map(bean => bean["Brand Name"]))]}
+                roastNameList={coffeeBeans.map(bean => bean["Roast Name"])}
+                varietalNameList={varietals.map(varietal => varietal["Name"])}        
             />
             </div>
            )}

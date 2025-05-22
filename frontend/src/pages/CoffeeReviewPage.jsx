@@ -149,12 +149,15 @@ function Reviews({ backendURL }) {
              />
             )}
 
-            {showUpdateForm && selectedReview && (
+            {showUpdateForm && selectedReview && coffeeBeans.length>0 && brewMethods.length>0 && users.length>0 &&(
                 <div className="update-form">
                     <UpdateCoffeeReviewForm
                         selectedReview={selectedReview}
                         backendURL={backendURL}
                         refreshCoffeeBeans={getData}
+                        roastNameList ={[...new Set(coffeeBeans.map(bean => bean["Roast Name"]))]}
+                        brewMethodList={brewMethods.map(brews => brews["Brew Method Name"])}
+                        userList={users.map(user => user["Username"])}
                     />
                 </div>
             )}

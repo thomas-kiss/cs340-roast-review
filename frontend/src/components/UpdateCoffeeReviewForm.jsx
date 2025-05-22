@@ -23,7 +23,7 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 
 import { useState, useEffect } from 'react';
 
-const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose }) => {
+const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose, roastNameList, brewMethodList, userList }) => {
     // Destructure from selectedReview
     const {
         'Review ID': reviewID,
@@ -202,31 +202,40 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose 
                 />
 
                 <label htmlFor="update_user_name">User Name:</label>
-                <input
-                    type="text"
+                <select
                     name="userName"
                     id="update_user_name"
-                    value={userName || ""}
-                    readOnly
-                />
+                    value={userName || ""}>
+                    {userList.map((user, index) => (
+                    <option key={index} value={user}>
+                        {user}
+                    </option>
+                ))}
+                </select>
 
                 <label htmlFor="update_roast_name">Roast Name:</label>
-                <input
-                    type="text"
+                <select 
                     name="roastName"
                     id="update_roast_name"
-                    value={roastName || ""}
-                    readOnly
-                />
+                    value={roastName || ""}>
+                    {roastNameList.map((roast, index) => (
+                    <option key={index} value={roast}>
+                        {roast}
+                    </option>
+                ))}
+                </select>
 
                 <label htmlFor="update_brew_method">Brew Method:</label>
-                <input
-                    type="text"
+                <select
                     name="brewMethodName"
                     id="update_brew_method"
-                    value={brewMethodName || ""}
-                    readOnly
-                />
+                    value={brewMethodName || ""}>                    
+                    {brewMethodList.map((brewMethod, index) => (
+                    <option key={index} value={brewMethod}>
+                        {brewMethod}
+                    </option>
+                ))}
+                </select>
 
                 <input type="submit" />
             </form>
