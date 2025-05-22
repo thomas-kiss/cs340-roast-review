@@ -16,20 +16,32 @@ Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
-import DeleteCoffeeBeanForm from './DeleteCoffeeBeanForm';
-
-const TableRow = ({ rowObject, backendURL, refreshCoffeeBean, onUpdateClick }) => {
-    return (
-        <tr>
-            {Object.values(rowObject).map((value, index) => (
-                <td key={index}>{value}</td>
-            ))}
-            <td>
-                <button onClick={()=> onUpdateClick(rowObject)}>Update</button>
-            </td>
-            <DeleteCoffeeBeanForm rowObject={rowObject} backendURL={backendURL} refreshCoffeeBeans={refreshCoffeeBean} />
-        </tr>
-    );
+const TableRow = ({
+  rowObject,
+  backendURL,
+  refreshData,
+  onUpdateClick,
+  DeleteFormComponent,  // pass delete form component as a prop
+}) => {
+  return (
+    <tr>
+      {Object.values(rowObject).map((value, index) => (
+        <td key={index}>{value}</td>
+      ))}
+      <td>
+        <button onClick={() => onUpdateClick(rowObject)}>Update</button>
+      </td>
+      <td>
+        {DeleteFormComponent && (
+          <DeleteFormComponent
+            rowObject={rowObject}
+            backendURL={backendURL}
+            refreshData={refreshData}
+          />
+        )}
+      </td>
+    </tr>
+  );
 };
 
 export default TableRow;

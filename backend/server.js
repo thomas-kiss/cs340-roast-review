@@ -159,6 +159,30 @@ app.get('/coffeebeansvarietals', async (req, res) => {
     }
 });
 
+// CREATE Brew Method
+app.post('/brew-methods/create', async (req, res) => {
+    try {
+        const data = req.body;
+
+        // Optionally validate inputs here
+        if (!data.name || !data.description) {
+            return res.status(400).json({ error: 'Name and description are required' });
+        }
+
+        const query = `CALL sp_CreateBrewMethod(?, ?, @new_id);`;
+        const [[[result]]] = await db.query(query, [data.name, data.description]);
+
+        console.log(`Created new brew method ID: ${result.new_id}`);
+
+        res.status(200).json({
+            message: 'Brew method created successfully',
+            brewMethodID: result.new_id
+        });
+    } catch (error) {
+        console.error("Error creating brew method:", error);
+        res.status(500).send("An error occurred while creating the brew method.");
+    }
+});
 
 
 // ########################################

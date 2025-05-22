@@ -1,25 +1,65 @@
+import React, { useState } from 'react';
+
 const CreateBrewMethodForm = ({ backendURL, refreshBrewMethods }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        description: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(`${backendURL}/brew-methods/create`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log("Brew method created successfully.");
+                refreshBrewMethods(); // refresh the list
+                setFormData({ name: '', description: '' }); // reset form
+            } else {
+                console.error("Error creating brew method.");
+            }
+        } catch (error) {
+            console.error('Error during form submission:', error);
+        }
+    };
 
     return (
         <>
             <h2>Create a Brew Method</h2>
 
-            <form className='cuForm'>
-                <label htmlFor="create_brew_method_name">Brew Method Name: </label>
+            <form className='cuForm' onSubmit={handleSubmit}>
+                <label htmlFor="name">Brew Method Name: </label>
                 <input
                     type="text"
-                    name="create_brew_method_name"
-                    id="create_brew_method_name"
+                    name="name"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                 />
 
-                <label htmlFor="create_brew_method_description">Description: </label>
+                <label htmlFor="description">Description: </label>
                 <textarea
-                    name="create_brew_method_description"
-                    id="create_brew_method_description"
+                    name="description"
+                    id="description"
+                    value={formData.description}
+                    onChange={handleChange}
                 ></textarea>
 
-                <input type="submit" />
+                <input type="submit" value="Create" />
             </form>
         </>
     );
