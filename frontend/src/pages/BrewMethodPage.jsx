@@ -25,8 +25,10 @@ import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateBrewMethodForm from '../components/CreateBrewMethodForm';
 import UpdateBrewMethodForm from '../components/UpdateBrewMethodForm';
+import DeleteBrewMethodForm from '../components/DeleteBrewMethodForm';
 
 function BrewMethodPage({ backendURL }) {
+
   // State to store list of brew methods
   const [brewMethods, setBrewMethods] = useState([]);
   
@@ -78,6 +80,7 @@ function BrewMethodPage({ backendURL }) {
               backendURL={backendURL}
               refreshBrewMethods={getData}  // <-- unified prop name
               onUpdateClick={handleUpdateClick} // Pass handler directly
+              DeleteForm={DeleteBrewMethodForm} // Pass update handler
             />
           ))}
         </tbody>

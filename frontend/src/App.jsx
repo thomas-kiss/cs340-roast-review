@@ -6,9 +6,9 @@ import Home from './pages/Home';
 import UserPage from './pages/UserPage';
 import BrewMethodPage from './pages/BrewMethodPage';
 import CoffeeReviewPage from './pages/CoffeeReviewPage'; 
-import CoffeeBeans from './pages/CoffeeBeans';
-import Varietals from './pages/Varietals';  
-import CoffeeBeansVarietals from './pages/CoffeeBeansVarietals'
+import CoffeeBeanPage from './pages/CoffeeBeanPage';
+import VarietalPage from './pages/VarietalPage';  
+import CoffeeBeanVarietalPage from './pages/CoffeeBeanVarietalPage'
 
 
 
@@ -29,9 +29,9 @@ function App() {
                 <Route path="/users" element={<UserPage backendURL={backendURL} />} />
                 <Route path="/brew-methods" element={<BrewMethodPage backendURL={backendURL} />} />
                 <Route path="/coffee-reviews" element={<CoffeeReviewPage backendURL={backendURL} />} /> 
-                <Route path="/coffeebeans" element={<CoffeeBeans backendURL={backendURL} />} />
-                <Route path="/varietals" element={<Varietals backendURL={backendURL} />} />  
-                <Route path="/coffeebeansvarietals" element={<CoffeeBeansVarietals backendURL={backendURL} />} />
+                <Route path="/coffeebeans" element={<CoffeeBeanPage backendURL={backendURL} />} />
+                <Route path="/varietals" element={<VarietalPage backendURL={backendURL} />} />  
+                <Route path="/coffeebeansvarietals" element={<CoffeeBeanVarietalPage backendURL={backendURL} />} />
                 
             </Routes>
         </>

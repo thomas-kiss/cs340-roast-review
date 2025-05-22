@@ -1,4 +1,4 @@
-const DeleteVarietalsForm = ({ rowObject, backendURL, refeshVarietals }) => {
+const DeleteCoffeeReviewForm = ({ rowObject, backendURL, refreshCoffeeReview }) => {
 
     return (
         <td>
@@ -12,4 +12,4 @@ const DeleteVarietalsForm = ({ rowObject, backendURL, refeshVarietals }) => {
     );
 };
 
-export default DeleteVarietalsForm;
+export default DeleteCoffeeReviewForm;

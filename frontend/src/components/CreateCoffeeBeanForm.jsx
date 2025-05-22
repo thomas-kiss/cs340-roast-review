@@ -40,8 +40,7 @@ const CreateCoffeeBeanForm = ({ backendURL, refreshCoffeeBeans }) => {
                 />
 
                 <label htmlFor="create_coffeeBean_providedTastingNotes">Provided Tasting Notes: </label>
-                <input
-                    type="text"
+                <textarea
                     name="create_coffeeBean_providedTastingNotes"
                     id="create_coffeeBean_providedTastingNotes"
                     maxLength={500}
