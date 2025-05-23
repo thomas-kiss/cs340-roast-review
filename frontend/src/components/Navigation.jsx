@@ -17,7 +17,7 @@ Source URLhttps://reactnative.dev/docs/button
 
 import React from 'react';
 
-const backendURL = 'http://classwork.engr.oregonstate.edu:45583';
+const backendURL = 'http://classwork.engr.oregonstate.edu:45581';
 
 function Navigation() {
     return (

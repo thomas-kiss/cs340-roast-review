@@ -1,3 +1,25 @@
+/*
+Citation for use of AI Tools
+Date: 05/22/2025
+Scope: Code copied from AI tool to allow for the Update form drop downs
+to default to the value of the selected Row. Drop downs were already coded and populating with 
+options, but the default value was null. 
+Prompts: "my update form is populating the selectedRow, and the dropdowns are populated 
+with the database names, but the value for the Names are not being auto selected at the first value [code snippet]"
+"troubleshooting errors, defaults aren't piping in","console log shows values, still not populating"
+*/
+
+/*
+Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.
+Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
+"Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
+can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
+AI Source URL: https://chatgpt.com
+*/
+
 /*Citation for use of AI Tools
 Date: 05/14/2025
 Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm

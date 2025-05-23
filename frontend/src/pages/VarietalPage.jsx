@@ -1,3 +1,12 @@
+/* Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. 
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through"
+AI Source URL: https://chatgpt.com
+*/
+
 /*Citation for use of AI Tools
 Date: 05/14/2025
 Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. 

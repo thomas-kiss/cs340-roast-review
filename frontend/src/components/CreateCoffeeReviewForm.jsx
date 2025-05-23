@@ -1,3 +1,16 @@
+/*
+Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective 
+Create and Update forms
+Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
+"Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
+can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
+AI Source URL: https://chatgpt.com
+*/
+
+
 import { useState, useEffect } from 'react';
 
 function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameList, brewMethodList, userList }) {
