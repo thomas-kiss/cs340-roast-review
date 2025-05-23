@@ -92,6 +92,7 @@ const UpdateCoffeeBeanVarietalForm = ({ selectedCoffeeBeanVarietal, backendURL, 
     setSelectedVarietalName(e.target.value);
   };
 
+  // AI code used to modify and adapt the below input boxes and drop down boxes. 
     return (
         <>
             <h2>Update a Coffee Bean by Varietal Relationship</h2>
@@ -102,7 +103,6 @@ const UpdateCoffeeBeanVarietalForm = ({ selectedCoffeeBeanVarietal, backendURL, 
                     type="text"
                     name="update_coffeeBeanVarietal_ID"
                     id="update_coffeeBeanVarietal_ID"
-                    //value line and readOnly copied from AI code, see citation above
                     value={coffeeBeanVarietalID || ""}
                 />
 
@@ -112,7 +112,9 @@ const UpdateCoffeeBeanVarietalForm = ({ selectedCoffeeBeanVarietal, backendURL, 
                 id="update_coffeeBeanVarietal_coffeeBeanBrandName" 
                 onChange={handleBrandChange} 
                 value={selectedBrandName}
+                 
                 >
+             
                     {brandNameList.map((brand, index) => (
                     <option key={index} value={brand}>
                         {brand}
