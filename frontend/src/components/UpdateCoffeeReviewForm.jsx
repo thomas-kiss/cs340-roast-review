@@ -120,6 +120,7 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
         }
     };
 
+    // coffee bean, brew method, and user drop downs modified based on AI code
     return (
         <>
             <h2>Update a Coffee Review</h2>
