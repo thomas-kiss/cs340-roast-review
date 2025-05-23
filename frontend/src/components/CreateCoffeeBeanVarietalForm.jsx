@@ -10,6 +10,7 @@ AI Source URL: https://chatgpt.com
 */
 
 
+// drop down box code adapted from AI code
 const CreateCoffeeBeanVarietalForm = ({ backendURL, refreshCoffeeBeansVarietals, brandNameList, roastNameList, varietalNameList }) => {
     return (
         <>
