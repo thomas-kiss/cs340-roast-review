@@ -62,6 +62,7 @@ function Reviews({ backendURL }) {
     const [reviews, setReviews] = useState([]);
     const [selectedReview, setSelectedReview] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    // next three lines adapted from AI code
     const [brewMethods, setBrewMethods] = useState([]);
     const [users, setUsers] = useState([]);
     const [coffeeBeans, setCoffeeBeans] = useState([]);
@@ -79,7 +80,7 @@ function Reviews({ backendURL }) {
 
         setReviews(fetchedReviews);
     };
-
+    // getCoffeeBeansData,getUsersData, getBrewMethodsData adapted from AI code
         const getCoffeeBeansData = async function () {
         let fetchedCoffeeBeans = [];
 
@@ -134,6 +135,7 @@ function Reviews({ backendURL }) {
         setShowUpdateForm(true);
     };
 
+    //CreateCoffeeReviewForm and UpdateCoffeeReviewForm code modified and adapted from AI code
     return (
         <>
             <h1>Coffee Reviews</h1>
