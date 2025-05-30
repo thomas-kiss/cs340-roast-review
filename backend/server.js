@@ -8,7 +8,7 @@ Group Members: Thomas Kiss, Katlin Hopkins
 
 
 /*
-Citation for CREATE BrewMethod and RESET Database
+Citation for CREATE BrewMethod, UPDATE Varietal, and RESET Database
 Date: 05/21/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
@@ -206,6 +206,38 @@ app.post('/brew-methods/create', async (req, res) => {
     } catch (error) {
         console.error("Error creating brew method:", error);
         res.status(500).send("An error occurred while creating the brew method.");
+    }
+});
+
+
+// UPDATE Varietals
+app.post('/varietals/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateVarietals(?, ?);';
+        const query2 = 'SELECT name FROM Varietals WHERE varietalID = ?;';
+        await db.query(query1, [
+            data.update_varietal_id,
+            data.update_varietal_name,
+        ]);
+        const [[rows]] = await db.query(query2, [data.update_varietal_id]);
+
+        console.log(`UPDATE Varietals. ID: ${data.update_varietal_id} ` +
+            `Varietal Name: ${rows.name}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Varietal updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries: ${error.message}'
+        );
     }
 });
 
