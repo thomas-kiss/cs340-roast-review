@@ -32,109 +32,129 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 */
 
 
-import { useState, useEffect } from 'react';  // Importing useState and useEffect for component state and lifecycle
+import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateUserForm from '../components/CreateUserForm';
 import UpdateUserForm from '../components/UpdateUserForm';
 import DeleteUserForm from '../components/DeleteUserForm';
 
-
-
 function UserPage({ backendURL }) {
+  // State to store user data fetched from the backend
+  const [users, setUsers] = useState([]);
 
-    // State to store user data fetched from the backend
-    const [users, setUsers] = useState([]);
-    
-    // State to track the selected user for updating
-    const [selectedUser, setSelectedUser] = useState(null);
+  // State to track the selected user for updating
+  const [selectedUser, setSelectedUser] = useState(null);
 
-    // State to control whether the update form is shown
-    const [showUpdateForm, setShowUpdateForm] = useState(false);
-    
-    // Async function to fetch user data from backend API
-    const getData = async function () {
-        let fetchedUsers = [];
+  // State to control whether the update form is shown
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
 
-        try {
-            // Make GET request to /users endpoint
-            const response = await fetch(backendURL + '/users');
-            
-            // Parse response JSON
-            const data = await response.json();
-            
-            // Extract users array from response
-            fetchedUsers = data.users;
+  // State to track the selected user for deleting
+  const [selectedUserForDelete, setSelectedUserForDelete] = useState(null);
 
-        } catch (error) {
-            // Log any errors fetching data
-            console.log(error);
-        }
+  // State to control whether the delete form is shown
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
 
-        // Update state with fetched users
-        setUsers(fetchedUsers);
-    };
+  // Async function to fetch user data from backend API
+  const getData = async function () {
+    let fetchedUsers = [];
 
-    // Load users data on component mount
-    useEffect(() => {
-        getData();
-    }, []);
+    try {
+      // Make GET request to /users endpoint
+      const response = await fetch(backendURL + '/users');
 
-    // Handler to open the update form and pass selected user data
-    const handleOpenUpdateForm = (user) => {
-        setSelectedUser(user);
-        setShowUpdateForm(true);
+      // Parse response JSON
+      const data = await response.json();
+
+      // Extract users array from response
+      fetchedUsers = data.users;
+    } catch (error) {
+      // Log any errors fetching data
+      console.log(error);
     }
 
-    return (
-        <>
-            <h1>Users</h1>
+    // Update state with fetched users
+    setUsers(fetchedUsers);
+  };
 
-            <table>
-                <thead>
-                    <tr>
-                        {/* Dynamically create table headers based on first user object's keys */}
-                        {users.length > 0 && Object.keys(users[0]).map((header, index) => (
-                            <th key={index}>{header}</th>
-                        ))}
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
+  // Load users data on component mount
+  useEffect(() => {
+    getData();
+  }, []);
 
-                <tbody>
-                    {/* Map users array to TableRow components, passing update handler */}
-                    {users.map((user, index) => (
-                        <TableRow
-                            key={index}
-                            rowObject={user}
-                            backendURL={backendURL}
-                            refreshHandler={getData}  // Function to refresh user data after changes
-                            onUpdateClick={handleOpenUpdateForm}  // Pass update button click handler
-                            type="user"
-                            DeleteForm={DeleteUserForm}
+  // Handler to open the update form and pass selected user data
+  const handleOpenUpdateForm = (user) => {
+    setSelectedUser(user);
+    setShowUpdateForm(true);
+  };
 
-                        />
-                    ))}
-                </tbody>
-            </table>
+  // Handler to open the delete form and pass selected user data
+  const handleOpenDeleteForm = (user) => {
+    setSelectedUserForDelete(user);
+    setShowDeleteForm(true);
+  };
 
-            {/* Form to create a new user */}
-            <CreateUserForm backendURL={backendURL} refreshUsers={getData} />
+  return (
+    <>
+      <h1>Users</h1>
 
-            {/* Conditionally render UpdateUserForm when triggered */}
-            {showUpdateForm && selectedUser && (
-                <div className="update-form">
-                    <UpdateUserForm
-                        selectedUser={selectedUser}
-                        backendURL={backendURL}
-                        refreshUsers={getData}
-                        // Optional close handler to hide the update form
-                        onClose={() => setShowUpdateForm(false)}
-                    />
-                </div>
-            )}
-        </>
-    );
+      <table>
+        <thead>
+          <tr>
+            {/* Dynamically create table headers based on first user object's keys */}
+            {users.length > 0 &&
+              Object.keys(users[0]).map((header, index) => (
+                <th key={index}>{header}</th>
+              ))}
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {/* Map users array to TableRow components, passing update and delete handlers */}
+          {users.map((user, index) => (
+            <TableRow
+              key={index}
+              rowObject={user}
+              backendURL={backendURL}
+              refreshHandler={getData}
+              onUpdateClick={handleOpenUpdateForm}
+              onDeleteClick={handleOpenDeleteForm}
+              type="user"
+              DeleteForm={DeleteUserForm}
+            />
+          ))}
+        </tbody>
+      </table>
+
+      {/* Form to create a new user */}
+      <CreateUserForm backendURL={backendURL} refreshUsers={getData} />
+
+      {/* Conditionally render UpdateUserForm when triggered */}
+      {showUpdateForm && selectedUser && (
+        <div className="update-form">
+          <UpdateUserForm
+            selectedUser={selectedUser}
+            backendURL={backendURL}
+            refreshUsers={getData}
+            onClose={() => setShowUpdateForm(false)}
+          />
+        </div>
+      )}
+
+      {/* Conditionally render DeleteUserForm when triggered */}
+      {showDeleteForm && selectedUserForDelete && (
+        <div className="delete-form">
+          <DeleteUserForm
+            selectedUser={selectedUserForDelete}
+            backendURL={backendURL}
+            refreshUsers={getData}
+            onClose={() => setShowDeleteForm(false)}
+          />
+        </div>
+      )}
+    </>
+  );
 }
 
 export default UserPage;

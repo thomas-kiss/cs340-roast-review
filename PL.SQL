@@ -60,4 +60,32 @@ END //
 DELIMITER ;
 
 
+-- DELETE Users Procedure
+
+DROP PROCEDURE IF EXISTS sp_DeleteUser;
+
+DELIMITER //
+CREATE PROCEDURE sp_DeleteUser(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM Users WHERE userID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Users for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+DELIMITER ;
+
+
 DELIMITER ;

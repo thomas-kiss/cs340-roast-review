@@ -31,7 +31,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45581;
+const PORT = 45583;
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -238,6 +238,25 @@ app.post('/varietals/update', async function (req, res) {
         res.status(500).send(
             'An error occurred while executing the database queries: ${error.message}'
         );
+    }
+});
+
+
+// DELETE Users 
+app.post('/users/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteUser(?);`;
+        await db.query(query, [data.delete_user_id]);
+
+        console.log(`DELETE Users. ID: ${data.delete_user_id} ` +
+            `Username: ${data.delete_user_name}`);
+
+        res.status(200).json({ message: 'User deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete user:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the user.' });
     }
 });
 

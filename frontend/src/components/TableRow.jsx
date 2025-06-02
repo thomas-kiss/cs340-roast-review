@@ -34,7 +34,7 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 */
 
 
-const TableRow = ({ rowObject, backendURL, onUpdateClick, DeleteForm }) => {
+const TableRow = ({ rowObject, backendURL, onUpdateClick, onDeleteClick }) => {
     return (
         <tr>
             {Object.values(rowObject).map((value, index) => (
@@ -43,7 +43,9 @@ const TableRow = ({ rowObject, backendURL, onUpdateClick, DeleteForm }) => {
             <td>
                 <button onClick={()=> onUpdateClick(rowObject)}>Update</button>
             </td>
-                <DeleteForm rowObject={rowObject} backendURL={backendURL} />
+            <td>
+                <button onClick={() => onDeleteClick(rowObject)}>Delete</button>
+            </td>
         </tr>
     );
 
