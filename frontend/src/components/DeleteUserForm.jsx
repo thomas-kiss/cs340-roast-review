@@ -1,45 +1,47 @@
+/* Citation for use of AI Tools
+Date: 05/30/2025
+Prompts used to rewrite the DeleteUserForm to match clean style with minimal UI for deletion only
+AI Source URL: https://chatgpt.com
+*/
+
+/*Citation for use of CS340 Starter Code 
+Date: 05/07/2025
+Adapted from CS340 Starter App Code
+Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+*/
+
 import React from 'react';
 
 const DeleteUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => {
-    const fullname = `${selectedUser["First Name"] || ''} ${selectedUser["Last Name"] || ''}`.trim();
+  const userId = selectedUser ? selectedUser["User ID"] || '' : '';
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleDelete = async (e) => {
+    e.preventDefault();
 
-        const formData = {
-            delete_user_id: selectedUser["User ID"],
-            delete_user_name: fullname,
-        };
+    try {
+      const response = await fetch(backendURL + '/users/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ delete_user_id: userId }),
+      });
 
-        try {
-            const response = await fetch(backendURL + '/users/delete', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
+      if (response.ok) {
+        refreshUsers();
+        onClose();
+      } else {
+        console.error("Error deleting user.");
+      }
+    } catch (error) {
+      console.error('Error during deletion:', error);
+    }
+  };
 
-            if (response.ok) {
-                console.log("User deleted successfully.");
-            } else {
-                console.warn("Server returned non-200. Refreshing anyway.");
-            }
-
-            refreshUsers();
-            onClose();  // Close the form after submit
-        } catch (error) {
-            console.error('Error during delete request:', error);
-        }
-    };
-
-    return (
-        <div className="delete-user-form" style={{ border: '1px solid red', padding: '1rem', marginTop: '1rem' }}>
-            <p>Are you sure you want to delete <strong>{fullname}</strong>?</p>
-            <form onSubmit={handleSubmit}>
-                <button type="submit">Confirm Delete</button>
-                <button type="button" onClick={onClose}>Cancel</button>
-            </form>
-        </div>
-    );
+  return (
+    <form onSubmit={handleDelete}>
+      <input type="submit" value="Delete" />
+    </form>
+  );
 };
 
 export default DeleteUserForm;
+

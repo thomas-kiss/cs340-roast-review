@@ -39,119 +39,96 @@ import UpdateUserForm from '../components/UpdateUserForm';
 import DeleteUserForm from '../components/DeleteUserForm';
 
 function UserPage({ backendURL }) {
-  // State to store user data fetched from the backend
   const [users, setUsers] = useState([]);
-
-  // State to track the selected user for updating
   const [selectedUser, setSelectedUser] = useState(null);
-
-  // State to control whether the update form is shown
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-
-  // State to track the selected user for deleting
   const [selectedUserForDelete, setSelectedUserForDelete] = useState(null);
-
-  // State to control whether the delete form is shown
   const [showDeleteForm, setShowDeleteForm] = useState(false);
 
-  // Async function to fetch user data from backend API
-  const getData = async function () {
-    let fetchedUsers = [];
-
+  // Fetch all users
+  const getData = async () => {
     try {
-      // Make GET request to /users endpoint
       const response = await fetch(backendURL + '/users');
-
-      // Parse response JSON
       const data = await response.json();
-
-      // Extract users array from response
-      fetchedUsers = data.users;
+      setUsers(data.users);
     } catch (error) {
-      // Log any errors fetching data
-      console.log(error);
+      console.error('Error fetching users:', error);
     }
-
-    // Update state with fetched users
-    setUsers(fetchedUsers);
   };
 
-  // Load users data on component mount
   useEffect(() => {
     getData();
   }, []);
 
-  // Handler to open the update form and pass selected user data
+  // Open update form with selected user
   const handleOpenUpdateForm = (user) => {
     setSelectedUser(user);
     setShowUpdateForm(true);
   };
 
-  // Handler to open the delete form and pass selected user data
+  // Close update form
+  const handleCloseUpdateForm = () => {
+    setShowUpdateForm(false);
+    setSelectedUser(null);
+  };
+
+  // Open delete form with selected user
   const handleOpenDeleteForm = (user) => {
     setSelectedUserForDelete(user);
     setShowDeleteForm(true);
   };
 
+  // Close delete form
+  const handleCloseDeleteForm = () => {
+    setShowDeleteForm(false);
+    setSelectedUserForDelete(null);
+  };
+
   return (
     <>
       <h1>Users</h1>
-
       <table>
         <thead>
           <tr>
-            {/* Dynamically create table headers based on first user object's keys */}
             {users.length > 0 &&
-              Object.keys(users[0]).map((header, index) => (
-                <th key={index}>{header}</th>
-              ))}
+              Object.keys(users[0]).map((header, index) => <th key={index}>{header}</th>)}
             <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
-
         <tbody>
-          {/* Map users array to TableRow components, passing update and delete handlers */}
           {users.map((user, index) => (
             <TableRow
               key={index}
               rowObject={user}
-              backendURL={backendURL}
-              refreshHandler={getData}
               onUpdateClick={handleOpenUpdateForm}
               onDeleteClick={handleOpenDeleteForm}
-              type="user"
-              DeleteForm={DeleteUserForm}
             />
           ))}
         </tbody>
       </table>
 
-      {/* Form to create a new user */}
+      {/* Create User Form is always visible */}
       <CreateUserForm backendURL={backendURL} refreshUsers={getData} />
 
-      {/* Conditionally render UpdateUserForm when triggered */}
+      {/* Conditionally render UpdateUserForm */}
       {showUpdateForm && selectedUser && (
-        <div className="update-form">
-          <UpdateUserForm
-            selectedUser={selectedUser}
-            backendURL={backendURL}
-            refreshUsers={getData}
-            onClose={() => setShowUpdateForm(false)}
-          />
-        </div>
+        <UpdateUserForm
+          selectedUser={selectedUser}
+          backendURL={backendURL}
+          refreshUsers={getData}
+          onClose={handleCloseUpdateForm}
+        />
       )}
 
-      {/* Conditionally render DeleteUserForm when triggered */}
+      {/* Conditionally render DeleteUserForm with corrected prop name */}
       {showDeleteForm && selectedUserForDelete && (
-        <div className="delete-form">
-          <DeleteUserForm
-            selectedUser={selectedUserForDelete}
-            backendURL={backendURL}
-            refreshUsers={getData}
-            onClose={() => setShowDeleteForm(false)}
-          />
-        </div>
+        <DeleteUserForm
+          selectedUser={selectedUserForDelete}  
+          backendURL={backendURL}
+          refreshUsers={getData}
+          onClose={handleCloseDeleteForm}     
+        />
       )}
     </>
   );
