@@ -31,19 +31,16 @@ Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
-
 import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateUserForm from '../components/CreateUserForm';
 import UpdateUserForm from '../components/UpdateUserForm';
-import DeleteUserForm from '../components/DeleteUserForm';
+// DeleteUserForm import removed since no longer used
 
 function UserPage({ backendURL }) {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-  const [selectedUserForDelete, setSelectedUserForDelete] = useState(null);
-  const [showDeleteForm, setShowDeleteForm] = useState(false);
 
   // Fetch all users
   const getData = async () => {
@@ -72,16 +69,23 @@ function UserPage({ backendURL }) {
     setSelectedUser(null);
   };
 
-  // Open delete form with selected user
-  const handleOpenDeleteForm = (user) => {
-    setSelectedUserForDelete(user);
-    setShowDeleteForm(true);
-  };
+  // Directly delete user on button click (no confirmation)
+  const handleDeleteUser = async (user) => {
+    try {
+      const response = await fetch(backendURL + '/users/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ delete_user_id: user["User ID"] }),
+      });
 
-  // Close delete form
-  const handleCloseDeleteForm = () => {
-    setShowDeleteForm(false);
-    setSelectedUserForDelete(null);
+      if (response.ok) {
+        getData();  // Refresh users after successful deletion
+      } else {
+        console.error('Failed to delete user');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   };
 
   return (
@@ -102,7 +106,7 @@ function UserPage({ backendURL }) {
               key={index}
               rowObject={user}
               onUpdateClick={handleOpenUpdateForm}
-              onDeleteClick={handleOpenDeleteForm}
+              onDeleteClick={handleDeleteUser} 
             />
           ))}
         </tbody>
@@ -118,16 +122,6 @@ function UserPage({ backendURL }) {
           backendURL={backendURL}
           refreshUsers={getData}
           onClose={handleCloseUpdateForm}
-        />
-      )}
-
-      {/* Conditionally render DeleteUserForm with corrected prop name */}
-      {showDeleteForm && selectedUserForDelete && (
-        <DeleteUserForm
-          selectedUser={selectedUserForDelete}  
-          backendURL={backendURL}
-          refreshUsers={getData}
-          onClose={handleCloseDeleteForm}     
         />
       )}
     </>
