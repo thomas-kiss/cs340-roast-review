@@ -60,6 +60,7 @@ CREATE TABLE BrewMethods (
 
 
 DROP TABLE IF EXISTS CoffeeBeans; 
+
 CREATE TABLE CoffeeBeans (
     coffeeBeanID int auto_increment not Null,
     brandName varchar(45) not Null,
@@ -73,6 +74,7 @@ CREATE TABLE CoffeeBeans (
 ); 
 
 DROP TABLE IF EXISTS Varietals; 
+
 CREATE TABLE Varietals (
     varietalID int auto_increment not Null, 
     name varchar(45) not Null, 
@@ -82,6 +84,7 @@ CREATE TABLE Varietals (
 );
 
 DROP TABLE IF EXISTS CoffeeBeansVarietals; 
+
 CREATE TABLE CoffeeBeansVarietals (
     coffeeBeanVarietalID int auto_increment not Null, 
     coffeeBeanID int,
@@ -95,6 +98,7 @@ CREATE TABLE CoffeeBeansVarietals (
 ); 
 
 DROP TABLE IF EXISTS CoffeeReviews; 
+
 CREATE TABLE CoffeeReviews (
     coffeeReviewID int auto_increment not Null, 
     reviewDate timestamp not Null, 
@@ -104,16 +108,17 @@ CREATE TABLE CoffeeReviews (
     body decimal(4,2) not Null, 
     acidity decimal(4,2) not Null, 
     reviewNotes text not Null, 
-    coffeeBeanID int not Null, 
-    brewMethodID int not Null, 
-    userID int not Null, 
+    coffeeBeanID int Null, 
+    brewMethodID int Null, 
+    userID int Null, 
     PRIMARY KEY (coffeeReviewID), 
-    FOREIGN KEY (coffeeBeanID) REFERENCES CoffeeBeans (coffeeBeanID) ON DELETE CASCADE, 
-    FOREIGN KEY (brewMethodID) REFERENCES BrewMethods (brewMethodID) ON DELETE CASCADE, 
-    FOREIGN KEY (userID) REFERENCES Users (userID) ON DELETE CASCADE, 
+    FOREIGN KEY (coffeeBeanID) REFERENCES CoffeeBeans (coffeeBeanID) ON DELETE SET NULL, 
+    FOREIGN KEY (brewMethodID) REFERENCES BrewMethods (brewMethodID) ON DELETE SET NULL, 
+    FOREIGN KEY (userID) REFERENCES Users (userID) ON DELETE SET NULL, 
     UNIQUE KEY coffeeReviewID_UNIQUE (coffeeReviewID)
 ); 
 
+DELIMITER ;
 
 INSERT INTO Users(
     userName,
@@ -319,4 +324,4 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 END //
 
-DELIMITER ; 
+DELIMITER ;
