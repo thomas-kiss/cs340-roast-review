@@ -30,21 +30,18 @@ Date: 05/07/2025
 Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
-import { useState, useEffect } from 'react';  
+
+import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateBrewMethodForm from '../components/CreateBrewMethodForm';
 import UpdateBrewMethodForm from '../components/UpdateBrewMethodForm';
-import DeleteBrewMethodForm from '../components/DeleteBrewMethodForm';
 
 function BrewMethodPage({ backendURL }) {
-
-  // State to store list of brew methods
   const [brewMethods, setBrewMethods] = useState([]);
-  
-  // State to track currently selected brew method for update form
   const [selectedBrewMethod, setSelectedBrewMethod] = useState(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
 
-  // Fetch brew methods from backend API
+  // Fetch all brew methods
   const getData = async () => {
     try {
       const response = await fetch(`${backendURL}/brew-methods`);
@@ -56,52 +53,75 @@ function BrewMethodPage({ backendURL }) {
     }
   };
 
-  // Handler when Update button is clicked for a brew method
-  const handleUpdateClick = (brewMethod) => {
-    setSelectedBrewMethod(brewMethod);
-  };
-
-  // Fetch data on component mount
   useEffect(() => {
     getData();
   }, []);
 
+  // Open update form with selected brew method
+  const handleOpenUpdateForm = (brewMethod) => {
+    setSelectedBrewMethod(brewMethod);
+    setShowUpdateForm(true);
+  };
+
+  // Close update form
+  const handleCloseUpdateForm = () => {
+    setShowUpdateForm(false);
+    setSelectedBrewMethod(null);
+  };
+
+  // Directly delete brew method on button click (no confirmation)
+  const handleDeleteBrewMethod = async (brewMethod) => {
+    try {
+      const response = await fetch(`${backendURL}/brew-methods/delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ delete_brew_method_id: brewMethod["Brew Method ID"] }),
+      });
+
+      if (response.ok) {
+        getData();  // Refresh brew methods after successful deletion
+      } else {
+        console.error('Failed to delete brew method');
+      }
+    } catch (error) {
+      console.error('Error deleting brew method:', error);
+    }
+  };
+
   return (
     <>
       <h1>Brew Methods</h1>
-
       <table>
         <thead>
           <tr>
-            {brewMethods.length > 0 && Object.keys(brewMethods[0]).map((header, index) => (
-              <th key={index}>{header}</th>
-            ))}
+            {brewMethods.length > 0 &&
+              Object.keys(brewMethods[0]).map((header, index) => <th key={index}>{header}</th>)}
             <th>Update</th>
             <th>Delete</th>
           </tr>
         </thead>
-
         <tbody>
           {brewMethods.map((brewMethod, index) => (
             <TableRow
               key={index}
               rowObject={brewMethod}
-              backendURL={backendURL}
-              refreshBrewMethods={getData}  // <-- unified prop name
-              onUpdateClick={handleUpdateClick} // Pass handler directly
-              DeleteForm={DeleteBrewMethodForm} // Pass update handler
+              onUpdateClick={handleOpenUpdateForm}
+              onDeleteClick={handleDeleteBrewMethod}
             />
           ))}
         </tbody>
       </table>
 
+      {/* Create Brew Method Form is always visible */}
       <CreateBrewMethodForm backendURL={backendURL} refreshBrewMethods={getData} />
 
-      {selectedBrewMethod && (
+      {/* Conditionally render UpdateBrewMethodForm */}
+      {showUpdateForm && selectedBrewMethod && (
         <UpdateBrewMethodForm
           selectedBrewMethod={selectedBrewMethod}
           backendURL={backendURL}
           refreshBrewMethods={getData}
+          onClose={handleCloseUpdateForm}
         />
       )}
     </>

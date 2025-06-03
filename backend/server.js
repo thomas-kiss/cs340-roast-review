@@ -6,6 +6,13 @@ Project Title: Roast Review
 Group Members: Thomas Kiss, Katlin Hopkins
 */
 
+/*
+Citation for DELETE User and DELETE BrewMethod
+Date: 06/02/2025
+Adapted from provided canvas code:
+Implementing CUD operations in your app
+Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+*/
 
 /*
 Citation for CREATE BrewMethod, UPDATE Varietal, and RESET Database
@@ -257,6 +264,24 @@ app.post('/users/delete', async function (req, res) {
     } catch (error) {
         console.error('Error executing delete user:', error);
         res.status(500).json({ error: 'An error occurred while deleting the user.' });
+    }
+});
+
+
+// DELETE BrewMethods 
+app.post('/brew-methods/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteBrewMethod(?);`;
+        await db.query(query, [data.delete_brew_method_id]);
+
+        console.log(`DELETE BrewMethod. ID: ${data.delete_brew_method_id}`);
+
+        res.status(200).json({ message: 'Brew method deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete brew method:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the brew method.' });
     }
 });
 
