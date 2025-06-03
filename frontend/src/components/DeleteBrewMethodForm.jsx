@@ -1,3 +1,18 @@
+/*
+Citation for us of CS340 Starter Code 
+Date: 06/02/2025
+Adapted from provided canvas code:
+Implementing CUD operations in your app
+Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+*/
+
+/*Citation for use of CS340 Starter Code 
+Date: 05/07/2025
+Adapted from CS340 Starter App Code
+Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+*/
+
+
 const DeleteBrewMethodForm = ({ rowObject, backendURL, refreshBrewMethods }) => {
 
     const handleDelete = async (e) => {
