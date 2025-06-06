@@ -108,13 +108,13 @@ CREATE TABLE CoffeeReviews (
     body decimal(4,2) not Null, 
     acidity decimal(4,2) not Null, 
     reviewNotes text not Null, 
-    coffeeBeanID int Null, 
-    brewMethodID int Null, 
-    userID int Null, 
+    coffeeBeanID int not Null, 
+    brewMethodID int not Null, 
+    userID int not Null, 
     PRIMARY KEY (coffeeReviewID), 
-    FOREIGN KEY (coffeeBeanID) REFERENCES CoffeeBeans (coffeeBeanID) ON DELETE SET NULL, 
-    FOREIGN KEY (brewMethodID) REFERENCES BrewMethods (brewMethodID) ON DELETE SET NULL, 
-    FOREIGN KEY (userID) REFERENCES Users (userID) ON DELETE SET NULL, 
+    FOREIGN KEY (coffeeBeanID) REFERENCES CoffeeBeans (coffeeBeanID) ON DELETE CASCADE, 
+    FOREIGN KEY (brewMethodID) REFERENCES BrewMethods (brewMethodID) ON DELETE CASCADE, 
+    FOREIGN KEY (userID) REFERENCES Users (userID) ON DELETE CASCADE, 
     UNIQUE KEY coffeeReviewID_UNIQUE (coffeeReviewID)
 ); 
 

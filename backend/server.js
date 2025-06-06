@@ -38,7 +38,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45583;
+const PORT = 45581;
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -216,6 +216,81 @@ app.post('/brew-methods/create', async (req, res) => {
     }
 });
 
+// CREATE Varietals
+
+app.post('/varietals/create', async (req, res) => {
+    try {
+        const data = req.body;
+
+        if (!data.name) {
+            return res.status(400).json({ error: 'Name is required' });
+        }
+
+        const query = `CALL sp_CreateVarietal(?, @new_id);`;
+        const [[[result]]] = await db.query(query, [data.name]);
+
+        console.log(`Created new varietal ID: ${result.new_id}`);
+
+        res.status(200).json({
+            message: 'Varietal created successfully',
+            varietalID: result.new_id
+        });
+    } catch (error) {
+        console.error("Error creating varietal:", error);
+        res.status(500).send("An error occurred while creating the varietal.");
+    }
+});
+
+// CREATE CoffeeBeans
+
+app.post('/coffeebeans/create', async (req, res) => {
+    try {
+        const data = req.body;
+
+        if (!data.brandName || !data.roastName || !data.singleOriginCountry || !data.roastLevel || !data.providedTastingNotes) {
+            return res.status(400).json({ error: 'Brand Name and Roast Name are required' });
+        }
+
+        const query = `CALL sp_CreateCoffeeBean(?, ?, ?, ?, ?, @new_id);`;
+        const [[[result]]] = await db.query(query, [data.brandName, data.roastName, data.singleOriginCountry, data.roastLevel, data.providedTastingNotes]);
+
+        console.log(`Created new coffee bean ID: ${result.new_id}`);
+
+        res.status(200).json({
+            message: 'Coffee bean created successfully',
+            coffeeBeanID: result.new_id
+        });
+    } catch (error) {
+        console.error("Error creating coffee bean:", error);
+        res.status(500).send("An error occurred while creating the coffee bean.");
+    }
+});
+
+// CREATE CoffeeBeansVarietals
+
+app.post('/coffeebeansvarietals/create', async (req, res) => {
+    try {
+        const data = req.body;
+
+        if (!data.coffeeBeanID || !data.varietalID) {
+            return res.status(400).json({ error: 'A Coffee Bean and a Varietal are required' });
+        }
+
+        const query = `CALL sp_CreateCoffeeBeansVarietals(?, ?, @new_id);`;
+        const [[[result]]] = await db.query(query, [data.coffeeBeanID, data.varietalID]);
+
+        console.log(`Created new coffee bean varietal ID: ${result.new_id}`);
+
+        res.status(200).json({
+            message: 'Coffee Bean by Varietal created successfully',
+            coffeeBeanVarietalID: result.new_id
+        });
+    } catch (error) {
+        console.error("Error creating Coffee Bean Varietal:", error);
+        res.status(500).send("An error occurred while creating the coffee bean varietal.");
+    }
+});
+
 
 // UPDATE Varietals
 app.post('/varietals/update', async function (req, res) {
@@ -225,7 +300,7 @@ app.post('/varietals/update', async function (req, res) {
 
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
-        const query1 = 'CALL sp_UpdateVarietals(?, ?);';
+        const query1 = 'CALL sp_UpdateVarietal(?, ?);';
         const query2 = 'SELECT name FROM Varietals WHERE varietalID = ?;';
         await db.query(query1, [
             data.update_varietal_id,
@@ -239,6 +314,72 @@ app.post('/varietals/update', async function (req, res) {
 
         // Send success status to frontend
         res.status(200).json({ message: 'Varietal updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries: ${error.message}'
+        );
+    }
+});
+
+// UPDATE CoffeeBeans
+app.post('/coffeebeans/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateCoffeeBean(?, ?, ?, ?, ?, ?);';
+        const query2 = 'SELECT brandName, roastName, singleOriginCountry, roastLevel, providedTastingNotes FROM CoffeeBeans WHERE coffeeBeanID = ?;';
+        await db.query(query1, [
+            data.update_coffeeBeanID,
+            data.update_brandName,
+            data.update_roastName,
+            data.update_singleOriginCountry,
+            data.update_roastLevel,
+            data.update_providedTastingNotes,
+        ]);
+        const [[rows]] = await db.query(query2, [data.update_coffeeBeanID]);
+
+        console.log(`UPDATE CoffeeBeans. ID: ${data.update_coffeeBeanID} ` +
+            `CoffeeBean Brand Name: ${rows.brandName}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Coffee Bean updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries: ${error.message}'
+        );
+    }
+});
+
+// UPDATE Coffee Beans by Varietals
+app.post('/coffeebeansvarietals/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateCoffeeBeanVarietal(?, ?, ?);';
+        const query2 = 'SELECT coffeeBeanID, varietalID FROM CoffeeBeansVarietals WHERE coffeeBeanVarietalID = ?;';
+        await db.query(query1, [
+            data.update_coffeebeanvarietal_id,
+            data.update_coffeebean_id,
+            data.update_varietal_id,
+        ]);
+        const [[rows]] = await db.query(query2, [data.update_coffeebeanvarietal_id]);
+
+        console.log(`UPDATE Varietals. ID: ${data.update_coffeebeanvarietal_id} `
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Coffee Bean by Varietal updated successfully' });
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -284,6 +425,33 @@ app.post('/brew-methods/delete', async function (req, res) {
         res.status(500).json({ error: 'An error occurred while deleting the brew method.' });
     }
 });
+
+
+
+
+// DELETE CoffeeBeans 
+app.post('/coffeebeans/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteCoffeeBean(?);`;
+        await db.query(query, [data.delete_coffeeBeanID]);
+
+        console.log(`DELETE Coffee Beans. ID: ${data.delete_coffeeBeanID} `)
+
+        res.status(200).json({ message: 'Coffee Bean deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete coffee bean:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the coffee bean.' });
+    }
+});
+
+
+
+
+
+
+
 
 // RESET Database
 

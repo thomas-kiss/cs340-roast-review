@@ -51,7 +51,24 @@ BEGIN
 END //
 
 
--- UPDATE varietals Procedure
+-- CREATE Varietals Procedure
+CREATE PROCEDURE sp_CreateVarietals(
+    IN p_name VARCHAR(100), 
+    OUT p_varietalID INT
+)
+BEGIN
+    INSERT INTO Varietals (name)
+    VALUES (p_name);
+
+    -- Get the ID of the newly inserted brew method
+    SELECT LAST_INSERT_ID() INTO p_varietalID;
+
+    -- Also return the ID directly
+    SELECT LAST_INSERT_ID() AS 'new_varietal_id';
+END //
+
+
+-- UPDATE Varietals Procedure
 CREATE PROCEDURE sp_UpdateVarietals(IN p_id int, p_name varchar(45))
 
 BEGIN
@@ -59,8 +76,97 @@ BEGIN
 END //
 
 
+
+-- DELETE Varietals Procedure
+CREATE PROCEDURE sp_DeleteVarietal(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM Varietals WHERE varietalID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Varietals for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+
+
+-- CREATE CoffeeBeans Procedure
+CREATE PROCEDURE sp_CreateCoffeeBeans(
+    IN p_brandName VARCHAR(100), 
+    IN p_roastName VARCHAR(100),
+    IN p_origin VARCHAR(100),
+    IN p_roastLevel varchar(100),
+    IN p_providedTastingNotes TEXT
+    OUT p_coffeeBeanID INT
+)
+BEGIN
+    INSERT INTO CoffeeBeans (brandName, roastName, singleOriginCountry, roastLevel, providedTastingNotes)
+    VALUES (p_brandName, p_roastName, p_origin, p_roastLevel, p_providedTastingNotes);
+
+    -- Get the ID of the newly inserted brew method
+    SELECT LAST_INSERT_ID() INTO p_coffeeBeanID;
+
+    -- Also return the ID directly
+    SELECT LAST_INSERT_ID() AS 'new_coffee_bean_id';
+END //
+
+
+-- UPDATE CoffeeBeans Procedure
+CREATE PROCEDURE sp_UpdateCoffeeBeans(IN p_id int,    
+    IN p_brandName VARCHAR(100), 
+    IN p_roastName VARCHAR(100),
+    IN p_origin VARCHAR(100),
+    IN p_roastLevel varchar(100),
+    IN p_providedTastingNotes TEXT)
+
+BEGIN
+    UPDATE CoffeeBeans 
+    SET 
+        brandName = p_brandName,
+        roastName = p_roastName,
+        singleOriginCountry = p_origin, 
+        roastLevel = p_roastLevel, 
+        providedTastingNotes = p_providedTastingNotes
+    WHERE varietalID= p_id; 
+END //
+
+
+
+-- DELETE CoffeeBeans Procedure
+CREATE PROCEDURE sp_DeleteCoffeeBeans(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM CoffeeBeans WHERE coffeeBeanID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Coffee Beans for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+
+
+
 -- DELETE Users Procedure
-DELIMITER //
 CREATE PROCEDURE sp_DeleteUser(IN p_id INT)
 BEGIN
     DECLARE error_message VARCHAR(255);
@@ -84,7 +190,6 @@ END //
 
 
 -- DELETE BrewMethod Procedure
-DELIMITER //
 CREATE PROCEDURE sp_DeleteBrewMethod(IN p_id INT)
 BEGIN
     DECLARE error_message VARCHAR(255);
