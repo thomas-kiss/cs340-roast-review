@@ -1,27 +1,22 @@
-/* 
-Course: OSU CS340 Intro to Databases
-Group: Group 2
-Team Name: Team 2
-Project Title: Roast Review
-Group Members: Thomas Kiss, Katlin Hopkins
-*/
-
 /*
-Citation for DELETE User, CREATE User, CREATE CoffeeReview, and DELETE BrewMethod
-Date: 06/06/2025
+Citation for all DELETE, UPDATE, and CREATE routes, and RESET Database
+Last Update Date: 06/07/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
 Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 */
 
-/*
-Citation for CREATE BrewMethod, UPDATE Varietal, and RESET Database
-Date: 05/21/2025
-Adapted from provided canvas code:
-Implementing CUD operations in your app
-Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+/*Citation for use of AI Tools
+Date: 06/07/25
+Adapted from AI Code 
+Scope: CREATE coffeebeansvarietals, READ CoffeeBeansVarietals - BrandName, READ CoffeeBeansVarietals - RoastName
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries", ""
+Source URL: https://chatgpt.com
 */
-
 // ########################################
 // ########## SETUP
 
@@ -194,6 +189,7 @@ app.get('/coffeebeansvarietals', async (req, res) => {
 });
 
 // GET CoffeeBeansVarietals Brands
+// Adapted from AI Code
 
 app.get('/coffeebeansvarietals/brandnames', async (req, res) => {
     try {
@@ -221,6 +217,7 @@ app.get('/coffeebeansvarietals/brandnames', async (req, res) => {
 });
 
 // GET CoffeeBeansVarietals Roast Names
+// Adapted from AI Code
 
 app.get('/coffeebeansvarietals/roastnames', async (req, res) => {
     try {
@@ -329,7 +326,7 @@ app.post('/coffeebeans/create', async (req, res) => {
 
 
 // CREATE CoffeeBeansVarietals
-
+// Adapted from CS340 Start code and from AI code
 app.post('/coffeebeansvarietals/create', async (req, res) => {
     try {
         

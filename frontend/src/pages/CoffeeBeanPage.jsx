@@ -22,10 +22,12 @@ AI Source URL: https://chatgpt.com
 /*
 Citation for use of AI Tools
 Date: 6/6/2025
-Scope: Modified existing code to accommodate Delete CUD operation
+Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code. 
 Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
 the dyanmic delete form but it's currently erroring out. provide debugging suggestions."
 AI Source URL: https://chatgpt.com
+*/
+
 /*
 Citation for use of CS340 Starter Code 
 Date: 05/07/2036
