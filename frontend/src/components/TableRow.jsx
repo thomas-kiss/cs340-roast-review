@@ -45,8 +45,6 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 */
 
 const TableRow = ({ rowObject, onUpdateClick, DeleteFormComponent, backendURL, refreshData }) => {
-    console.log('onUpdateClick type:', typeof onUpdateClick);
-  console.log('onDeleteClick type:', typeof onDeleteClick);
   return (
     <tr>
       {Object.values(rowObject).map((value, index) => (

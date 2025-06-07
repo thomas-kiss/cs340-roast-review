@@ -19,6 +19,7 @@ const DeleteCoffeeBeanForm = ({ rowObject, backendURL, refreshData }) => {
         };
 
         try {
+            console.log('Deleting rowObject:', rowObject);
             const response = await fetch(`${backendURL}/coffeebeans/delete`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

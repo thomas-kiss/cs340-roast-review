@@ -129,14 +129,15 @@ app.get('/coffeebeans', async (req, res) => {
     try {
         const query = `
             SELECT 
-            coffeebeanID as "Coffee Bean ID",
+            coffeeBeanID as "Coffee Bean ID",
             brandName as "Brand Name", 
             roastName as "Roast Name", 
             singleOriginCountry as "Origin", 
             roastLevel as "Roast Level", 
             providedTastingNotes as 
             "Provided Tasting Notes"
-            FROM CoffeeBeans;
+            FROM CoffeeBeans
+            ORDER BY coffeeBeanID ASC;
         `;
         const [coffeeBeans] = await db.query(query);
         res.status(200).json({ coffeeBeans });
@@ -155,7 +156,8 @@ app.get('/varietals', async (req, res) => {
             SELECT 
             varietalID as "Varietal ID", 
             name as "Name"
-            FROM Varietals;
+            FROM Varietals
+            ORDER BY varietalID ASC;
         `;
         const [varietals] = await db.query(query);
         res.status(200).json({ varietals });
@@ -181,6 +183,7 @@ app.get('/coffeebeansvarietals', async (req, res) => {
             FROM CoffeeBeans
             JOIN CoffeeBeansVarietals on CoffeeBeans.coffeeBeanID = CoffeeBeansVarietals.coffeeBeanID
             JOIN Varietals on Varietals.varietalID = CoffeeBeansVarietals.varietalID 
+            ORDER BY CoffeeBeansVarietals.coffeebeanvarietalID ASC;
         `;
         const [coffeebeansvarietals] = await db.query(query);
         res.status(200).json({ coffeebeansvarietals });
@@ -189,6 +192,62 @@ app.get('/coffeebeansvarietals', async (req, res) => {
         res.status(500).send("An error occurred while fetching coffee beans by varietals.");
     }
 });
+
+// GET CoffeeBeansVarietals Brands
+
+app.get('/coffeebeansvarietals/brandnames', async (req, res) => {
+    try {
+        const roastName = req.query.roastName;
+        const params = [];
+        let query = `
+            SELECT DISTINCT 
+            brandName as "Brand Name"
+            FROM CoffeeBeans
+        `;
+       
+        
+        if (roastName) {
+        query += ` WHERE roastName = ?`;
+        params.push(roastName);
+        }
+
+    query += ` ORDER BY brandName ASC`;
+        const [brands] = await db.query(query, params);
+        res.status(200).json({ brands });
+    } catch (error) {
+        console.error("Error fetching brand names", error);
+        res.status(500).send("An error occurred while fetching brandnames");
+    }
+});
+
+// GET CoffeeBeansVarietals Roast Names
+
+app.get('/coffeebeansvarietals/roastnames', async (req, res) => {
+    try {
+        const brandName = req.query.brandName;
+        const params = [];
+        
+        let query = `
+            SELECT DISTINCT
+            roastName as "Roast Name"
+            FROM CoffeeBeans
+        `;
+
+
+        if (brandName) {
+        query += ` WHERE brandName = ?`;
+        params.push(brandName);
+        }
+
+    query += ` ORDER BY roastName ASC`;
+        const [roasts] = await db.query(query, params);
+        res.status(200).json({ roasts });
+    } catch (error) {
+        console.error("Error fetching  roasts", error);
+        res.status(500).send("An error occurred while fetching roasts.");
+    }
+});
+
 
 
 // CREATE Brew Method
@@ -270,14 +329,14 @@ app.post('/coffeebeans/create', async (req, res) => {
 
 app.post('/coffeebeansvarietals/create', async (req, res) => {
     try {
-        const data = req.body;
+        
+        const { brandName, roastName, varietalName } = req.body;
 
-        if (!data.coffeeBeanID || !data.varietalID) {
+        if (!brandName || !roastName || !varietalName) {
             return res.status(400).json({ error: 'A Coffee Bean and a Varietal are required' });
         }
-
-        const query = `CALL sp_CreateCoffeeBeansVarietals(?, ?, @new_id);`;
-        const [[[result]]] = await db.query(query, [data.coffeeBeanID, data.varietalID]);
+        const query = `CALL sp_CreateCoffeeBeanVarietal(?, ?, ?, @new_id);`;
+        const [[[result]]] = await db.query(query, [brandName, roastName, varietalName]);
 
         console.log(`Created new coffee bean varietal ID: ${result.new_id}`);
 
@@ -286,8 +345,8 @@ app.post('/coffeebeansvarietals/create', async (req, res) => {
             coffeeBeanVarietalID: result.new_id
         });
     } catch (error) {
-        console.error("Error creating Coffee Bean Varietal:", error);
-        res.status(500).send("An error occurred while creating the coffee bean varietal.");
+      console.error('Error in /coffeebeansvarietals/create:', error.stack || error);
+    res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 });
 
@@ -329,6 +388,56 @@ app.post('/users/create', async (req, res) => {
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).send("An error occurred while creating the user.");
+    }
+});
+
+
+
+// CREATE CoffeeReview
+
+app.post('/coffee-reviews', async (req, res) => {
+    try {
+        const {
+            userID,
+            coffeeBeanID,
+            brewMethodID,
+            reviewDate,
+            aroma,
+            flavor,
+            afterTaste,
+            body,
+            acidity,
+            reviewNotes
+        } = req.body;
+
+        const query = `CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @new_id);`;
+        
+        // Order of params: reviewDate, aroma, flavor, afterTaste, body, acidity, reviewNotes, coffeeBeanID, brewMethodID, userID
+        const [[[result]]] = await db.query(query, [
+            reviewDate,
+            aroma,
+            flavor,
+            afterTaste,
+            body,
+            acidity,
+            reviewNotes,
+            coffeeBeanID,
+            brewMethodID,
+            userID
+        ]);
+
+        const newID = result.new_coffeeReview_id;
+
+        console.log(`Created new coffee review ID: ${newID}`);
+
+        res.status(201).json({
+            message: 'Coffee review created successfully',
+            coffeeReviewID: newID
+        });
+
+    } catch (error) {
+        console.error('Error creating coffee review:', error);
+        res.status(500).json({ error: 'Failed to create coffee review' });
     }
 });
 
@@ -490,6 +599,7 @@ app.post('/brew-methods/delete', async function (req, res) {
 // DELETE CoffeeBeans 
 app.post('/coffeebeans/delete', async function (req, res) {
     try {
+        console.log('Received delete request body:', req.body);
         const data = req.body;
         const query = `CALL sp_DeleteCoffeeBean(?);`;
         await db.query(query, [data.delete_coffeeBeanID]);
@@ -500,7 +610,7 @@ app.post('/coffeebeans/delete', async function (req, res) {
 
     } catch (error) {
         console.error('Error executing delete coffee bean:', error);
-        res.status(500).json({ error: 'An error occurred while deleting the coffee bean.' });
+        res.status(500).json({ error: error.message, stack: error.stack });
     }
 });
 

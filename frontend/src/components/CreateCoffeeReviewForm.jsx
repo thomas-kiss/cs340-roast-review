@@ -19,9 +19,10 @@ Prompts: "previously this code hard-coded the delete form. I am trying to make i
 AI Source URL: https://chatgpt.com
 */
 
-import { useState, useEffect } from 'react';
 
-function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameList, brewMethodList, userList }) {
+import { useState } from 'react';
+
+function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans, brewMethods, users }) {
   const [formData, setFormData] = useState({
     reviewDate: '',
     aroma: '',
@@ -50,14 +51,28 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
       });
 
       refreshCoffeeReviews();
+      // Reset form after submit (optional)
+      setFormData({
+        reviewDate: '',
+        aroma: '',
+        flavor: '',
+        afterTaste: '',
+        body: '',
+        acidity: '',
+        reviewNotes: '',
+        coffeeBeanID: '',
+        brewMethodID: '',
+        userID: '',
+      });
     } catch (err) {
       console.error('Error creating review:', err);
     }
   };
-  // Coffee Bean, Brew Method, User drop downs were adapted from AI code
+
   return (
     <form onSubmit={handleSubmit}>
       <h2>Create Coffee Review</h2>
+
       <label htmlFor="reviewDate">Review Date: </label>
       <input
         type="datetime-local"
@@ -135,11 +150,11 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
         required
       >
         <option value="">Select Coffee Bean</option>
-                    {roastNameList.map((roast, index)=> (
-                        <option key={index} value={roast}>
-                            {roast}
-                        </option>
-                    ))}
+        {coffeeBeans.map((bean) => (
+          <option key={bean['Coffee Bean ID']} value={bean['Coffee Bean ID']}>
+            {bean['Roast Name']}
+          </option>
+        ))}
       </select>
 
       <label htmlFor="brewMethodID">Brew Method: </label>
@@ -151,11 +166,11 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
         required
       >
         <option value="">Select Brew Method</option>
-                    {brewMethodList.map((brewname, index)=> (
-                        <option key={index} value={brewname}>
-                            {brewname}
-                        </option>
-                    ))}
+        {brewMethods.map((brew) => (
+          <option key={brew['Brew Method ID']} value={brew['Brew Method ID']}>
+            {brew['Brew Method Name']}
+          </option>
+        ))}
       </select>
 
       <label htmlFor="userID">User: </label>
@@ -167,11 +182,11 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
         required
       >
         <option value="">Select User</option>
-                    {userList.map((username, index)=> (
-                        <option key={index} value={username}>
-                            {username}
-                        </option>
-                    ))}
+        {users.map((user) => (
+          <option key={user['User ID']} value={user['User ID']}>
+            {user['Username']}
+          </option>
+        ))}
       </select>
 
       <button type="submit">Submit</button>
