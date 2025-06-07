@@ -24,10 +24,19 @@ AI Source URL: https://chatgpt.com
 Date: 05/14/2025
 Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm
 Note: This was done after the CoffeeBeans page and UpdateCoffeeBeanForm was created, and after the Update button was worked into the table component
-“how to create an update button that would dynamically open a form and pass along relevant details”
+Prompts: “how to create an update button that would dynamically open a form and pass along relevant details”
 “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
 “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
 “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
+AI Source URL: https://chatgpt.com
+*/
+
+/*
+Citation for use of AI Tools 
+Date: 06/06/2025
+Prompts used to combine BrandName and UserName dropdowns
+Prompts: "How can I take these two forms that work and combine them into one drop down that is brandname - roastname? [code snippet]", "are there other ways to accomplish 
+that same thing"
 AI Source URL: https://chatgpt.com
 */
 
@@ -98,23 +107,13 @@ const UpdateCoffeeBeanVarietalForm = ({ selectedCoffeeBeanVarietal, backendURL, 
             <h2>Update a Coffee Bean by Varietal Relationship</h2>
             <form className='cuForm'>
 
-                <label htmlFor="update_coffeeBeanVarietal_ID">Coffee Bean by Varietal Relationship ID: </label>
-                <input
-                    type="text"
-                    name="update_coffeeBeanVarietal_ID"
-                    id="update_coffeeBeanVarietal_ID"
-                    value={coffeeBeanVarietalID || ""}
-                />
-
-                <label htmlFor="update_coffeeBeanVarietal_coffeeBeanBrandName">Brand Name: </label>
+                <label htmlFor="update_coffeeBeanVarietal_coffeeBeanBrandName">Brand Name</label>
                 <select 
                 name="update_coffeeBeanVarietal_coffeeBeanBrandName" 
                 id="update_coffeeBeanVarietal_coffeeBeanBrandName" 
                 onChange={handleBrandChange} 
                 value={selectedBrandName}
-                 
                 >
-             
                     {brandNameList.map((brand, index) => (
                     <option key={index} value={brand}>
                         {brand}

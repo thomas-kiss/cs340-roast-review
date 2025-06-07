@@ -1,13 +1,4 @@
-/* 
-Course: OSU CS340 Intro to Databases
-Group: Group 2
-Team Name: Team 2
-Project Title: Roast Review
-Group Members: Thomas Kiss, Katlin Hopkins
-*/
-
 /*
-Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Date: 06/06/2025
 Adapted from provided canvas code:
@@ -31,6 +22,18 @@ Implementing CUD operations in your app
 Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 */
 
+
+/*Citation for use of AI Tools
+Date: 06/07/25
+Adapted from AI Code 
+Scope: Adapted the sp_CreateCoffeeBeanVarietal proc based on AI Code. 
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries", ""
+Source URL: https://chatgpt.com
+*/
 
 
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
@@ -259,14 +262,20 @@ END //
 
 
 -- CREATE CoffeeBeanVarietals Procedure
+-- Code adapted from AI code 
 CREATE PROCEDURE sp_CreateCoffeeBeanVarietal(
-    IN p_coffeeBeanID int,
-    IN p_varietalID int,
+    IN p_brandName varchar(45),
+    IN p_roastName VARCHAR(45),
+    IN p_varietalName varchar(45),
     OUT p_coffeeBeanVarietalID INT
 )
 BEGIN
+    DECLARE insertcoffeeBeanID int;
+    DECLARE insertvarietalID int; 
+    SELECT coffeeBeanID into insertcoffeeBeanID from CoffeeBeans where brandName = p_brandName and roastName = p_roastName;
+    SELECT varietalID into insertvarietalID from Varietals where name = p_varietalName;
     INSERT INTO CoffeeBeansVarietals (coffeeBeanID, varietalID)
-    VALUES (p_coffeeBeanID, p_varietalID);
+    VALUES (insertcoffeeBeanID, insertvarietalID);
 
     -- Get the ID of the newly inserted brew method
     SELECT LAST_INSERT_ID() INTO p_coffeeBeanVarietalID;
@@ -383,4 +392,6 @@ BEGIN
 END //
 
 
+
 DELIMITER ;
+

@@ -50,6 +50,14 @@ Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
+/*
+Citation for use of AI Tools
+Date: 6/6/2025
+Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code. 
+Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
+the dyanmic delete form but it's currently erroring out. provide debugging suggestions."
+AI Source URL: https://chatgpt.com
+*/
 
 import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
