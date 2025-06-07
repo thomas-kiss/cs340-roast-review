@@ -35,7 +35,7 @@ import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateUserForm from '../components/CreateUserForm';
 import UpdateUserForm from '../components/UpdateUserForm';
-// DeleteUserForm import removed since no longer used
+import DeleteUserForm from '../components/DeleteUserForm';
 
 function UserPage({ backendURL }) {
   const [users, setUsers] = useState([]);
@@ -69,24 +69,6 @@ function UserPage({ backendURL }) {
     setSelectedUser(null);
   };
 
-  // Directly delete user on button click (no confirmation)
-  const handleDeleteUser = async (user) => {
-    try {
-      const response = await fetch(backendURL + '/users/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ delete_user_id: user["User ID"] }),
-      });
-
-      if (response.ok) {
-        getData();  // Refresh users after successful deletion
-      } else {
-        console.error('Failed to delete user');
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
-  };
 
   return (
     <>
@@ -105,8 +87,11 @@ function UserPage({ backendURL }) {
             <TableRow
               key={index}
               rowObject={user}
+              backendURL={backendURL}
+              refreshData={getData}
               onUpdateClick={handleOpenUpdateForm}
-              onDeleteClick={handleDeleteUser} 
+              DeleteFormComponent={DeleteUserForm}
+
             />
           ))}
         </tbody>

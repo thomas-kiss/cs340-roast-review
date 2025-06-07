@@ -450,6 +450,25 @@ app.post('/users/delete', async function (req, res) {
 });
 
 
+
+// DELETE Coffee Reviews 
+app.post('/coffee-reviews/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteCoffeeReview(?);`;
+        await db.query(query, [data.delete_coffeeReviewID]);
+
+        console.log(`DELETE Coffee Review. ID: ${data.delete_coffeeReviewID} `);
+
+        res.status(200).json({ message: 'Coffee Review deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete coffee review:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the coffee review.' });
+    }
+});
+
+
 // DELETE BrewMethods 
 app.post('/brew-methods/delete', async function (req, res) {
     try {
@@ -466,8 +485,6 @@ app.post('/brew-methods/delete', async function (req, res) {
         res.status(500).json({ error: 'An error occurred while deleting the brew method.' });
     }
 });
-
-
 
 
 // DELETE CoffeeBeans 
@@ -487,10 +504,39 @@ app.post('/coffeebeans/delete', async function (req, res) {
     }
 });
 
+// DELETE Varietals 
+app.post('/varietals/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteVarietal(?);`;
+        await db.query(query, [data.delete_varietalID]);
 
+        console.log(`DELETE Varietal. ID: ${data.delete_varietalID} `)
 
+        res.status(200).json({ message: 'Varietal deleted successfully' });
 
+    } catch (error) {
+        console.error('Error executing delete varietal:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the varietal.' });
+    }
+});
 
+// DELETE CoffeeBeansVarietals
+app.post('/coffeebeansvarietals/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteCoffeeBeanVarietal(?);`;
+        await db.query(query, [data.delete_coffeeBeanVarietalID]);
+
+        console.log(`DELETE Coffee Beans. ID: ${data.delete_coffeeBeanVarietalID} `)
+
+        res.status(200).json({ message: 'Coffee Bean Varietal deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete coffee bean varietal:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the coffee bean varietal.' });
+    }
+});
 
 
 

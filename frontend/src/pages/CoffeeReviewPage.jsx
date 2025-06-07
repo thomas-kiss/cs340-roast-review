@@ -55,7 +55,7 @@ import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateCoffeeReviewForm from '../components/CreateCoffeeReviewForm';
 import UpdateCoffeeReviewForm from '../components/UpdateCoffeeReviewForm';
-import DeleteCoffeeReviewForm from '../components/DeleteCoffeeBeanForm';
+import DeleteCoffeeReviewForm from '../components/DeleteCoffeeReviewForm';
 
 
 function Reviews({ backendURL }) {
@@ -157,9 +157,9 @@ function Reviews({ backendURL }) {
                             key={index}
                             rowObject={review}
                             backendURL={backendURL}
-                            refreshCoffeeBeans={getData}
+                            refreshData={getData}
                             onUpdateClick={handleOpenUpdateForm}
-                            DeleteForm={DeleteCoffeeReviewForm}
+                            DeleteFormComponent={DeleteCoffeeReviewForm}
                         />
                     ))}
                 </tbody>

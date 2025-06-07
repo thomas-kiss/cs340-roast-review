@@ -35,6 +35,7 @@ import { useState, useEffect } from 'react';
 import TableRow from '../components/TableRow';
 import CreateBrewMethodForm from '../components/CreateBrewMethodForm';
 import UpdateBrewMethodForm from '../components/UpdateBrewMethodForm';
+import DeleteBrewMethodForm from '../components/DeleteBrewMethodForm';
 
 function BrewMethodPage({ backendURL }) {
   const [brewMethods, setBrewMethods] = useState([]);
@@ -69,25 +70,6 @@ function BrewMethodPage({ backendURL }) {
     setSelectedBrewMethod(null);
   };
 
-  // Directly delete brew method on button click (no confirmation)
-  const handleDeleteBrewMethod = async (brewMethod) => {
-    try {
-      const response = await fetch(`${backendURL}/brew-methods/delete`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ delete_brew_method_id: brewMethod["Brew Method ID"] }),
-      });
-
-      if (response.ok) {
-        getData();  // Refresh brew methods after successful deletion
-      } else {
-        console.error('Failed to delete brew method');
-      }
-    } catch (error) {
-      console.error('Error deleting brew method:', error);
-    }
-  };
-
   return (
     <>
       <h1>Brew Methods</h1>
@@ -105,8 +87,11 @@ function BrewMethodPage({ backendURL }) {
             <TableRow
               key={index}
               rowObject={brewMethod}
+              backendURL={backendURL}
+              refreshData={getData}
               onUpdateClick={handleOpenUpdateForm}
-              onDeleteClick={handleDeleteBrewMethod}
+              DeleteFormComponent={DeleteBrewMethodForm}
+
             />
           ))}
         </tbody>

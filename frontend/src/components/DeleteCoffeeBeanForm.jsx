@@ -1,3 +1,14 @@
+/* Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. 
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but 
+receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee 
+beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"
+AI Source URL: https://chatgpt.com
+*/
+
 const DeleteCoffeeBeanForm = ({ rowObject, backendURL, refreshData }) => {
 
     const handleDelete = async (e) => {

@@ -13,7 +13,7 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 */
 
 
-const DeleteBrewMethodForm = ({ rowObject, backendURL, refreshBrewMethods }) => {
+const DeleteBrewMethodForm = ({ rowObject, backendURL, refreshData }) => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -31,7 +31,7 @@ const DeleteBrewMethodForm = ({ rowObject, backendURL, refreshBrewMethods }) => 
 
             if (response.ok) {
                 console.log(`Successfully deleted brew method ID ${payload.delete_brew_method_id}`);
-                refreshBrewMethods();
+                refreshData();
             } else {
                 const errorText = await response.text();
                 console.error("Failed to delete brew method:", errorText);
