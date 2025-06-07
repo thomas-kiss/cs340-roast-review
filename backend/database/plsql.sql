@@ -48,6 +48,7 @@ DROP PROCEDURE IF EXISTS sp_UpdateVarietal;
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBeanVarietal;
 DROP PROCEDURE IF EXISTS sp_UpdateUser;
 DROP PROCEDURE IF EXISTS sp_UpdateBrewMethod;
+DROP PROCEDURE IF EXISTS sp_UpdateCoffeeReview
 
 
 
