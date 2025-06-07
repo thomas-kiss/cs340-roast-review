@@ -86,12 +86,10 @@ const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => 
             <form className="cuForm" onSubmit={handleSubmit}>
                 <label htmlFor="update_user_id">User ID: </label>
                 <input
-                    type="text"
+                    type="hidden"
                     id="update_user_id"
                     name="update_user_id"
                     value={formData.update_user_id}
-                    readOnly
-                    // value line and readOnly copied from AI code, see citation above
                 />
 
                 <label htmlFor="update_user_userName">Username: </label>
