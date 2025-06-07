@@ -8,6 +8,7 @@ Group Members: Thomas Kiss, Katlin Hopkins
 
 /*
 Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
+Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
@@ -34,6 +35,7 @@ Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-impl
 
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
 DROP PROCEDURE IF EXISTS sp_CreateUser;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
 DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietals;
 DROP PROCEDURE IF EXISTS sp_DeleteUser;

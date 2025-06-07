@@ -8,6 +8,7 @@ Group Members: Thomas Kiss, Katlin Hopkins
 
 /*
 Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
+Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
@@ -34,6 +35,7 @@ Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-impl
 
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
 DROP PROCEDURE IF EXISTS sp_CreateUser;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
 DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietals;
 DROP PROCEDURE IF EXISTS sp_DeleteUser;
@@ -90,6 +92,51 @@ BEGIN
 
     -- Also return the ID directly as a result set
     SELECT LAST_INSERT_ID() AS 'new_user_id';
+END //
+
+
+-- CREATE CoffeeReview Procedure
+CREATE PROCEDURE sp_CreateCoffeeReview (
+    IN p_reviewDate TIMESTAMP,
+    IN p_aroma DECIMAL(4,2),
+    IN p_flavor DECIMAL(4,2),
+    IN p_afterTaste DECIMAL(4,2),
+    IN p_body DECIMAL(4,2),
+    IN p_acidity DECIMAL(4,2),
+    IN p_reviewNotes TEXT,
+    IN p_coffeeBeanID INT,
+    IN p_brewMethodID INT,
+    IN p_userID INT,
+    OUT p_coffeeReviewID INT
+)
+BEGIN
+    INSERT INTO CoffeeReviews (
+        reviewDate,
+        aroma,
+        flavor,
+        afterTaste,
+        body,
+        acidity,
+        reviewNotes,
+        coffeeBeanID,
+        brewMethodID,
+        userID
+    ) VALUES (
+        p_reviewDate,
+        p_aroma,
+        p_flavor,
+        p_afterTaste,
+        p_body,
+        p_acidity,
+        p_reviewNotes,
+        p_coffeeBeanID,
+        p_brewMethodID,
+        p_userID
+    );
+
+    SET p_coffeeReviewID = LAST_INSERT_ID();
+
+    SELECT LAST_INSERT_ID() AS 'new_coffeeReview_id';
 END //
 
 
