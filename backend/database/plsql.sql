@@ -286,16 +286,23 @@ END //
 
 
 -- UPDATE CoffeeBeanVarietal Procedure
-CREATE PROCEDURE sp_UpdateCoffeeBeanVarietal(IN p_id int,    
-    IN p_coffeeBeanID int, 
-    IN p_varietalID int
+CREATE PROCEDURE sp_UpdateCoffeeBeanVarietal(
+    IN p_id INT, 
+    IN p_brandName varchar(45),
+    IN p_roastName VARCHAR(45),
+    IN p_varietalName varchar(45)
     )
 
 BEGIN
+    DECLARE insertcoffeeBeanID int;
+    DECLARE insertvarietalID int; 
+    SELECT coffeeBeanID into insertcoffeeBeanID from CoffeeBeans where brandName = p_brandName and roastName = p_roastName;
+    SELECT varietalID into insertvarietalID from Varietals where name = p_varietalName;
+    
     UPDATE CoffeeBeansVarietals 
     SET 
-        coffeeBeanID = p_coffeeBeanID,
-        varietalID = p_varietalID
+        coffeeBeanID = insertcoffeeBeanID,
+        varietalID = insertvarietalID
     WHERE coffeeBeanVarietalID= p_id; 
 END //
 

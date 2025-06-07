@@ -158,7 +158,7 @@ function CoffeeBeanVarietalPage({ backendURL }) {
                 </tbody>
             </table>
                 {coffeeBeans.length>0 && varietals.length > 0 && (
-            <CreateCoffeeBeanVarietalForm backendURL={backendURL} refreshCoffeeBeansVarietals={getData}
+            <CreateCoffeeBeanVarietalForm backendURL={backendURL} refreshCoffeeBeanVarietal={getData}
                 brandNameList ={[...new Set(coffeeBeans.map(bean => bean["Brand Name"]))]}
                 roastNameList={coffeeBeans.map(bean => bean["Roast Name"])}
                 varietalNameList={varietals.map(varietal => varietal["Name"])}

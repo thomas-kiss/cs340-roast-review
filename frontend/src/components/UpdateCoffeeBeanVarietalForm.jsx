@@ -51,109 +51,161 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 import React, { useState, useEffect } from 'react';
 
 
-const UpdateCoffeeBeanVarietalForm = ({ selectedCoffeeBeanVarietal, backendURL, refreshCoffeeBeanVarietal, brandNameList, roastNameList, varietalNameList }) => {
-        const {
-        'Coffee Bean by Varietal Relationship ID': coffeeBeanVarietalID,
-        'Coffee Bean ID': coffeeBeanID,
-        'Brand Name': brandName, 
-        'Roast Name': roastName,
-        'Varietal ID': varietalID,
-        'Varietal Name': name
-    } = selectedCoffeeBeanVarietal || {};
+const UpdateCoffeeBeanVarietalForm = ({ selectedCoffeeBeanVarietal, backendURL, refreshCoffeeBeanVarietal, varietalNameList }) => {
+  const [brandNameList, setBrandNameList] = useState([]);
+  const [roastNameList, setRoastNameList] = useState([]);
+  const [selectedBrandName, setSelectedBrandName] = useState('');
+  const [selectedRoastName, setSelectedRoastName] = useState('');
 
+  const [formData, setFormData] = useState({
+    update_coffeebeanvarietal_id: '',
+    update_brandName: '',
+    update_roastName: '',
+    update_varietalName: '',
+  });
+useEffect(() => {
+  if (selectedCoffeeBeanVarietal) {
+    setFormData({
+      update_coffeebeanvarietal_id: selectedCoffeeBeanVarietal["Coffee Bean by Varietal Relationship ID"] || '',
+      update_brandName: selectedCoffeeBeanVarietal["Brand Name"] || '',
+      update_roastName: selectedCoffeeBeanVarietal["Roast Name"] || '',
+      update_varietalName: selectedCoffeeBeanVarietal["Varietal Name"] || '',
+    });
+    setSelectedBrandName(selectedCoffeeBeanVarietal["Brand Name"] || '');
+    setSelectedRoastName(selectedCoffeeBeanVarietal["Roast Name"] || '');
 
+    getRoastNames(selectedCoffeeBeanVarietal["Brand Name"]);
+    getBrandNames(selectedCoffeeBeanVarietal["Roast Name"]);
+  }
+}, [selectedCoffeeBeanVarietal]);
 
-
-  // AI generated for const, use effect, and const handleBrandChange. citation above.
-  const [selectedBrandName, setSelectedBrandName] = useState("");
-
-  useEffect(() => {
-    if (selectedCoffeeBeanVarietal) {
-      setSelectedBrandName(brandName || "");
+ const getBrandNames = async (roastFilter = "") => {
+    try {
+      const response = await fetch(
+        roastFilter
+          ? `${backendURL}/coffeebeansvarietals/brandnames?roastName=${encodeURIComponent(roastFilter)}`
+          : `${backendURL}/coffeebeansvarietals/brandnames`
+      );
+      const data = await response.json();
+      setBrandNameList(data.brands || data);
+    } catch (error) {
+      console.log("Brand name fetch error:", error);
     }
-  }, [selectedCoffeeBeanVarietal, brandName]);
-
-  const handleBrandChange = (e) => {
-    setSelectedBrandName(e.target.value);
   };
 
-// Adapated from AI code based on brandname handling above
-  const [selectedRoastName, setSelectedRoastName] = useState("");
-
-  useEffect(() => {
-    if (selectedCoffeeBeanVarietal) {
-      setSelectedRoastName(roastName || "");
+  const getRoastNames = async (brandFilter = "") => {
+    try {
+      const response = await fetch(
+        brandFilter
+          ? `${backendURL}/coffeebeansvarietals/roastnames?brandName=${encodeURIComponent(brandFilter)}`
+          : `${backendURL}/coffeebeansvarietals/roastnames`
+      );
+      const data = await response.json();
+      setRoastNameList(data.roasts || data);
+    } catch (error) {
+      console.log("Roast name fetch error:", error);
     }
-  }, [selectedCoffeeBeanVarietal, roastName]);
-
-  const hanldeRoastChange = (e) => {
-    setSelectedRoastName(e.target.value);
   };
-    const [selectedVarietalName, setSelectedVarietalName] = useState("");
 
-  useEffect(() => {
-    if (selectedCoffeeBeanVarietal) {
-      setSelectedVarietalName(name || "");
-    }
-  }, [selectedCoffeeBeanVarietal, name]);
+    // On brand change
+const handleBrandChange = (e) => {
+  const selected = e.target.value;
+  setSelectedBrandName(selected);
+    setFormData(prev => ({ ...prev, update_brandName: selected }));
+  getRoastNames(selected);
+};
 
-  const handleVarietalChange = (e) => {
-    setSelectedVarietalName(e.target.value);
-  };
+// On roast change
+const handleRoastChange = (e) => {
+  const selected = e.target.value;
+  setSelectedRoastName(selected);
+    setFormData(prev => ({ ...prev, update_roastName: selected }));
+  getBrandNames(selected);
+};
+
+const handleVarietalChange = (e) => {
+  const selected = e.target.value;
+  setFormData(prev => ({ ...prev, update_varietalName: selected }));
+};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+// This is where the AI code copy stops. 
+
+        try {
+            const response = await fetch(`${backendURL}/coffeebeansvarietals/update`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log("cofee bean varietal updated successfully.");
+                refreshCoffeeBeanVarietal();
+            } else {
+                console.error("Error updating coffee bean varietal.");
+            }
+        } catch (error) {
+            console.error('Error during form submission:', error);
+        }
+    };
+
 
   // AI code used to modify and adapt the below input boxes and drop down boxes. 
     return (
         <>
             <h2>Update a Coffee Bean by Varietal Relationship</h2>
-            <form className='cuForm'>
+            <form className='cuForm' onSubmit={handleSubmit}>
 
                 <label htmlFor="update_coffeeBeanVarietal_coffeeBeanBrandName">Brand Name</label>
                 <select 
                 name="update_coffeeBeanVarietal_coffeeBeanBrandName" 
                 id="update_coffeeBeanVarietal_coffeeBeanBrandName" 
-                onChange={handleBrandChange} 
-                value={selectedBrandName}
-                >
-                    {brandNameList.map((brand, index) => (
-                    <option key={index} value={brand}>
-                        {brand}
-                    </option>
-                ))}
+                value={formData.update_brandName} 
+                onChange={handleBrandChange}
+                required>
+                    <option value="">Select a Brand</option>
+                    {brandNameList.map((brand, index)=> (
+            <option key={index} value={brand["Brand Name"] || brand}>
+              {brand["Brand Name"] || brand}
+            </option>
+                    ))}
                 </select>
             
                 <label htmlFor="update_coffeeBeanVarietal_coffeeBeanRoastName">Roast Name: </label>
                 <select
                     name="update_coffeeBeanVarietal_coffeeBeanRoastName"
                     id="update_coffeeBeanVarietal_coffeeBeanRoastName"
-                     onChange={hanldeRoastChange} 
-                    value={selectedRoastName}
-                >
-                    {roastNameList.map((roast, index) => (
-                    <option key={index} value={roast}>
-                        {roast}
-                    </option>
-                ))}
+                value={formData.update_roastName} 
+                onChange={handleRoastChange} 
+                required>
+                     <option value="">Select a Roast</option>
+                     {roastNameList.map((roast,index) => (
+            <option key={index} value={roast["Roast Name"] || roast}>
+              {roast["Roast Name"] || roast}
+            </option>
+                     ))}
                 </select>
-      
+
 
                 <label htmlFor="update_coffeeBeanVarietal_varietalName">Varietal Name: </label>
                 <select
                     name="update_coffeeBeanVarietal_varietalName"
                     id="update_coffeeBeanVarietal_varietalName"
-                    onChange={handleVarietalChange} 
-                    value={selectedVarietalName}
-                >
-                    {varietalNameList.map((varietal, index) => (
-                    <option key={index} value={varietal}>
-                        {varietal}
-                    </option>
-                ))}
+                    value={formData.update_varietalName}
+                    onChange={handleVarietalChange}
+                    required>
+                    <option value="">Select a Varietal</option>
+                    {varietalNameList.map((varietalname,index) => (
+                        <option key={index} value={varietalname}>
+                            {varietalname}
+                        </option>
+                     ))}
                 </select>
 
                 <input type="submit" />
             </form>
         </>
     );
-};
-
+  };
 export default UpdateCoffeeBeanVarietalForm;
