@@ -216,6 +216,7 @@ app.post('/brew-methods/create', async (req, res) => {
     }
 });
 
+
 // CREATE Varietals
 
 app.post('/varietals/create', async (req, res) => {
@@ -241,6 +242,7 @@ app.post('/varietals/create', async (req, res) => {
     }
 });
 
+
 // CREATE CoffeeBeans
 
 app.post('/coffeebeans/create', async (req, res) => {
@@ -265,6 +267,7 @@ app.post('/coffeebeans/create', async (req, res) => {
         res.status(500).send("An error occurred while creating the coffee bean.");
     }
 });
+
 
 // CREATE CoffeeBeansVarietals
 
@@ -383,8 +386,8 @@ app.post('/coffee-reviews', async (req, res) => {
 });
 
 
-
 // UPDATE Varietals
+
 app.post('/varietals/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -415,7 +418,9 @@ app.post('/varietals/update', async function (req, res) {
     }
 });
 
+
 // UPDATE CoffeeBeans
+
 app.post('/coffeebeans/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -450,7 +455,9 @@ app.post('/coffeebeans/update', async function (req, res) {
     }
 });
 
+
 // UPDATE Coffee Beans by Varietals
+
 app.post('/coffeebeansvarietals/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -502,8 +509,8 @@ app.post('/users/delete', async function (req, res) {
 });
 
 
-
 // DELETE Coffee Reviews 
+
 app.post('/coffee-reviews/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -541,6 +548,7 @@ app.post('/brew-methods/delete', async function (req, res) {
 
 
 // DELETE CoffeeBeans 
+
 app.post('/coffeebeans/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -557,7 +565,9 @@ app.post('/coffeebeans/delete', async function (req, res) {
     }
 });
 
+
 // DELETE Varietals 
+
 app.post('/varietals/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -574,7 +584,9 @@ app.post('/varietals/delete', async function (req, res) {
     }
 });
 
+
 // DELETE CoffeeBeansVarietals
+
 app.post('/coffeebeansvarietals/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -592,7 +604,6 @@ app.post('/coffeebeansvarietals/delete', async function (req, res) {
 });
 
 
-
 // RESET Database
 
 app.post('/reset', async (req, res) => {
@@ -604,7 +615,6 @@ app.post('/reset', async (req, res) => {
         res.status(500).send('Error resetting database.');
     }
 });
-
 
 
 // ########################################
