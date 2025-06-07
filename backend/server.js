@@ -544,6 +544,73 @@ app.post('/coffeebeansvarietals/update', async function (req, res) {
 });
 
 
+// UPDATE Users
+
+app.post('/users/update', async function (req, res) {
+    try {
+        const data = req.body;
+
+        const query1 = 'CALL sp_UpdateUser(?, ?, ?, ?, ?, ?, ?);';
+        const query2 = 'SELECT userName FROM Users WHERE userID = ?;';
+        
+        await db.query(query1, [
+            data.update_user_id,
+            data.update_user_userName,
+            data.update_user_email,
+            data.update_user_firstName,
+            data.update_user_lastName,
+            data.update_user_location,
+            data.update_user_joinDate
+        ]);
+
+        const [[rows]] = await db.query(query2, [data.update_user_id]);
+
+        console.log(`UPDATE User. ID: ${data.update_user_id} Username: ${rows.userName}`);
+        res.status(200).json({ message: 'User updated successfully' });
+
+    } catch (error) {
+        console.error('Error executing update user:', error);
+        res.status(500).json({ error: 'An error occurred while updating the user.' });
+    }
+});
+
+
+// UPDATE BrewMethods
+
+app.post('/brew-methods/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+
+        // Create and execute our query
+        const query1 = 'CALL sp_UpdateBrewMethod(?, ?, ?);';
+        const query2 = 'SELECT name, description FROM BrewMethods WHERE brewMethodID = ?;';
+    
+        await db.query('CALL sp_UpdateBrewMethod(?, ?, ?);', [
+            data.update_brew_method_id,
+            data.update_brew_method_name,
+            data.update_brew_method_description
+        ]);
+
+        const [[rows]] = await db.query('SELECT name, description FROM BrewMethods WHERE brewMethodID = ?;', [
+            data.update_brew_method_id
+        ]);
+
+console.log(`UPDATE BrewMethods. ID: ${data.update_brew_method_id} Name: ${rows.name}`);
+
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Brew Method updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            `An error occurred while executing the database queries: ${error.message}`
+        );
+    }
+});
+
+
 // DELETE Users 
 
 app.post('/users/delete', async function (req, res) {

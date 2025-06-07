@@ -46,6 +46,10 @@ DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeanVarietal;
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBean;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietal;
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBeanVarietal;
+DROP PROCEDURE IF EXISTS sp_UpdateUser;
+DROP PROCEDURE IF EXISTS sp_UpdateBrewMethod;
+
+
 
 DROP PROCEDURE IF EXISTS sp_DeleteUser;
 DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
@@ -232,6 +236,43 @@ BEGIN
         roastLevel = p_roastLevel, 
         providedTastingNotes = p_providedTastingNotes
     WHERE coffeeBeanID= p_id; 
+END //
+
+
+-- UPDATE Users Procedure
+CREATE PROCEDURE sp_UpdateUser(
+    IN p_userID INT,
+    IN p_userName VARCHAR(45),
+    IN p_email VARCHAR(225),
+    IN p_firstName VARCHAR(45),
+    IN p_lastName VARCHAR(45),
+    IN p_location VARCHAR(225),
+    IN p_joinDate TIMESTAMP
+)
+BEGIN
+    UPDATE Users
+    SET 
+        userName = p_userName,
+        email = p_email,
+        firstName = p_firstName,
+        lastName = p_lastName,
+        location = p_location,
+        joinDate = p_joinDate
+    WHERE userID = p_userID;
+END //
+
+
+-- UPDATE BrewMethod Procedure
+CREATE PROCEDURE sp_UpdateBrewMethod(
+    IN p_brewMethodID INT,
+    IN p_name VARCHAR(255),
+    IN p_description TEXT
+)
+BEGIN
+    UPDATE BrewMethods
+    SET name = p_name,
+        description = p_description
+    WHERE brewMethodID = p_brewMethodID;
 END //
 
 
