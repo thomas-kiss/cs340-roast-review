@@ -47,7 +47,7 @@ DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBeanVarietal;
 DROP PROCEDURE IF EXISTS sp_DeleteUser;
 DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBean;
-DROP PROCEDURE IF EXISTS sp_DeleteVarietal;s
+DROP PROCEDURE IF EXISTS sp_DeleteVarietal;
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBeanVarietal;
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeReview;
 
@@ -70,6 +70,7 @@ BEGIN
     -- Also return the ID directly
     SELECT LAST_INSERT_ID() AS 'new_brew_method_id';
 END //
+
 
 -- CREATE User Procedure
 CREATE PROCEDURE sp_CreateUser(
@@ -138,36 +139,6 @@ BEGIN
     SET p_coffeeReviewID = LAST_INSERT_ID();
 
     SELECT LAST_INSERT_ID() AS 'new_coffeeReview_id';
-END //
-
-
--- CREATE CoffeeReview Procedure
-CREATE PROCEDURE sp_CreateCoffeeReview (
-    IN p_userID INT,
-    IN p_beanID INT,
-    IN p_brewMethodID INT,
-    IN p_rating DECIMAL(3,1),
-    IN p_reviewText TEXT,
-    IN p_reviewDate DATE
-)
-BEGIN
-    INSERT INTO CoffeeReviews (
-        userID,
-        beanID,
-        brewMethodID,
-        rating,
-        reviewText,
-        reviewDate
-    ) VALUES (
-        p_userID,
-        p_beanID,
-        p_brewMethodID,
-        p_rating,
-        p_reviewText,
-        p_reviewDate
-    );
-
-    SELECT * FROM CoffeeReviews WHERE reviewID = LAST_INSERT_ID();
 END //
 
 
@@ -320,7 +291,6 @@ BEGIN
 END //
 
 
-
 -- DELETE CoffeeBeanVarietal Procedure
 CREATE PROCEDURE sp_DeleteCoffeeBeanVarietal(IN p_id INT)
 BEGIN
@@ -411,10 +381,6 @@ BEGIN
         END IF;
     COMMIT;
 END //
-
-
-
-
 
 
 DELIMITER ;
