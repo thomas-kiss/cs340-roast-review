@@ -20,34 +20,43 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 
 import React from 'react';
 
-const DeleteUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => {
-  const userId = selectedUser ? selectedUser["User ID"] || '' : '';
+const DeleteUserForm = ({ rowObject, backendURL, refreshData, onClose }) => {
+  
 
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(backendURL + '/users/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ delete_user_id: userId }),
-      });
+    const payload = {
+      delete_user_id: rowObject["User ID"]
+    };
 
-      if (response.ok) {
-        refreshUsers();
-        onClose();
-      } else {
-        console.error("Error deleting user.");
-      }
-    } catch (error) {
-      console.error('Error during deletion:', error);
-    }
-  };
 
+        try {
+            const response = await fetch(`${backendURL}/users/delete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                console.log(`Successfully deleted user ${payload.delete_user_id}`);
+                refreshData();
+            } else {
+                const errorText = await response.text();
+                console.error("Failed to delete user", errorText);
+                alert("Error deleting user.");
+            }
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            alert("Error deleting user.");
+        }
+    };
   return (
-    <form onSubmit={handleDelete}>
-      <input type="submit" value="Delete" />
-    </form>
+        <td>
+            <form onSubmit={handleDelete}>
+                <button type='submit'>Delete</button>
+            </form>
+        </td>
   );
 };
 

@@ -141,10 +141,10 @@ function CoffeeBeanVarietalPage({ backendURL }) {
                             key={index}
                             rowObject={coffeebeanvarietal}
                             backendURL={backendURL}
-                            refreshedCoffeeBeansVarietals={getData}
+                            refreshData={getData}
                             //onUpdateClick from AI code, see citation above 
                             onUpdateClick={handleOpenUpdateForm}
-                            DeleteForm={DeleteCoffeeBeanVarietalForm}
+                            DeleteFormComponent={DeleteCoffeeBeanVarietalForm}
                         />
                     ))}
                 </tbody>

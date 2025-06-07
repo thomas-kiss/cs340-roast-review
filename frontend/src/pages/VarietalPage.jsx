@@ -98,10 +98,10 @@ function VarietalPage({ backendURL }) {
                             key={index}
                             rowObject={varietals}
                             backendURL={backendURL}
-                            refreshVarietals={getData}
+                            refreshData={getData}
                             //onUpdateClick from AI code, see citation above 
                             onUpdateClick={handleOpenUpdateForm}
-                            DeleteForm={DeleteVarietalForm}
+                            DeleteFormComponent={DeleteVarietalForm}
                         />
                     ))}
                 </tbody>

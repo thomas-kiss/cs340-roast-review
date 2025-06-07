@@ -36,19 +36,20 @@ Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-impl
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
 DROP PROCEDURE IF EXISTS sp_CreateUser;
 DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
-DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
-DROP PROCEDURE IF EXISTS sp_UpdateVarietals;
-DROP PROCEDURE IF EXISTS sp_DeleteUser;
-DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
-DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeans;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeBean;
 DROP PROCEDURE IF EXISTS sp_CreateVarietal;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeanVarietal; 
+ 
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBean;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietal;
-DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBean;
-DROP PROCEDURE IF EXISTS sp_DeleteVarietal;
-DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeanVarietal; 
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBeanVarietal;
+
+DROP PROCEDURE IF EXISTS sp_DeleteUser;
+DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
+DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBean;
+DROP PROCEDURE IF EXISTS sp_DeleteVarietal;s
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBeanVarietal;
+DROP PROCEDURE IF EXISTS sp_DeleteCoffeeReview;
 
 
 DELIMITER //
@@ -387,4 +388,33 @@ BEGIN
         END IF;
     COMMIT;
 END //
+
+
+-- DELETE Coffee Review Procedure
+CREATE PROCEDURE sp_DeleteCoffeeReview(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM CoffeeReviews WHERE coffeeReviewID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Coffee Reviews for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+
+
+
+
+
+
 DELIMITER ;
