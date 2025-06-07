@@ -7,7 +7,8 @@ Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 /*
-Citation for CREATE BrewMethod and CREATE Users Procedure 
+Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
+Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
@@ -41,13 +42,12 @@ DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeanVarietal;
  
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBean;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietal;
-DROP PROCEDURE IF EXISTS sp_UpdateVarietal;
 DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBeanVarietal;
 
 DROP PROCEDURE IF EXISTS sp_DeleteUser;
 DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBean;
-DROP PROCEDURE IF EXISTS sp_DeleteVarietal;
+DROP PROCEDURE IF EXISTS sp_DeleteVarietal;s
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBeanVarietal;
 DROP PROCEDURE IF EXISTS sp_DeleteCoffeeReview;
 
@@ -93,6 +93,81 @@ BEGIN
 
     -- Also return the ID directly as a result set
     SELECT LAST_INSERT_ID() AS 'new_user_id';
+END //
+
+
+-- CREATE CoffeeReview Procedure
+CREATE PROCEDURE sp_CreateCoffeeReview (
+    IN p_reviewDate TIMESTAMP,
+    IN p_aroma DECIMAL(4,2),
+    IN p_flavor DECIMAL(4,2),
+    IN p_afterTaste DECIMAL(4,2),
+    IN p_body DECIMAL(4,2),
+    IN p_acidity DECIMAL(4,2),
+    IN p_reviewNotes TEXT,
+    IN p_coffeeBeanID INT,
+    IN p_brewMethodID INT,
+    IN p_userID INT,
+    OUT p_coffeeReviewID INT
+)
+BEGIN
+    INSERT INTO CoffeeReviews (
+        reviewDate,
+        aroma,
+        flavor,
+        afterTaste,
+        body,
+        acidity,
+        reviewNotes,
+        coffeeBeanID,
+        brewMethodID,
+        userID
+    ) VALUES (
+        p_reviewDate,
+        p_aroma,
+        p_flavor,
+        p_afterTaste,
+        p_body,
+        p_acidity,
+        p_reviewNotes,
+        p_coffeeBeanID,
+        p_brewMethodID,
+        p_userID
+    );
+
+    SET p_coffeeReviewID = LAST_INSERT_ID();
+
+    SELECT LAST_INSERT_ID() AS 'new_coffeeReview_id';
+END //
+
+
+-- CREATE CoffeeReview Procedure
+CREATE PROCEDURE sp_CreateCoffeeReview (
+    IN p_userID INT,
+    IN p_beanID INT,
+    IN p_brewMethodID INT,
+    IN p_rating DECIMAL(3,1),
+    IN p_reviewText TEXT,
+    IN p_reviewDate DATE
+)
+BEGIN
+    INSERT INTO CoffeeReviews (
+        userID,
+        beanID,
+        brewMethodID,
+        rating,
+        reviewText,
+        reviewDate
+    ) VALUES (
+        p_userID,
+        p_beanID,
+        p_brewMethodID,
+        p_rating,
+        p_reviewText,
+        p_reviewDate
+    );
+
+    SELECT * FROM CoffeeReviews WHERE reviewID = LAST_INSERT_ID();
 END //
 
 
