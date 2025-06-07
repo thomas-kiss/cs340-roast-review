@@ -7,8 +7,8 @@ Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 /*
-Citation for DELETE User and DELETE BrewMethod
-Date: 06/02/2025
+Citation for DELETE User, CREATE User, CREATE CoffeeReview, and DELETE BrewMethod
+Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
 Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
@@ -38,7 +38,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45581;
+const PORT = 45583;
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -275,6 +275,7 @@ app.post('/brew-methods/create', async (req, res) => {
     }
 });
 
+
 // CREATE Varietals
 
 app.post('/varietals/create', async (req, res) => {
@@ -300,6 +301,7 @@ app.post('/varietals/create', async (req, res) => {
     }
 });
 
+
 // CREATE CoffeeBeans
 
 app.post('/coffeebeans/create', async (req, res) => {
@@ -324,6 +326,7 @@ app.post('/coffeebeans/create', async (req, res) => {
         res.status(500).send("An error occurred while creating the coffee bean.");
     }
 });
+
 
 // CREATE CoffeeBeansVarietals
 
@@ -352,6 +355,7 @@ app.post('/coffeebeansvarietals/create', async (req, res) => {
 
 
 // CREATE User
+
 app.post('/users/create', async (req, res) => {
     try {
         const data = req.body;
@@ -390,8 +394,6 @@ app.post('/users/create', async (req, res) => {
         res.status(500).send("An error occurred while creating the user.");
     }
 });
-
-
 
 // CREATE CoffeeReview
 
@@ -443,6 +445,7 @@ app.post('/coffee-reviews', async (req, res) => {
 
 
 // UPDATE Varietals
+
 app.post('/varietals/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -473,7 +476,9 @@ app.post('/varietals/update', async function (req, res) {
     }
 });
 
+
 // UPDATE CoffeeBeans
+
 app.post('/coffeebeans/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -508,7 +513,9 @@ app.post('/coffeebeans/update', async function (req, res) {
     }
 });
 
+
 // UPDATE Coffee Beans by Varietals
+
 app.post('/coffeebeansvarietals/update', async function (req, res) {
     try {
         // Parse frontend form information
@@ -541,6 +548,7 @@ app.post('/coffeebeansvarietals/update', async function (req, res) {
 
 
 // DELETE Users 
+
 app.post('/users/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -559,8 +567,8 @@ app.post('/users/delete', async function (req, res) {
 });
 
 
-
 // DELETE Coffee Reviews 
+
 app.post('/coffee-reviews/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -579,6 +587,7 @@ app.post('/coffee-reviews/delete', async function (req, res) {
 
 
 // DELETE BrewMethods 
+
 app.post('/brew-methods/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -597,6 +606,7 @@ app.post('/brew-methods/delete', async function (req, res) {
 
 
 // DELETE CoffeeBeans 
+
 app.post('/coffeebeans/delete', async function (req, res) {
     try {
         console.log('Received delete request body:', req.body);
@@ -614,7 +624,9 @@ app.post('/coffeebeans/delete', async function (req, res) {
     }
 });
 
+
 // DELETE Varietals 
+
 app.post('/varietals/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -631,7 +643,9 @@ app.post('/varietals/delete', async function (req, res) {
     }
 });
 
+
 // DELETE CoffeeBeansVarietals
+
 app.post('/coffeebeansvarietals/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -649,7 +663,6 @@ app.post('/coffeebeansvarietals/delete', async function (req, res) {
 });
 
 
-
 // RESET Database
 
 app.post('/reset', async (req, res) => {
@@ -661,7 +674,6 @@ app.post('/reset', async (req, res) => {
         res.status(500).send('Error resetting database.');
     }
 });
-
 
 
 // ########################################
