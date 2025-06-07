@@ -87,31 +87,46 @@ END //
 
 -- CREATE CoffeeReview Procedure
 CREATE PROCEDURE sp_CreateCoffeeReview (
-    IN p_userID INT,
-    IN p_beanID INT,
+    IN p_reviewDate TIMESTAMP,
+    IN p_aroma DECIMAL(4,2),
+    IN p_flavor DECIMAL(4,2),
+    IN p_afterTaste DECIMAL(4,2),
+    IN p_body DECIMAL(4,2),
+    IN p_acidity DECIMAL(4,2),
+    IN p_reviewNotes TEXT,
+    IN p_coffeeBeanID INT,
     IN p_brewMethodID INT,
-    IN p_rating DECIMAL(3,1),
-    IN p_reviewText TEXT,
-    IN p_reviewDate DATE
+    IN p_userID INT,
+    OUT p_coffeeReviewID INT
 )
 BEGIN
     INSERT INTO CoffeeReviews (
-        userID,
-        beanID,
+        reviewDate,
+        aroma,
+        flavor,
+        afterTaste,
+        body,
+        acidity,
+        reviewNotes,
+        coffeeBeanID,
         brewMethodID,
-        rating,
-        reviewText,
-        reviewDate
+        userID
     ) VALUES (
-        p_userID,
-        p_beanID,
+        p_reviewDate,
+        p_aroma,
+        p_flavor,
+        p_afterTaste,
+        p_body,
+        p_acidity,
+        p_reviewNotes,
+        p_coffeeBeanID,
         p_brewMethodID,
-        p_rating,
-        p_reviewText,
-        p_reviewDate
+        p_userID
     );
 
-    SELECT * FROM CoffeeReviews WHERE reviewID = LAST_INSERT_ID();
+    SET p_coffeeReviewID = LAST_INSERT_ID();
+
+    SELECT LAST_INSERT_ID() AS 'new_coffeeReview_id';
 END //
 
 

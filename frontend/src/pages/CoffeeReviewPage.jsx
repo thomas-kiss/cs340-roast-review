@@ -57,12 +57,11 @@ import CreateCoffeeReviewForm from '../components/CreateCoffeeReviewForm';
 import UpdateCoffeeReviewForm from '../components/UpdateCoffeeReviewForm';
 import DeleteCoffeeReviewForm from '../components/DeleteCoffeeBeanForm';
 
-
 function Reviews({ backendURL }) {
     const [reviews, setReviews] = useState([]);
     const [selectedReview, setSelectedReview] = useState(null);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
-    // next three lines adapted from AI code
+
     const [brewMethods, setBrewMethods] = useState([]);
     const [users, setUsers] = useState([]);
     const [coffeeBeans, setCoffeeBeans] = useState([]);
@@ -73,21 +72,21 @@ function Reviews({ backendURL }) {
         try {
             const response = await fetch(backendURL + '/coffee-reviews');
             const data = await response.json();
-            fetchedReviews = data.coffeeReviews || [];  // <-- Correct property from backend response
+            fetchedReviews = data.coffeeReviews || [];
         } catch (error) {
             console.log(error);
         }
 
         setReviews(fetchedReviews);
     };
-    // getCoffeeBeansData,getUsersData, getBrewMethodsData adapted from AI code
-        const getCoffeeBeansData = async function () {
+
+    const getCoffeeBeansData = async function () {
         let fetchedCoffeeBeans = [];
 
         try {
             const response = await fetch(backendURL + '/coffeebeans');
             const data = await response.json();
-            fetchedCoffeeBeans = data.coffeeBeans || [];  // <-- Correct property from backend response
+            fetchedCoffeeBeans = data.coffeeBeans || [];
         } catch (error) {
             console.log(error);
         }
@@ -101,7 +100,7 @@ function Reviews({ backendURL }) {
         try {
             const response = await fetch(backendURL + '/users');
             const data = await response.json();
-            fetchedUsers = data.users || [];  // <-- Correct property from backend response
+            fetchedUsers = data.users || [];
         } catch (error) {
             console.log(error);
         }
@@ -115,7 +114,7 @@ function Reviews({ backendURL }) {
         try {
             const response = await fetch(backendURL + '/brew-methods');
             const data = await response.json();
-            fetchedBrewMethods = data.brewMethods || [];  // <-- Correct property from backend response
+            fetchedBrewMethods = data.brewMethods || [];
         } catch (error) {
             console.log(error);
         }
@@ -135,7 +134,6 @@ function Reviews({ backendURL }) {
         setShowUpdateForm(true);
     };
 
-    //CreateCoffeeReviewForm and UpdateCoffeeReviewForm code modified and adapted from AI code
     return (
         <>
             <h1>Coffee Reviews</h1>
@@ -164,23 +162,26 @@ function Reviews({ backendURL }) {
                     ))}
                 </tbody>
             </table>
-             {coffeeBeans.length>0 && brewMethods.length>0 && users.length>0 && (
-            <CreateCoffeeReviewForm backendURL={backendURL} refreshCoffeeReviews={getData}
-            roastNameList ={[...new Set(coffeeBeans.map(bean => bean["Roast Name"]))]}
-            brewMethodList={brewMethods.map(brews => brews["Brew Method Name"])}
-            userList={users.map(user => user["Username"])}
-             />
+
+            {coffeeBeans.length > 0 && brewMethods.length > 0 && users.length > 0 && (
+                <CreateCoffeeReviewForm
+                    backendURL={backendURL}
+                    refreshCoffeeReviews={getData}
+                    coffeeBeans={coffeeBeans}      // <-- pass full coffeeBeans array with IDs + names
+                    brewMethods={brewMethods}      // <-- pass full brewMethods array
+                    users={users}                  // <-- pass full users array
+                />
             )}
 
-            {showUpdateForm && selectedReview && coffeeBeans.length>0 && brewMethods.length>0 && users.length>0 &&(
+            {showUpdateForm && selectedReview && coffeeBeans.length > 0 && brewMethods.length > 0 && users.length > 0 && (
                 <div className="update-form">
                     <UpdateCoffeeReviewForm
                         selectedReview={selectedReview}
                         backendURL={backendURL}
                         refreshCoffeeBeans={getData}
-                        roastNameList ={[...new Set(coffeeBeans.map(bean => bean["Roast Name"]))]}
-                        brewMethodList={brewMethods.map(brews => brews["Brew Method Name"])}
-                        userList={users.map(user => user["Username"])}
+                        coffeeBeans={coffeeBeans}      // <-- pass full coffeeBeans array here too
+                        brewMethods={brewMethods}
+                        users={users}
                     />
                 </div>
             )}

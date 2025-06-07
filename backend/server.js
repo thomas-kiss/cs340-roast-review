@@ -261,20 +261,52 @@ app.post('/users/create', async (req, res) => {
 
 // CREATE CoffeeReview
 
-router.post('/coffee-reviews', async (req, res) => {
-    const { userID, beanID, brewMethodID, rating, reviewText, reviewDate } = req.body;
-
+app.post('/coffee-reviews', async (req, res) => {
     try {
-        const [rows] = await db.execute(
-            'CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?)',
-            [userID, beanID, brewMethodID, rating, reviewText, reviewDate]
-        );
-        res.status(201).json(rows[0]); // returns the inserted review
-    } catch (err) {
-        console.error('Error creating coffee review:', err);
+        const {
+            userID,
+            coffeeBeanID,
+            brewMethodID,
+            reviewDate,
+            aroma,
+            flavor,
+            afterTaste,
+            body,
+            acidity,
+            reviewNotes
+        } = req.body;
+
+        const query = `CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @new_id);`;
+        
+        // Order of params: reviewDate, aroma, flavor, afterTaste, body, acidity, reviewNotes, coffeeBeanID, brewMethodID, userID
+        const [[[result]]] = await db.query(query, [
+            reviewDate,
+            aroma,
+            flavor,
+            afterTaste,
+            body,
+            acidity,
+            reviewNotes,
+            coffeeBeanID,
+            brewMethodID,
+            userID
+        ]);
+
+        const newID = result.new_coffeeReview_id;
+
+        console.log(`Created new coffee review ID: ${newID}`);
+
+        res.status(201).json({
+            message: 'Coffee review created successfully',
+            coffeeReviewID: newID
+        });
+
+    } catch (error) {
+        console.error('Error creating coffee review:', error);
         res.status(500).json({ error: 'Failed to create coffee review' });
     }
 });
+
 
 
 // UPDATE Varietals

@@ -19,9 +19,10 @@ Prompts: "previously this code hard-coded the delete form. I am trying to make i
 AI Source URL: https://chatgpt.com
 */
 
+
 import { useState } from 'react';
 
-function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameList, brewMethodList, userList }) {
+function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans, brewMethods, users }) {
   const [formData, setFormData] = useState({
     reviewDate: '',
     aroma: '',
@@ -50,7 +51,7 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
       });
 
       refreshCoffeeReviews();
-      // Optionally reset form here
+      // Reset form after submit (optional)
       setFormData({
         reviewDate: '',
         aroma: '',
@@ -71,7 +72,7 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
   return (
     <form onSubmit={handleSubmit}>
       <h2>Create Coffee Review</h2>
-      
+
       <label htmlFor="reviewDate">Review Date: </label>
       <input
         type="datetime-local"
@@ -149,9 +150,9 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
         required
       >
         <option value="">Select Coffee Bean</option>
-        {roastNameList.map((bean) => (
+        {coffeeBeans.map((bean) => (
           <option key={bean['Coffee Bean ID']} value={bean['Coffee Bean ID']}>
-            {bean['Brand Name']} - {bean['Roast Name']}
+            {bean['Roast Name']}
           </option>
         ))}
       </select>
@@ -165,9 +166,9 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
         required
       >
         <option value="">Select Brew Method</option>
-        {brewMethodList.map((method) => (
-          <option key={method['Brew Method ID']} value={method['Brew Method ID']}>
-            {method['Brew Method Name']}
+        {brewMethods.map((brew) => (
+          <option key={brew['Brew Method ID']} value={brew['Brew Method ID']}>
+            {brew['Brew Method Name']}
           </option>
         ))}
       </select>
@@ -181,7 +182,7 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, roastNameLis
         required
       >
         <option value="">Select User</option>
-        {userList.map((user) => (
+        {users.map((user) => (
           <option key={user['User ID']} value={user['User ID']}>
             {user['Username']}
           </option>
