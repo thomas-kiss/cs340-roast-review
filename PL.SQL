@@ -7,7 +7,7 @@ Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 /*
-Citation for CREATE BrewMethod and CREATE Users Procedure 
+Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
@@ -34,6 +34,7 @@ Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-impl
 
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
 DROP PROCEDURE IF EXISTS sp_CreateUser;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietals;
 DROP PROCEDURE IF EXISTS sp_DeleteUser;
 DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
@@ -81,6 +82,36 @@ BEGIN
 
     -- Also return the ID directly as a result set
     SELECT LAST_INSERT_ID() AS 'new_user_id';
+END //
+
+
+-- CREATE CoffeeReview Procedure
+CREATE PROCEDURE sp_CreateCoffeeReview (
+    IN p_userID INT,
+    IN p_beanID INT,
+    IN p_brewMethodID INT,
+    IN p_rating DECIMAL(3,1),
+    IN p_reviewText TEXT,
+    IN p_reviewDate DATE
+)
+BEGIN
+    INSERT INTO CoffeeReviews (
+        userID,
+        beanID,
+        brewMethodID,
+        rating,
+        reviewText,
+        reviewDate
+    ) VALUES (
+        p_userID,
+        p_beanID,
+        p_brewMethodID,
+        p_rating,
+        p_reviewText,
+        p_reviewDate
+    );
+
+    SELECT * FROM CoffeeReviews WHERE reviewID = LAST_INSERT_ID();
 END //
 
 
