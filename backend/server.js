@@ -33,7 +33,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45583;
+const PORT = 45581;
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -512,20 +512,28 @@ app.post('/coffeebeans/update', async function (req, res) {
 
 
 // UPDATE Coffee Beans by Varietals
+// Adapted from CS340 Start code and from AI code
 
 app.post('/coffeebeansvarietals/update', async function (req, res) {
     try {
         // Parse frontend form information
         const data = req.body;
+                // Extract variables from request body
+        const coffeeBeanVarietalID = data.update_coffeebeanvarietal_id;
+        const brandName = data.update_brandName;
+        const roastName = data.update_roastName;
+        const varietalName = data.update_varietalName;
+        console.log('Updating:', { coffeeBeanVarietalID, brandName, roastName, varietalName });
 
+        const query1 = `CALL sp_UpdateCoffeeBeanVarietal(?, ?, ?, ?);`;
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
-        const query1 = 'CALL sp_UpdateCoffeeBeanVarietal(?, ?, ?);';
         const query2 = 'SELECT coffeeBeanID, varietalID FROM CoffeeBeansVarietals WHERE coffeeBeanVarietalID = ?;';
         await db.query(query1, [
-            data.update_coffeebeanvarietal_id,
-            data.update_coffeebean_id,
-            data.update_varietal_id,
+            coffeeBeanVarietalID,
+            brandName,
+            roastName,
+            varietalName
         ]);
         const [[rows]] = await db.query(query2, [data.update_coffeebeanvarietal_id]);
 
@@ -538,7 +546,7 @@ app.post('/coffeebeansvarietals/update', async function (req, res) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
         res.status(500).send(
-            'An error occurred while executing the database queries: ${error.message}'
+            `An error occurred while executing the database queries: ${error.message}`
         );
     }
 });

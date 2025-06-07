@@ -9,12 +9,13 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 // ########################################
 // ########## SETUP
 
+
 const express = require('express');
 const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname, 'dist')));
 
-const PORT = 45584;
+const PORT = 45582;
 
 // ########################################
 // ########## ROUTE HANDLERS
