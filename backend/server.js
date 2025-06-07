@@ -292,6 +292,47 @@ app.post('/coffeebeansvarietals/create', async (req, res) => {
 });
 
 
+// CREATE User
+app.post('/users/create', async (req, res) => {
+    try {
+        const data = req.body;
+
+        if (!data.userName || !data.email || !data.firstName || !data.lastName) {
+            return res.status(400).json({ error: 'userName, email, firstName, and lastName are required' });
+        }
+
+        // Optional: location and joinDate can be provided or set defaults
+        // Assuming joinDate is DATE and location is VARCHAR
+        const location = data.location || null;
+        const joinDate = data.joinDate || new Date().toISOString().split('T')[0]; // defaults to today in YYYY-MM-DD
+
+        // Call stored procedure to create user - assume it returns new userID as out param
+        const query = `CALL sp_CreateUser(?, ?, ?, ?, ?, ?, @new_id);`;
+        // Note: Pass parameters in correct order depending on your stored procedure signature
+        // Assuming sp_CreateUser(userName, email, firstName, lastName, location, joinDate, OUT new_id)
+        const [[[result]]] = await db.query(query, [
+            data.userName,
+            data.email,
+            data.firstName,
+            data.lastName,
+            location,
+            joinDate
+        ]);
+
+        console.log(`Created new user ID: ${result.new_id}`);
+
+        res.status(200).json({
+            message: 'User created successfully',
+            userID: result.new_id
+        });
+
+    } catch (error) {
+        console.error("Error creating user:", error);
+        res.status(500).send("An error occurred while creating the user.");
+    }
+});
+
+
 // UPDATE Varietals
 app.post('/varietals/update', async function (req, res) {
     try {
