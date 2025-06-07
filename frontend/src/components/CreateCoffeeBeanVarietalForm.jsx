@@ -29,7 +29,7 @@ Source URL: https://chatgpt.com
 
 import React, { useState, useEffect } from 'react';
 
-const CreateCoffeeBeanVarietalForm = ({ backendURL, refreshCoffeeBeansVarietals, varietalNameList }) => {
+const CreateCoffeeBeanVarietalForm = ({ backendURL, refreshCoffeeBeanVarietal, varietalNameList }) => {
     // Copied from AI code starting here 
     const [brandNameList, setbrandNameList] = useState([]);
     const [roastNameList, setroastNameList] = useState([]);
@@ -119,8 +119,8 @@ const handleRoastChange = (e) => {
             });
 
             if (response.ok) {
-                console.log("cofee bean varietal created successfully.");
-                refreshCoffeeBeansVarietals();
+                console.log("coffee bean varietal created successfully.");
+                refreshCoffeeBeanVarietal();
             } else {
                 console.error("Error creating coffee bean varietal.");
             }
