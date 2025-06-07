@@ -75,6 +75,30 @@ function CoffeeBeanPage({ backendURL }) {
         setShowUpdateForm(true);
     }
 
+    const handleCloseUpdateForm = () => {
+    setShowUpdateForm(false);
+    setSelectedCoffeeBean(null);
+  };
+
+
+    const handleDeleteCoffeeBean = async (coffeeBean) => {
+    try {
+      const response = await fetch(`${backendURL}/coffeebeans/delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ delete_coffeeBeanID: coffeeBean["Coffee Bean ID"] }),
+      });
+
+      if (response.ok) {
+        getData();  // Refresh brew methods after successful deletion
+      } else {
+        console.error('Failed to delete coffee bean');
+      }
+    } catch (error) {
+      console.error('Error deleting coffee bean:', error);
+    }
+  };
+
     return (
         <>
             <h1>Coffee Beans</h1>
@@ -99,10 +123,10 @@ function CoffeeBeanPage({ backendURL }) {
                             key={index}
                             rowObject={coffeeBeans}
                             backendURL={backendURL}
-                            refreshCoffeeBeans={getData}
+                            refreshData={getData}
                             //onUpdateClick from AI code, see citation above 
                             onUpdateClick={handleOpenUpdateForm}
-                            DeleteForm={DeleteCoffeeBeanForm}
+                            DeleteFormComponent={DeleteCoffeeBeanForm}
                         />
                     ))}
                 </tbody>

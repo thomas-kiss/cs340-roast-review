@@ -33,7 +33,9 @@ Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
-const TableRow = ({ rowObject, onUpdateClick, onDeleteClick }) => {
+const TableRow = ({ rowObject, onUpdateClick, DeleteFormComponent, backendURL, refreshData }) => {
+    console.log('onUpdateClick type:', typeof onUpdateClick);
+  console.log('onDeleteClick type:', typeof onDeleteClick);
   return (
     <tr>
       {Object.values(rowObject).map((value, index) => (
@@ -42,9 +44,11 @@ const TableRow = ({ rowObject, onUpdateClick, onDeleteClick }) => {
       <td>
         <button onClick={() => onUpdateClick(rowObject)}>Update</button>
       </td>
-      <td>
-        <button onClick={() => onDeleteClick(rowObject)}>Delete</button>
-      </td>
+            <DeleteFormComponent
+                rowObject={rowObject}
+                backendURL={backendURL}
+                refreshData={refreshData}
+            />
     </tr>
   );
 };

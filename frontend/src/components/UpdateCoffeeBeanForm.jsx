@@ -16,75 +16,117 @@ Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
-import { useEffect } from "react";
 
-//Both CONST statements Modified from AI code, see citation above
+
+
+import React, { useState, useEffect } from 'react';
+
+
 const UpdateCoffeeBeanForm = ({ selectedCoffeeBean, backendURL, refreshCoffeeBeans }) => {
-        const {
-        'Coffee Bean ID': coffeeBeanID,
-        'Brand Name': brandName,
-        'Roast Name': roastName,
-        'Origin': singleOriginCountry,
-        'Roast Level': roastLevel,
-        'Provided Tasting Notes': providedTastingNotes
-    } = selectedCoffeeBean || {};
+        const [formData, setFormData] = useState({
+            update_coffeeBeanID: '',
+            update_brandName: '',
+            update_roastName: '',
+            update_singleOriginCountry: '',
+            update_roastLevel: '',
+            update_providedTastingNotes: ''
+        });
+
+        useEffect (() => {
+            if (selectedCoffeeBean) {
+                setFormData({
+                    update_coffeeBeanID: selectedCoffeeBean["Coffee Bean ID"] || '',
+                    update_brandName: selectedCoffeeBean["Brand Name"] || '',
+                    update_roastName: selectedCoffeeBean["Roast Name"] ||'',
+                    update_singleOriginCountry: selectedCoffeeBean["Origin"]|| '',
+                    update_roastLevel: selectedCoffeeBean["Roast Level"]||'',
+                    update_providedTastingNotes: selectedCoffeeBean["Provided Tasting Notes"] || ''
+                });
+            }
+        }, [selectedCoffeeBean]);
+
+        const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // Handle the update logic here
+
+        try {
+            const response = await fetch(backendURL + '/coffeebeans/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log("Coffee bean updated successfully.");
+                refreshCoffeeBeans();
+            } else {
+                console.error("Error updating coffee bean.");
+            }
+        } catch (error) {
+            console.error('Error during form submission:', error);
+        }
+    };
 
     return (
         <>
             <h2>Update a Coffee Bean</h2>
-            <form className='cuForm'>
+            <form className='cuForm' onSubmit={handleSubmit}>
 
-                <label htmlFor="update_coffeeBeans_ID">Coffee Bean ID: </label>
+                <label htmlFor="update_brandName">Brand Name: </label>
                 <input
                     type="text"
-                    name="update_coffeeBeans_ID"
-                    id="update_coffeeBeans_ID"
-                    value={coffeeBeanID || ""}
-                    readOnly
-                />
-
-                <label htmlFor="update_coffeeBeans_brandName">Brand Name: </label>
-                <input
-                    type="text"
-                    name="update_coffeeBeans_brandName"
-                    id="update_coffeeBeans_brandName"
-                    value={brandName || ""}
+                    name="update_brandName"
+                    id="update_brandName"
+                    value={formData.update_brandName}
+                    onChange={handleChange}
                     maxLength={45}
                 />
 
-                <label htmlFor="update_coffeeBeans_roastName">Roast Name: </label>
+                <label htmlFor="update_roastName">Roast Name: </label>
                 <input
                     type="text"
-                    name="update_coffeeBeans_roastName"
-                    id="update_coffeeBeans_roastName"
-                    value={roastName || ""}
+                    name="update_roastName"
+                    id="update_roastName"
+                    value={formData.update_roastName}
+                    onChange={handleChange}
                     maxLength={45}
                 />
 
-                <label htmlFor="update_coffeeBeans_singleOriginCountry"> Origin: </label>
+                <label htmlFor="update_singleOriginCountry"> Origin: </label>
                 <input
                     type="text"
-                    name="update_coffeeBeans_singleOriginCountry"
-                    id="update_coffeeBeans_singleOriginCountry"
-                    value = {singleOriginCountry || ""}
+                    name="update_singleOriginCountry"
+                    id="update_singleOriginCountry"
+                    value={formData.update_singleOriginCountry}
+                    onChange={handleChange}
                     maxLength={225}
                 />
 
-                <label htmlFor="update_coffeBeans_roastLevel">Roast Level: </label>
+                <label htmlFor="update_roastLevel">Roast Level: </label>
                 <input
                     type="text"
-                    name="update_coffeBeans_roastLevel"
-                    id="update_coffeBeans_roastLevel"
-                    value = {roastLevel || ""}
+                    name="update_roastLevel"
+                    id="update_roastLevel"
+                    value={formData.update_roastLevel}
+                    onChange={handleChange}
                     maxLength={45}
                 />
 
-                <label htmlFor="update_coffeeBeans_proviedTastingNotes">Provided Tasting Notes: </label>
+                <label htmlFor="update_providedTastingNotes">Provided Tasting Notes: </label>
                 <textarea
-                    name="update_coffeeBeans_proviedTastingNotes"
-                    id="update_coffeeBeans_proviedTastingNotes"
-                    value ={providedTastingNotes || ""}
+                    name="update_providedTastingNotes"
+                    id="update_providedTastingNotes"
                     maxLength={500}
+                    value={formData.update_providedTastingNotes}
+                    onChange={handleChange}
                 />
 
 
