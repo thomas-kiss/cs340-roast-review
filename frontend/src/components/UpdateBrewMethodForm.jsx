@@ -76,7 +76,6 @@ const UpdateBrewMethodForm = ({ selectedBrewMethod, backendURL, refreshBrewMetho
         <>
             <h2>Update a Brew Method</h2>
             <form className="cuForm" onSubmit={handleSubmit}>
-                <label htmlFor="update_brew_method_id">Brew Method ID: </label>
                 <input
                     type="hidden"
                     id="update_brew_method_id"

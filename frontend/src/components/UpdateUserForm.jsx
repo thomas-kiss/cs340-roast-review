@@ -84,7 +84,6 @@ const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => 
         <>
             <h2>Update a User</h2>
             <form className="cuForm" onSubmit={handleSubmit}>
-                <label htmlFor="update_user_id">User ID: </label>
                 <input
                     type="hidden"
                     id="update_user_id"
