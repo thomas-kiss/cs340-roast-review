@@ -19,8 +19,7 @@ Prompts: "previously this code hard-coded the delete form. I am trying to make i
 AI Source URL: https://chatgpt.com
 */
 
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans, brewMethods, users }) {
   const [formData, setFormData] = useState({
@@ -36,22 +35,46 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
     userID: '',
   });
 
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedRoast, setSelectedRoast] = useState('');
+
+  // Extract unique brand names and roast names
+  const uniqueBrands = [...new Set(coffeeBeans.map(cb => cb["Brand Name"]))];
+  const uniqueRoasts = [...new Set(coffeeBeans.map(cb => cb["Roast Name"]))];
+
+  // Filter dropdowns dynamically
+  const filteredBrands = selectedRoast
+    ? [...new Set(coffeeBeans.filter(cb => cb["Roast Name"] === selectedRoast).map(cb => cb["Brand Name"]))]
+    : uniqueBrands;
+
+  const filteredRoasts = selectedBrand
+    ? [...new Set(coffeeBeans.filter(cb => cb["Brand Name"] === selectedBrand).map(cb => cb["Roast Name"]))]
+    : uniqueRoasts;
+
+  // Set the coffeeBeanID when both selections are made
+  useEffect(() => {
+    const matchedBean = coffeeBeans.find(
+      cb => cb["Brand Name"] === selectedBrand && cb["Roast Name"] === selectedRoast
+    );
+    setFormData(prev => ({
+      ...prev,
+      coffeeBeanID: matchedBean ? matchedBean["Coffee Bean ID"] : ''
+    }));
+  }, [selectedBrand, selectedRoast, coffeeBeans]);
+
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     try {
       await fetch(`${backendURL}/coffee-reviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
       refreshCoffeeReviews();
-      // Reset form after submit (optional)
       setFormData({
         reviewDate: '',
         aroma: '',
@@ -64,6 +87,8 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         brewMethodID: '',
         userID: '',
       });
+      setSelectedBrand('');
+      setSelectedRoast('');
     } catch (err) {
       console.error('Error creating review:', err);
     }
@@ -73,7 +98,7 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
     <form onSubmit={handleSubmit}>
       <h2>Create Coffee Review</h2>
 
-      <label htmlFor="reviewDate">Review Date: </label>
+      <label htmlFor="reviewDate">Review Date:</label>
       <input
         type="datetime-local"
         name="reviewDate"
@@ -83,113 +108,131 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         required
       />
 
-      <label htmlFor="aroma">Aroma: </label>
+      <label htmlFor="aroma">Aroma:</label>
       <input
-        type="text"
+        type="number"
         name="aroma"
         id="aroma"
+        step="0.01"        
+        min="0"
+        max="10"
         value={formData.aroma}
         onChange={handleChange}
         required
       />
 
-      <label htmlFor="flavor">Flavor: </label>
+      <label htmlFor="flavor">Flavor:</label>
       <input
-        type="text"
+        type="number"
         name="flavor"
         id="flavor"
+        step="0.01"        
+        min="0"
+        max="10"
         value={formData.flavor}
         onChange={handleChange}
         required
       />
 
-      <label htmlFor="afterTaste">Aftertaste: </label>
+      <label htmlFor="afterTaste">Aftertaste:</label>
       <input
-        type="text"
+        type="number"
         name="afterTaste"
-        id="afterTaste"
+        id="afterTaste"         
+        step="0.01"       
+        min="0"
+        max="10"
         value={formData.afterTaste}
         onChange={handleChange}
         required
       />
 
-      <label htmlFor="body">Body: </label>
+      <label htmlFor="body">Body:</label>
       <input
-        type="text"
+        type="number"
         name="body"
-        id="body"
+        id="body"          
+        step="0.01"      
+        min="0"
+        max="10"
         value={formData.body}
         onChange={handleChange}
         required
       />
 
-      <label htmlFor="acidity">Acidity: </label>
+      <label htmlFor="acidity">Acidity:</label>
       <input
-        type="text"
+        type="number"
         name="acidity"
-        id="acidity"
+        id="acidity"        
+        step="0.01"
+        min="0"
+        max="10"
         value={formData.acidity}
         onChange={handleChange}
         required
       />
 
-      <label htmlFor="reviewNotes">Review Notes: </label>
+      <label htmlFor="reviewNotes">Review Notes:</label>
       <textarea
         name="reviewNotes"
         id="reviewNotes"
         value={formData.reviewNotes}
         onChange={handleChange}
-      ></textarea>
-
-      <label htmlFor="coffeeBeanID">Coffee Bean: </label>
-      <select
-        name="coffeeBeanID"
-        id="coffeeBeanID"
-        value={formData.coffeeBeanID}
-        onChange={handleChange}
         required
-      >
-        <option value="">Select Coffee Bean</option>
-        {coffeeBeans.map((bean) => (
-          <option key={bean['Coffee Bean ID']} value={bean['Coffee Bean ID']}>
-            {bean['Roast Name']}
-          </option>
+      />
+
+      {/* Brand Name Dropdown */}
+      <label>Brand Name:</label>
+      <select value={selectedBrand} onChange={e => setSelectedBrand(e.target.value)} required>
+        <option value="">Select Brand</option>
+        {filteredBrands.map(brand => (
+          <option key={brand} value={brand}>{brand}</option>
         ))}
       </select>
 
-      <label htmlFor="brewMethodID">Brew Method: </label>
+      {/* Roast Name Dropdown */}
+      <label>Roast Name:</label>
+      <select value={selectedRoast} onChange={e => setSelectedRoast(e.target.value)} required>
+        <option value="">Select Roast</option>
+        {filteredRoasts.map(roast => (
+          <option key={roast} value={roast}>{roast}</option>
+        ))}
+      </select>
+
+      {/* Brew Method */}
+      <label>Brew Method:</label>
       <select
         name="brewMethodID"
-        id="brewMethodID"
         value={formData.brewMethodID}
         onChange={handleChange}
         required
       >
         <option value="">Select Brew Method</option>
-        {brewMethods.map((brew) => (
-          <option key={brew['Brew Method ID']} value={brew['Brew Method ID']}>
-            {brew['Brew Method Name']}
+        {brewMethods.map(method => (
+          <option key={method["Brew Method ID"]} value={method["Brew Method ID"]}>
+            {method["Brew Method Name"]}
           </option>
         ))}
       </select>
 
-      <label htmlFor="userID">User: </label>
+      {/* User */}
+      <label>User:</label>
       <select
         name="userID"
-        id="userID"
         value={formData.userID}
         onChange={handleChange}
         required
       >
         <option value="">Select User</option>
-        {users.map((user) => (
-          <option key={user['User ID']} value={user['User ID']}>
-            {user['Username']}
+        {users.map(user => (
+          <option key={user["User ID"]} value={user["User ID"]}>
+            {user["Username"]}
           </option>
         ))}
       </select>
 
-      <button type="submit">Submit</button>
+      <button type="submit">Submit Review</button>
     </form>
   );
 }
