@@ -7,8 +7,8 @@ Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 /*
-Citation for DELETE User and DELETE BrewMethod
-Date: 06/02/2025
+Citation for DELETE User, CREATE User, CREATE CoffeeReview, and DELETE BrewMethod
+Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
 Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
@@ -218,6 +218,7 @@ app.post('/brew-methods/create', async (req, res) => {
 
 
 // CREATE User
+
 app.post('/users/create', async (req, res) => {
     try {
         const data = req.body;
@@ -258,6 +259,24 @@ app.post('/users/create', async (req, res) => {
 });
 
 
+// CREATE CoffeeReview
+
+router.post('/coffee-reviews', async (req, res) => {
+    const { userID, beanID, brewMethodID, rating, reviewText, reviewDate } = req.body;
+
+    try {
+        const [rows] = await db.execute(
+            'CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?)',
+            [userID, beanID, brewMethodID, rating, reviewText, reviewDate]
+        );
+        res.status(201).json(rows[0]); // returns the inserted review
+    } catch (err) {
+        console.error('Error creating coffee review:', err);
+        res.status(500).json({ error: 'Failed to create coffee review' });
+    }
+});
+
+
 // UPDATE Varietals
 app.post('/varietals/update', async function (req, res) {
     try {
@@ -291,6 +310,7 @@ app.post('/varietals/update', async function (req, res) {
 
 
 // DELETE Users 
+
 app.post('/users/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -310,6 +330,7 @@ app.post('/users/delete', async function (req, res) {
 
 
 // DELETE BrewMethods 
+
 app.post('/brew-methods/delete', async function (req, res) {
     try {
         const data = req.body;
