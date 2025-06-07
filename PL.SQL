@@ -7,7 +7,7 @@ Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 /*
-Citation for CREATE BrewMethod and CREATE Users Procedure 
+Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
 Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
@@ -34,10 +34,19 @@ Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-impl
 
 DROP PROCEDURE IF EXISTS sp_CreateBrewMethod;
 DROP PROCEDURE IF EXISTS sp_CreateUser;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeReview;
 DROP PROCEDURE IF EXISTS sp_UpdateVarietals;
 DROP PROCEDURE IF EXISTS sp_DeleteUser;
 DROP PROCEDURE IF EXISTS sp_DeleteBrewMethod;
-
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeans;
+DROP PROCEDURE IF EXISTS sp_CreateVarietal;
+DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBean;
+DROP PROCEDURE IF EXISTS sp_UpdateVarietal;
+DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBean;
+DROP PROCEDURE IF EXISTS sp_DeleteVarietal;
+DROP PROCEDURE IF EXISTS sp_CreateCoffeeBeanVarietal; 
+DROP PROCEDURE IF EXISTS sp_UpdateCoffeeBeanVarietal;
+DROP PROCEDURE IF EXISTS sp_DeleteCoffeeBeanVarietal;
 
 
 DELIMITER //
@@ -84,8 +93,83 @@ BEGIN
 END //
 
 
+-- CREATE CoffeeReview Procedure
+CREATE PROCEDURE sp_CreateCoffeeReview (
+    IN p_reviewDate TIMESTAMP,
+    IN p_aroma DECIMAL(4,2),
+    IN p_flavor DECIMAL(4,2),
+    IN p_afterTaste DECIMAL(4,2),
+    IN p_body DECIMAL(4,2),
+    IN p_acidity DECIMAL(4,2),
+    IN p_reviewNotes TEXT,
+    IN p_coffeeBeanID INT,
+    IN p_brewMethodID INT,
+    IN p_userID INT,
+    OUT p_coffeeReviewID INT
+)
+BEGIN
+    INSERT INTO CoffeeReviews (
+        reviewDate,
+        aroma,
+        flavor,
+        afterTaste,
+        body,
+        acidity,
+        reviewNotes,
+        coffeeBeanID,
+        brewMethodID,
+        userID
+    ) VALUES (
+        p_reviewDate,
+        p_aroma,
+        p_flavor,
+        p_afterTaste,
+        p_body,
+        p_acidity,
+        p_reviewNotes,
+        p_coffeeBeanID,
+        p_brewMethodID,
+        p_userID
+    );
+
+    SET p_coffeeReviewID = LAST_INSERT_ID();
+
+    SELECT LAST_INSERT_ID() AS 'new_coffeeReview_id';
+END //
+
+
+-- CREATE CoffeeReview Procedure
+CREATE PROCEDURE sp_CreateCoffeeReview (
+    IN p_userID INT,
+    IN p_beanID INT,
+    IN p_brewMethodID INT,
+    IN p_rating DECIMAL(3,1),
+    IN p_reviewText TEXT,
+    IN p_reviewDate DATE
+)
+BEGIN
+    INSERT INTO CoffeeReviews (
+        userID,
+        beanID,
+        brewMethodID,
+        rating,
+        reviewText,
+        reviewDate
+    ) VALUES (
+        p_userID,
+        p_beanID,
+        p_brewMethodID,
+        p_rating,
+        p_reviewText,
+        p_reviewDate
+    );
+
+    SELECT * FROM CoffeeReviews WHERE reviewID = LAST_INSERT_ID();
+END //
+
+
 -- CREATE Varietals Procedure
-CREATE PROCEDURE sp_CreateVarietals(
+CREATE PROCEDURE sp_CreateVarietal(
     IN p_name VARCHAR(100), 
     OUT p_varietalID INT
 )
@@ -102,7 +186,7 @@ END //
 
 
 -- UPDATE Varietals Procedure
-CREATE PROCEDURE sp_UpdateVarietals(IN p_id int, p_name varchar(45))
+CREATE PROCEDURE sp_UpdateVarietal(IN p_id int, p_name varchar(45))
 
 BEGIN
     UPDATE Varietals SET name = p_name WHERE varietalID= p_id; 
@@ -134,12 +218,12 @@ END //
 
 
 -- CREATE CoffeeBeans Procedure
-CREATE PROCEDURE sp_CreateCoffeeBeans(
+CREATE PROCEDURE sp_CreateCoffeeBean(
     IN p_brandName VARCHAR(100), 
     IN p_roastName VARCHAR(100),
     IN p_origin VARCHAR(100),
     IN p_roastLevel varchar(100),
-    IN p_providedTastingNotes TEXT
+    IN p_providedTastingNotes TEXT,
     OUT p_coffeeBeanID INT
 )
 BEGIN
@@ -155,7 +239,7 @@ END //
 
 
 -- UPDATE CoffeeBeans Procedure
-CREATE PROCEDURE sp_UpdateCoffeeBeans(IN p_id int,    
+CREATE PROCEDURE sp_UpdateCoffeeBean(IN p_id int,    
     IN p_brandName VARCHAR(100), 
     IN p_roastName VARCHAR(100),
     IN p_origin VARCHAR(100),
@@ -170,13 +254,13 @@ BEGIN
         singleOriginCountry = p_origin, 
         roastLevel = p_roastLevel, 
         providedTastingNotes = p_providedTastingNotes
-    WHERE varietalID= p_id; 
+    WHERE coffeeBeanID= p_id; 
 END //
 
 
 
 -- DELETE CoffeeBeans Procedure
-CREATE PROCEDURE sp_DeleteCoffeeBeans(IN p_id INT)
+CREATE PROCEDURE sp_DeleteCoffeeBean(IN p_id INT)
 BEGIN
     DECLARE error_message VARCHAR(255);
 
@@ -197,6 +281,64 @@ BEGIN
     COMMIT;
 END //
 
+
+
+
+-- CREATE CoffeeBeanVarietals Procedure
+CREATE PROCEDURE sp_CreateCoffeeBeanVarietal(
+    IN p_coffeeBeanID int,
+    IN p_varietalID int,
+    OUT p_coffeeBeanVarietalID INT
+)
+BEGIN
+    INSERT INTO CoffeeBeansVarietals (coffeeBeanID, varietalID)
+    VALUES (p_coffeeBeanID, p_varietalID);
+
+    -- Get the ID of the newly inserted brew method
+    SELECT LAST_INSERT_ID() INTO p_coffeeBeanVarietalID;
+
+    -- Also return the ID directly
+    SELECT LAST_INSERT_ID() AS 'new_coffee_bean_varietal_id';
+END //
+
+
+-- UPDATE CoffeeBeanVarietal Procedure
+CREATE PROCEDURE sp_UpdateCoffeeBeanVarietal(IN p_id int,    
+    IN p_coffeeBeanID int, 
+    IN p_varietalID int
+    )
+
+BEGIN
+    UPDATE CoffeeBeansVarietals 
+    SET 
+        coffeeBeanID = p_coffeeBeanID,
+        varietalID = p_varietalID
+    WHERE coffeeBeanVarietalID= p_id; 
+END //
+
+
+
+-- DELETE CoffeeBeanVarietal Procedure
+CREATE PROCEDURE sp_DeleteCoffeeBeanVarietal(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM CoffeeBeansVarietals WHERE coffeeBeanVarietalID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Coffee Beans by Varietals for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
 
 
 -- DELETE Users Procedure

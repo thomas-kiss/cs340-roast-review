@@ -7,8 +7,8 @@ Group Members: Thomas Kiss, Katlin Hopkins
 */
 
 /*
-Citation for DELETE User and DELETE BrewMethod
-Date: 06/02/2025
+Citation for DELETE User, CREATE User, CREATE CoffeeReview, and DELETE BrewMethod
+Date: 06/06/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
 Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
@@ -293,6 +293,7 @@ app.post('/coffeebeansvarietals/create', async (req, res) => {
 
 
 // CREATE User
+
 app.post('/users/create', async (req, res) => {
     try {
         const data = req.body;
@@ -331,6 +332,56 @@ app.post('/users/create', async (req, res) => {
         res.status(500).send("An error occurred while creating the user.");
     }
 });
+
+
+// CREATE CoffeeReview
+
+app.post('/coffee-reviews', async (req, res) => {
+    try {
+        const {
+            userID,
+            coffeeBeanID,
+            brewMethodID,
+            reviewDate,
+            aroma,
+            flavor,
+            afterTaste,
+            body,
+            acidity,
+            reviewNotes
+        } = req.body;
+
+        const query = `CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @new_id);`;
+        
+        // Order of params: reviewDate, aroma, flavor, afterTaste, body, acidity, reviewNotes, coffeeBeanID, brewMethodID, userID
+        const [[[result]]] = await db.query(query, [
+            reviewDate,
+            aroma,
+            flavor,
+            afterTaste,
+            body,
+            acidity,
+            reviewNotes,
+            coffeeBeanID,
+            brewMethodID,
+            userID
+        ]);
+
+        const newID = result.new_coffeeReview_id;
+
+        console.log(`Created new coffee review ID: ${newID}`);
+
+        res.status(201).json({
+            message: 'Coffee review created successfully',
+            coffeeReviewID: newID
+        });
+
+    } catch (error) {
+        console.error('Error creating coffee review:', error);
+        res.status(500).json({ error: 'Failed to create coffee review' });
+    }
+});
+
 
 
 // UPDATE Varietals
@@ -432,6 +483,7 @@ app.post('/coffeebeansvarietals/update', async function (req, res) {
 
 
 // DELETE Users 
+
 app.post('/users/delete', async function (req, res) {
     try {
         const data = req.body;
@@ -451,6 +503,7 @@ app.post('/users/delete', async function (req, res) {
 
 
 // DELETE BrewMethods 
+
 app.post('/brew-methods/delete', async function (req, res) {
     try {
         const data = req.body;
