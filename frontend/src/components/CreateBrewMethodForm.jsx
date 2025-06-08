@@ -68,7 +68,7 @@ const CreateBrewMethodForm = ({ backendURL, refreshBrewMethods }) => {
                     onChange={handleChange}
                 ></textarea>
 
-                <input type="submit" value="Create" />
+                <input type="submit" />
             </form>
         </>
     );

@@ -225,7 +225,7 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         ))}
       </select>
 
-      <button type="submit">Submit Review</button>
+      <input type="submit" />
     </form>
   );
 }

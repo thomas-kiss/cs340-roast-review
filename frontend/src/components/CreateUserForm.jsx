@@ -119,7 +119,7 @@ const CreateUserForm = ({ backendURL, refreshUsers }) => {
           required
         />
 
-        <input type="submit" value="Create" />
+        <input type="submit" />
       </form>
     </>
   );
