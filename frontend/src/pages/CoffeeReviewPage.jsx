@@ -74,60 +74,44 @@ function Reviews({ backendURL }) {
     const [users, setUsers] = useState([]);
     const [coffeeBeans, setCoffeeBeans] = useState([]);
 
-    const getData = async function () {
-        let fetchedReviews = [];
-
+    const getData = async () => {
         try {
-            const response = await fetch(backendURL + '/coffee-reviews');
+            const response = await fetch(`${backendURL}/coffee-reviews`);
             const data = await response.json();
-            fetchedReviews = data.coffeeReviews || [];
+            setReviews(data.coffeeReviews || []);
         } catch (error) {
-            console.log(error);
+            console.error('Error fetching reviews:', error);
         }
-
-        setReviews(fetchedReviews);
     };
 
-    const getCoffeeBeansData = async function () {
-        let fetchedCoffeeBeans = [];
-
+    const getUsersData = async () => {
         try {
-            const response = await fetch(backendURL + '/coffeebeans');
+            const response = await fetch(`${backendURL}/users`);
             const data = await response.json();
-            fetchedCoffeeBeans = data.coffeeBeans || [];
+            setUsers(data.users || []);
         } catch (error) {
-            console.log(error);
+            console.error('Error fetching users:', error);
         }
-
-        setCoffeeBeans(fetchedCoffeeBeans);
     };
 
-    const getUsersData = async function () {
-        let fetchedUsers = [];
-
+    const getBrewMethodData = async () => {
         try {
-            const response = await fetch(backendURL + '/users');
+            const response = await fetch(`${backendURL}/brew-methods`);
             const data = await response.json();
-            fetchedUsers = data.users || [];
+            setBrewMethods(data.brewMethods || []);
         } catch (error) {
-            console.log(error);
+            console.error('Error fetching brew methods:', error);
         }
-
-        setUsers(fetchedUsers);
     };
 
-    const getBrewMethodData = async function () {
-        let fetchedBrewMethods = [];
-
+    const getCoffeeBeansData = async () => {
         try {
-            const response = await fetch(backendURL + '/brew-methods');
+            const response = await fetch(`${backendURL}/coffeebeans`);
             const data = await response.json();
-            fetchedBrewMethods = data.brewMethods || [];
+            setCoffeeBeans(data.coffeeBeans || []);
         } catch (error) {
-            console.log(error);
+            console.error('Error fetching coffee beans:', error);
         }
-
-        setBrewMethods(fetchedBrewMethods);
     };
 
     useEffect(() => {
@@ -140,6 +124,11 @@ function Reviews({ backendURL }) {
     const handleOpenUpdateForm = (review) => {
         setSelectedReview(review);
         setShowUpdateForm(true);
+    };
+
+    const handleCloseUpdateForm = () => {
+        setSelectedReview(null);
+        setShowUpdateForm(false);
     };
 
     return (
@@ -175,23 +164,19 @@ function Reviews({ backendURL }) {
                 <CreateCoffeeReviewForm
                     backendURL={backendURL}
                     refreshCoffeeReviews={getData}
-                    coffeeBeans={coffeeBeans}      
-                    brewMethods={brewMethods}      
-                    users={users}                 
+                    coffeeBeans={coffeeBeans}
+                    brewMethods={brewMethods}
+                    users={users}
                 />
             )}
 
-            {showUpdateForm && selectedReview && coffeeBeans.length > 0 && brewMethods.length > 0 && users.length > 0 && (
-                <div className="update-form">
-                    <UpdateCoffeeReviewForm
-                        selectedReview={selectedReview}
-                        backendURL={backendURL}
-                        refreshCoffeeBeans={getData}
-                        coffeeBeans={coffeeBeans}      
-                        brewMethods={brewMethods}
-                        users={users}
-                    />
-                </div>
+            {showUpdateForm && selectedReview && (
+                <UpdateCoffeeReviewForm
+                    selectedCoffeeReview={selectedReview}
+                    backendURL={backendURL}
+                    refreshReviews={getData}
+                    onClose={handleCloseUpdateForm}
+                />
             )}
         </>
     );

@@ -33,220 +33,127 @@ Adapted from CS340 Starter App Code
 Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose, roastNameList, brewMethodList, userList }) => {
-    const {
-        'Review ID': reviewID,
-        'Review Date': reviewDate,
-        Aroma: aroma,
-        Flavor: flavor,
-        Aftertaste: afterTaste,
-        Body: body,
-        Acidity: acidity,
-        Notes: reviewNotes,
-        'User ID': userID,
-        'User Name': userName,
-        'Bean ID': beanID,
-        'Roast Name': roastName,
-        'Brew Method ID': brewMethodID,
-        'Brew Method': brewMethodName
-    } = selectedReview || {};
-
-    const [formData, setFormData] = useState({
-        reviewDate: reviewDate ? reviewDate.slice(0, 16) : "",  
-        aroma: aroma || "",
-        flavor: flavor || "",
-        afterTaste: afterTaste || "",
-        body: body || "",
-        acidity: acidity || "",
-        reviewNotes: reviewNotes || ""
-    });
+const UpdateCoffeeReviewForm = ({ selectedCoffeeReview, backendURL, refreshReviews, onClose }) => {
+    const [formData, setFormData] = useState({});
+    const [users, setUsers] = useState([]);
+    const [brewMethods, setBrewMethods] = useState([]);
+    const [coffeeBeans, setCoffeeBeans] = useState([]);
 
     useEffect(() => {
-        setFormData({
-            reviewDate: reviewDate ? reviewDate.slice(0, 16) : "",  // <-- slice applied here too
-            aroma: aroma || "",
-            flavor: flavor || "",
-            afterTaste: afterTaste || "",
-            body: body || "",
-            acidity: acidity || "",
-            reviewNotes: reviewNotes || ""
-        });
-    }, [selectedReview]);
+        fetch(`${backendURL}/users`).then(res => res.json()).then(data => setUsers(data.users));
+        fetch(`${backendURL}/brew-methods`).then(res => res.json()).then(data => setBrewMethods(data.brewMethods));
+        fetch(`${backendURL}/coffeebeans`).then(res => res.json()).then(data => setCoffeeBeans(data.coffeeBeans));
+    }, [backendURL]);
+
+    useEffect(() => {
+        if (selectedCoffeeReview) {
+            setFormData({
+                coffeeReviewID: selectedCoffeeReview["Review ID"],
+                reviewDate: selectedCoffeeReview["Review Date"].slice(0, 16),
+                aroma: selectedCoffeeReview["Aroma"],
+                flavor: selectedCoffeeReview["Flavor"],
+                afterTaste: selectedCoffeeReview["Aftertaste"],
+                body: selectedCoffeeReview["Body"],
+                acidity: selectedCoffeeReview["Acidity"],
+                reviewNotes: selectedCoffeeReview["Notes"],
+                coffeeBeanID: selectedCoffeeReview["Bean ID"],
+                brewMethodID: selectedCoffeeReview["Brew Method ID"],
+                userID: selectedCoffeeReview["User ID"]
+            });
+        }
+    }, [selectedCoffeeReview]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const updatePayload = {
-            reviewDate: formData.reviewDate,
-            Aroma: Number(formData.aroma),
-            Flavor: Number(formData.flavor),
-            Aftertaste: Number(formData.afterTaste),
-            Body: Number(formData.body),
-            Acidity: Number(formData.acidity),
-            Notes: formData.reviewNotes
-        };
-
         try {
-            const response = await fetch(`${backendURL}/coffee-reviews/${reviewID}`, {
-                method: 'PUT',
+            const response = await fetch(`${backendURL}/coffee-reviews/update`, {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatePayload)
+                body: JSON.stringify(formData)
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (response.ok) {
+                refreshReviews();
+                onClose();
+            } else {
+                console.error("Failed to update coffee review");
             }
-
-            await refreshReviews();
-            onClose();
         } catch (error) {
-            console.error("Failed to update review:", error);
+            console.error("Error during update:", error);
         }
     };
 
     return (
-        <>
-            <h2>Update a Coffee Review</h2>
-            <form className="cuForm" onSubmit={handleSubmit}>
-                <label htmlFor="update_review_id">Review ID:</label>
-                <input
-                    type="text"
-                    name="reviewID"
-                    id="update_review_id"
-                    value={reviewID || ""}
-                    readOnly
-                />
+        <form className="cuForm" onSubmit={handleSubmit}>
+            <h2>Update Coffee Review</h2>
+            <label>Review Date:
+                <input type="datetime-local" name="reviewDate" value={formData.reviewDate || ''} onChange={handleChange} required />
+            </label>
+            <label>Aroma:
+                <input type="number" step="0.01" name="aroma" value={formData.aroma || ''} onChange={handleChange} required />
+            </label>
+            <label>Flavor:
+                <input type="number" step="0.01" name="flavor" value={formData.flavor || ''} onChange={handleChange} required />
+            </label>
+            <label>Aftertaste:
+                <input type="number" step="0.01" name="afterTaste" value={formData.afterTaste || ''} onChange={handleChange} required />
+            </label>
+            <label>Body:
+                <input type="number" step="0.01" name="body" value={formData.body || ''} onChange={handleChange} required />
+            </label>
+            <label>Acidity:
+                <input type="number" step="0.01" name="acidity" value={formData.acidity || ''} onChange={handleChange} required />
+            </label>
+            <label>Review Notes:
+                <textarea name="reviewNotes" value={formData.reviewNotes || ''} onChange={handleChange} required />
+            </label>
 
-                <label htmlFor="update_review_date">Review Date:</label>
-                <input
-                    type="datetime-local"  
-                    name="reviewDate"
-                    id="update_review_date"
-                    value={formData.reviewDate}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="update_aroma">Aroma:</label>
-                <input
-                    type="number"
-                    name="aroma"
-                    id="update_aroma"
-                    value={formData.aroma}
-                    onChange={handleChange}
-                    min={1}
-                    max={10}
-                    required
-                />
-
-                <label htmlFor="update_flavor">Flavor:</label>
-                <input
-                    type="number"
-                    name="flavor"
-                    id="update_flavor"
-                    value={formData.flavor}
-                    onChange={handleChange}
-                    min={1}
-                    max={10}
-                    required
-                />
-
-                <label htmlFor="update_aftertaste">Aftertaste:</label>
-                <input
-                    type="number"
-                    name="afterTaste"
-                    id="update_aftertaste"
-                    value={formData.afterTaste}
-                    onChange={handleChange}
-                    min={1}
-                    max={10}
-                    required
-                />
-
-                <label htmlFor="update_body">Body:</label>
-                <input
-                    type="number"
-                    name="body"
-                    id="update_body"
-                    value={formData.body}
-                    onChange={handleChange}
-                    min={1}
-                    max={10}
-                    required
-                />
-
-                <label htmlFor="update_acidity">Acidity:</label>
-                <input
-                    type="number"
-                    name="acidity"
-                    id="update_acidity"
-                    value={formData.acidity}
-                    onChange={handleChange}
-                    min={1}
-                    max={10}
-                    required
-                />
-
-                <label htmlFor="update_notes">Review Notes:</label>
-                <textarea
-                    name="reviewNotes"
-                    id="update_notes"
-                    value={formData.reviewNotes}
-                    onChange={handleChange}
-                    maxLength={1000}
-                />
-
-                <label htmlFor="update_user_name">User Name:</label>
-                <select
-                    name="userName"
-                    id="update_user_name"
-                    value={userName || ""}>
-                    {userList.map((user, index) => (
-                    <option key={index} value={user}>
-                        {user}
-                    </option>
-                ))}
+            <label>Brew Method:
+                <select name="brewMethodID" value={formData.brewMethodID || ''} onChange={handleChange} required>
+                    <option value="">Select Brew Method</option>
+                    {brewMethods.map(method => (
+                        <option key={method["Brew Method ID"]} value={method["Brew Method ID"]}>
+                            {method["Brew Method Name"]}
+                        </option>
+                    ))}
                 </select>
+            </label>
 
-                <label htmlFor="update_roast_name">Roast Name:</label>
-                <select 
-                    name="roastName"
-                    id="update_roast_name"
-                    value={roastName || ""}>
-                    {roastNameList.map((roast, index) => (
-                    <option key={index} value={roast}>
-                        {roast}
-                    </option>
-                ))}
+            <label>User:
+                <select name="userID" value={formData.userID || ''} onChange={handleChange} required>
+                    <option value="">Select User</option>
+                    {users.map(user => (
+                        <option key={user["User ID"]} value={user["User ID"]}>
+                            {user["Username"]}
+                        </option>
+                    ))}
                 </select>
+            </label>
 
-                <label htmlFor="update_brew_method">Brew Method:</label>
-                <select
-                    name="brewMethodName"
-                    id="update_brew_method"
-                    value={brewMethodName || ""}>                    
-                    {brewMethodList.map((brewMethod, index) => (
-                    <option key={index} value={brewMethod}>
-                        {brewMethod}
-                    </option>
-                ))}
+            <label>Coffee Bean:
+                <select name="coffeeBeanID" value={formData.coffeeBeanID || ''} onChange={handleChange} required>
+                    <option value="">Select Coffee Bean</option>
+                    {coffeeBeans.map(bean => (
+                        <option key={bean["Coffee Bean ID"]} value={bean["Coffee Bean ID"]}>
+                            {bean["Brand Name"]} - {bean["Roast Name"]}
+                        </option>
+                    ))}
                 </select>
+            </label>
 
-                <input type="submit" />
-            </form>
-        </>
+            <button type="submit">Update Review</button>
+            <button type="button" onClick={onClose}>Cancel</button>
+        </form>
     );
 };
 
-export default UpdateReviewForm;
+export default UpdateCoffeeReviewForm;
+
 
