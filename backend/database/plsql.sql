@@ -72,10 +72,8 @@ BEGIN
     INSERT INTO BrewMethods (name, description)
     VALUES (p_name, p_description);
 
-    -- Get the ID of the newly inserted brew method
     SELECT LAST_INSERT_ID() INTO p_brewMethodID;
 
-    -- Also return the ID directly
     SELECT LAST_INSERT_ID() AS 'new_brew_method_id';
 END //
 
@@ -97,10 +95,8 @@ BEGIN
         p_userName, p_email, p_firstName, p_lastName, p_location, p_joinDate
     );
 
-    -- Get the ID of the newly inserted user
     SELECT LAST_INSERT_ID() INTO p_userID;
 
-    -- Also return the ID directly as a result set
     SELECT LAST_INSERT_ID() AS 'new_user_id';
 END //
 
@@ -276,6 +272,36 @@ BEGIN
     WHERE brewMethodID = p_brewMethodID;
 END //
 
+
+-- UPDATE CoffeeReview Procedure
+CREATE PROCEDURE sp_UpdateCoffeeReview(
+    IN p_coffeeReviewID INT,
+    IN p_reviewDate TIMESTAMP,
+    IN p_aroma DECIMAL(4,2),
+    IN p_flavor DECIMAL(4,2),
+    IN p_afterTaste DECIMAL(4,2),
+    IN p_body DECIMAL(4,2),
+    IN p_acidity DECIMAL(4,2),
+    IN p_reviewNotes TEXT,
+    IN p_coffeeBeanID INT,
+    IN p_brewMethodID INT,
+    IN p_userID INT
+)
+BEGIN
+    UPDATE CoffeeReviews
+    SET
+        reviewDate = p_reviewDate,
+        aroma = p_aroma,
+        flavor = p_flavor,
+        afterTaste = p_afterTaste,
+        body = p_body,
+        acidity = p_acidity,
+        reviewNotes = p_reviewNotes,
+        coffeeBeanID = p_coffeeBeanID,
+        brewMethodID = p_brewMethodID,
+        userID = p_userID
+    WHERE coffeeReviewID = p_coffeeReviewID;
+END //
 
 
 -- DELETE CoffeeBeans Procedure
