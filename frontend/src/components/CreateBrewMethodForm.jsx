@@ -35,8 +35,8 @@ const CreateBrewMethodForm = ({ backendURL, refreshBrewMethods }) => {
 
             if (response.ok) {
                 console.log("Brew method created successfully.");
-                refreshBrewMethods(); // refresh the list
-                setFormData({ name: '', description: '' }); // reset form
+                refreshBrewMethods(); 
+                setFormData({ name: '', description: '' }); 
             } else {
                 console.error("Error creating brew method.");
             }

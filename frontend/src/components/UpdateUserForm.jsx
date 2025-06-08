@@ -26,7 +26,6 @@ import React, { useState, useEffect } from 'react';
 
 const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => {
 
-    //Both CONST statements Modified from AI code, see citation above
     const [formData, setFormData] = useState({
         update_user_id: '',
         update_user_userName: '',
@@ -37,7 +36,6 @@ const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => 
         update_user_joinDate: ''
     });
 
-    // useEffect populates form fields based on selectedUser
     useEffect(() => {
         if (selectedUser) {
             setFormData({
@@ -52,13 +50,11 @@ const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => 
         }
     }, [selectedUser]);
 
-    // Handles typing into form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // Handles submission of update form
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -70,8 +66,8 @@ const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => 
 
             if (response.ok) {
                 console.log("User updated successfully");
-                refreshUsers();  // refresh table data
-                onClose();       // close update form
+                refreshUsers();  
+                onClose();      
             } else {
                 console.error("Failed to update user");
             }

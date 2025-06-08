@@ -38,11 +38,9 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedRoast, setSelectedRoast] = useState('');
 
-  // Extract unique brand names and roast names
   const uniqueBrands = [...new Set(coffeeBeans.map(cb => cb["Brand Name"]))];
   const uniqueRoasts = [...new Set(coffeeBeans.map(cb => cb["Roast Name"]))];
 
-  // Filter dropdowns dynamically
   const filteredBrands = selectedRoast
     ? [...new Set(coffeeBeans.filter(cb => cb["Roast Name"] === selectedRoast).map(cb => cb["Brand Name"]))]
     : uniqueBrands;
@@ -51,7 +49,6 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
     ? [...new Set(coffeeBeans.filter(cb => cb["Brand Name"] === selectedBrand).map(cb => cb["Roast Name"]))]
     : uniqueRoasts;
 
-  // Set the coffeeBeanID when both selections are made
   useEffect(() => {
     const matchedBean = coffeeBeans.find(
       cb => cb["Brand Name"] === selectedBrand && cb["Roast Name"] === selectedRoast
@@ -182,7 +179,6 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         required
       />
 
-      {/* Brand Name Dropdown */}
       <label>Brand Name:</label>
       <select value={selectedBrand} onChange={e => setSelectedBrand(e.target.value)} required>
         <option value="">Select Brand</option>
@@ -191,7 +187,6 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         ))}
       </select>
 
-      {/* Roast Name Dropdown */}
       <label>Roast Name:</label>
       <select value={selectedRoast} onChange={e => setSelectedRoast(e.target.value)} required>
         <option value="">Select Roast</option>
@@ -200,7 +195,6 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         ))}
       </select>
 
-      {/* Brew Method */}
       <label>Brew Method:</label>
       <select
         name="brewMethodID"
@@ -216,7 +210,6 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
         ))}
       </select>
 
-      {/* User */}
       <label>User:</label>
       <select
         name="userID"

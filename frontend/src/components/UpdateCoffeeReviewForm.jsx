@@ -36,7 +36,6 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 import { useState, useEffect } from 'react';
 
 const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose, roastNameList, brewMethodList, userList }) => {
-    // Destructure from selectedReview
     const {
         'Review ID': reviewID,
         'Review Date': reviewDate,
@@ -54,7 +53,6 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
         'Brew Method': brewMethodName
     } = selectedReview || {};
 
-    // Controlled inputs state with date formatting applied here for datetime-local input
     const [formData, setFormData] = useState({
         reviewDate: reviewDate ? reviewDate.slice(0, 16) : "",  
         aroma: aroma || "",
@@ -65,7 +63,6 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
         reviewNotes: reviewNotes || ""
     });
 
-    // Update formData when selectedReview changes
     useEffect(() => {
         setFormData({
             reviewDate: reviewDate ? reviewDate.slice(0, 16) : "",  // <-- slice applied here too
@@ -78,7 +75,6 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
         });
     }, [selectedReview]);
 
-    // Handle changes to inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -87,7 +83,6 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
         }));
     };
 
-    // Submit updated data
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -112,7 +107,6 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Refresh list and close form on success
             await refreshReviews();
             onClose();
         } catch (error) {
@@ -120,7 +114,6 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
         }
     };
 
-    // coffee bean, brew method, and user drop downs modified based on AI code
     return (
         <>
             <h2>Update a Coffee Review</h2>
@@ -134,10 +127,9 @@ const UpdateReviewForm = ({ selectedReview, backendURL, refreshReviews, onClose,
                     readOnly
                 />
 
-                {/* Changed input type to datetime-local for date + time */}
                 <label htmlFor="update_review_date">Review Date:</label>
                 <input
-                    type="datetime-local"  // <-- changed here
+                    type="datetime-local"  
                     name="reviewDate"
                     id="update_review_date"
                     value={formData.reviewDate}

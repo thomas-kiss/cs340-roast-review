@@ -175,9 +175,9 @@ function Reviews({ backendURL }) {
                 <CreateCoffeeReviewForm
                     backendURL={backendURL}
                     refreshCoffeeReviews={getData}
-                    coffeeBeans={coffeeBeans}      // <-- pass full coffeeBeans array with IDs + names
-                    brewMethods={brewMethods}      // <-- pass full brewMethods array
-                    users={users}                  // <-- pass full users array
+                    coffeeBeans={coffeeBeans}      
+                    brewMethods={brewMethods}      
+                    users={users}                 
                 />
             )}
 
@@ -187,7 +187,7 @@ function Reviews({ backendURL }) {
                         selectedReview={selectedReview}
                         backendURL={backendURL}
                         refreshCoffeeBeans={getData}
-                        coffeeBeans={coffeeBeans}      // <-- pass full coffeeBeans array here too
+                        coffeeBeans={coffeeBeans}      
                         brewMethods={brewMethods}
                         users={users}
                     />

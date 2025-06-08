@@ -52,7 +52,6 @@ function BrewMethodPage({ backendURL }) {
   const [selectedBrewMethod, setSelectedBrewMethod] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
-  // Fetch all brew methods
   const getData = async () => {
     try {
       const response = await fetch(`${backendURL}/brew-methods`);
@@ -68,13 +67,11 @@ function BrewMethodPage({ backendURL }) {
     getData();
   }, []);
 
-  // Open update form with selected brew method
   const handleOpenUpdateForm = (brewMethod) => {
     setSelectedBrewMethod(brewMethod);
     setShowUpdateForm(true);
   };
 
-  // Close update form
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
     setSelectedBrewMethod(null);
@@ -107,10 +104,8 @@ function BrewMethodPage({ backendURL }) {
         </tbody>
       </table>
 
-      {/* Create Brew Method Form is always visible */}
       <CreateBrewMethodForm backendURL={backendURL} refreshBrewMethods={getData} />
 
-      {/* Conditionally render UpdateBrewMethodForm */}
       {showUpdateForm && selectedBrewMethod && (
         <UpdateBrewMethodForm
           selectedBrewMethod={selectedBrewMethod}

@@ -39,7 +39,7 @@ const CreateUserForm = ({ backendURL, refreshUsers }) => {
 
       if (response.ok) {
         console.log("User created successfully.");
-        refreshUsers();               // refresh user list after creation
+        refreshUsers();
         setFormData({
           userName: '',
           email: '',
@@ -47,7 +47,7 @@ const CreateUserForm = ({ backendURL, refreshUsers }) => {
           lastName: '',
           location: '',
           joinDate: ''
-        });                           // reset form
+        });                          
       } else {
         console.error("Error creating user.");
       }

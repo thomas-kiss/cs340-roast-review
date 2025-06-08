@@ -51,7 +51,6 @@ function UserPage({ backendURL }) {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
 
-  // Fetch all users
   const getData = async () => {
     try {
       const response = await fetch(backendURL + '/users');
@@ -66,13 +65,11 @@ function UserPage({ backendURL }) {
     getData();
   }, []);
 
-  // Open update form with selected user
   const handleOpenUpdateForm = (user) => {
     setSelectedUser(user);
     setShowUpdateForm(true);
   };
 
-  // Close update form
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
     setSelectedUser(null);
@@ -106,10 +103,8 @@ function UserPage({ backendURL }) {
         </tbody>
       </table>
 
-      {/* Create User Form is always visible */}
       <CreateUserForm backendURL={backendURL} refreshUsers={getData} />
 
-      {/* Conditionally render UpdateUserForm */}
       {showUpdateForm && selectedUser && (
         <UpdateUserForm
           selectedUser={selectedUser}

@@ -26,14 +26,12 @@ import React, { useState, useEffect } from 'react';
 
 const UpdateBrewMethodForm = ({ selectedBrewMethod, backendURL, refreshBrewMethods, onClose }) => {
 
-    // Both CONST statements Modified from AI code, see citation above
     const [formData, setFormData] = useState({
         update_brew_method_id: '',
         update_brew_method_name: '',
         update_brew_method_description: ''
     });
 
-    // useEffect populates form fields based on selectedBrewMethod
     useEffect(() => {
         if (selectedBrewMethod) {
             setFormData({
@@ -44,13 +42,11 @@ const UpdateBrewMethodForm = ({ selectedBrewMethod, backendURL, refreshBrewMetho
         }
     }, [selectedBrewMethod]);
 
-    // Handles typing into form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    // Handles submission of update form
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -62,8 +58,8 @@ const UpdateBrewMethodForm = ({ selectedBrewMethod, backendURL, refreshBrewMetho
 
             if (response.ok) {
                 console.log("Brew method updated successfully");
-                refreshBrewMethods();  // refresh table data
-                onClose();             // close update form
+                refreshBrewMethods();  
+                onClose();             
             } else {
                 console.error("Failed to update brew method");
             }
