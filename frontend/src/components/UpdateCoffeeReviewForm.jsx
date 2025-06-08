@@ -74,7 +74,7 @@ const UpdateCoffeeReviewForm = ({ selectedCoffeeReview, backendURL, refreshRevie
         e.preventDefault();
         try {
             const response = await fetch(`${backendURL}/coffee-reviews/update`, {
-                method: 'POST',
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
@@ -148,12 +148,9 @@ const UpdateCoffeeReviewForm = ({ selectedCoffeeReview, backendURL, refreshRevie
                 </select>
             </label>
 
-            <button type="submit">Update Review</button>
-            <button type="button" onClick={onClose}>Cancel</button>
+            <input type="submit" />
         </form>
     );
 };
 
 export default UpdateCoffeeReviewForm;
-
-
