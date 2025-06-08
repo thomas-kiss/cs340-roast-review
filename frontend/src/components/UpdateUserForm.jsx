@@ -141,7 +141,7 @@ const UpdateUserForm = ({ selectedUser, backendURL, refreshUsers, onClose }) => 
                     onChange={handleChange}
                 />
 
-                <input type="submit" value="Update User" />
+                <input type="submit" />
             </form>
         </>
     );

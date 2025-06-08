@@ -97,7 +97,7 @@ const UpdateBrewMethodForm = ({ selectedBrewMethod, backendURL, refreshBrewMetho
                     maxLength={500}
                 ></textarea>
 
-                <input type="submit" value="Update Brew Method" />
+                <input type="submit" />
             </form>
         </>
     );
