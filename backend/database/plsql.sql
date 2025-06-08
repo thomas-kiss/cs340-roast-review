@@ -62,21 +62,6 @@ DROP PROCEDURE IF EXISTS sp_DeleteCoffeeReview;
 
 DELIMITER //
 
--- CREATE BrewMethod Procedure
-CREATE PROCEDURE sp_CreateBrewMethod(
-    IN p_name VARCHAR(100), 
-    IN p_description TEXT,
-    OUT p_brewMethodID INT
-)
-BEGIN
-    INSERT INTO BrewMethods (name, description)
-    VALUES (p_name, p_description);
-
-    SELECT LAST_INSERT_ID() INTO p_brewMethodID;
-
-    SELECT LAST_INSERT_ID() AS 'new_brew_method_id';
-END //
-
 
 -- CREATE User Procedure
 CREATE PROCEDURE sp_CreateUser(
@@ -99,6 +84,105 @@ BEGIN
 
     SELECT LAST_INSERT_ID() AS 'new_user_id';
 END //
+
+
+-- UPDATE User Procedure
+CREATE PROCEDURE sp_UpdateUser(
+    IN p_userID INT,
+    IN p_userName VARCHAR(45),
+    IN p_email VARCHAR(225),
+    IN p_firstName VARCHAR(45),
+    IN p_lastName VARCHAR(45),
+    IN p_location VARCHAR(225),
+    IN p_joinDate TIMESTAMP
+)
+BEGIN
+    UPDATE Users
+    SET 
+        userName = p_userName,
+        email = p_email,
+        firstName = p_firstName,
+        lastName = p_lastName,
+        location = p_location,
+        joinDate = p_joinDate
+    WHERE userID = p_userID;
+END //
+
+
+-- DELETE User Procedure
+CREATE PROCEDURE sp_DeleteUser(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM Users WHERE userID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Users for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+
+
+
+-- CREATE BrewMethod Procedure
+CREATE PROCEDURE sp_CreateBrewMethod(
+    IN p_name VARCHAR(100), 
+    IN p_description TEXT,
+    OUT p_brewMethodID INT
+)
+BEGIN
+    INSERT INTO BrewMethods (name, description)
+    VALUES (p_name, p_description);
+
+    SELECT LAST_INSERT_ID() INTO p_brewMethodID;
+
+    SELECT LAST_INSERT_ID() AS 'new_brew_method_id';
+END //
+
+
+-- UPDATE BrewMethod Procedure
+CREATE PROCEDURE sp_UpdateBrewMethod(
+    IN p_brewMethodID INT,
+    IN p_name VARCHAR(255),
+    IN p_description TEXT
+)
+BEGIN
+    UPDATE BrewMethods
+    SET name = p_name,
+        description = p_description
+    WHERE brewMethodID = p_brewMethodID;
+END //
+
+
+-- DELETE BrewMethod Procedure
+CREATE PROCEDURE sp_DeleteBrewMethod(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM BrewMethods WHERE brewMethodID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in BrewMethods for ID: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+
 
 
 -- CREATE CoffeeReview Procedure
@@ -144,6 +228,60 @@ BEGIN
 
     SELECT LAST_INSERT_ID() AS 'new_coffeeReview_id';
 END //
+
+
+-- UPDATE CoffeeReview Procedure
+CREATE PROCEDURE sp_UpdateCoffeeReview(
+    IN p_coffeeReviewID INT,
+    IN p_reviewDate TIMESTAMP,
+    IN p_aroma DECIMAL(4,2),
+    IN p_flavor DECIMAL(4,2),
+    IN p_afterTaste DECIMAL(4,2),
+    IN p_body DECIMAL(4,2),
+    IN p_acidity DECIMAL(4,2),
+    IN p_reviewNotes TEXT,
+    IN p_coffeeBeanID INT,
+    IN p_brewMethodID INT,
+    IN p_userID INT
+)
+BEGIN
+    UPDATE CoffeeReviews
+    SET
+        reviewDate = p_reviewDate,
+        aroma = p_aroma,
+        flavor = p_flavor,
+        afterTaste = p_afterTaste,
+        body = p_body,
+        acidity = p_acidity,
+        reviewNotes = p_reviewNotes,
+        coffeeBeanID = p_coffeeBeanID,
+        brewMethodID = p_brewMethodID,
+        userID = p_userID
+    WHERE coffeeReviewID = p_coffeeReviewID;
+END //
+
+
+-- DELETE CoffeeReview Procedure
+CREATE PROCEDURE sp_DeleteCoffeeReview(IN p_id INT)
+BEGIN
+    DECLARE error_message VARCHAR(255);
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        DELETE FROM CoffeeReviews WHERE coffeeReviewID = p_id;
+
+        IF ROW_COUNT() = 0 THEN
+            SET error_message = CONCAT('No matching record found in Coffee Reviews for id: ', p_id);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+    COMMIT;
+END //
+
 
 
 -- CREATE Varietals Procedure
@@ -236,74 +374,6 @@ BEGIN
 END //
 
 
--- UPDATE Users Procedure
-CREATE PROCEDURE sp_UpdateUser(
-    IN p_userID INT,
-    IN p_userName VARCHAR(45),
-    IN p_email VARCHAR(225),
-    IN p_firstName VARCHAR(45),
-    IN p_lastName VARCHAR(45),
-    IN p_location VARCHAR(225),
-    IN p_joinDate TIMESTAMP
-)
-BEGIN
-    UPDATE Users
-    SET 
-        userName = p_userName,
-        email = p_email,
-        firstName = p_firstName,
-        lastName = p_lastName,
-        location = p_location,
-        joinDate = p_joinDate
-    WHERE userID = p_userID;
-END //
-
-
--- UPDATE BrewMethod Procedure
-CREATE PROCEDURE sp_UpdateBrewMethod(
-    IN p_brewMethodID INT,
-    IN p_name VARCHAR(255),
-    IN p_description TEXT
-)
-BEGIN
-    UPDATE BrewMethods
-    SET name = p_name,
-        description = p_description
-    WHERE brewMethodID = p_brewMethodID;
-END //
-
-
--- UPDATE CoffeeReview Procedure
-CREATE PROCEDURE sp_UpdateCoffeeReview(
-    IN p_coffeeReviewID INT,
-    IN p_reviewDate TIMESTAMP,
-    IN p_aroma DECIMAL(4,2),
-    IN p_flavor DECIMAL(4,2),
-    IN p_afterTaste DECIMAL(4,2),
-    IN p_body DECIMAL(4,2),
-    IN p_acidity DECIMAL(4,2),
-    IN p_reviewNotes TEXT,
-    IN p_coffeeBeanID INT,
-    IN p_brewMethodID INT,
-    IN p_userID INT
-)
-BEGIN
-    UPDATE CoffeeReviews
-    SET
-        reviewDate = p_reviewDate,
-        aroma = p_aroma,
-        flavor = p_flavor,
-        afterTaste = p_afterTaste,
-        body = p_body,
-        acidity = p_acidity,
-        reviewNotes = p_reviewNotes,
-        coffeeBeanID = p_coffeeBeanID,
-        brewMethodID = p_brewMethodID,
-        userID = p_userID
-    WHERE coffeeReviewID = p_coffeeReviewID;
-END //
-
-
 -- DELETE CoffeeBeans Procedure
 CREATE PROCEDURE sp_DeleteCoffeeBean(IN p_id INT)
 BEGIN
@@ -325,7 +395,6 @@ BEGIN
         END IF;
     COMMIT;
 END //
-
 
 
 
@@ -396,76 +465,6 @@ BEGIN
         END IF;
     COMMIT;
 END //
-
-
--- DELETE Users Procedure
-CREATE PROCEDURE sp_DeleteUser(IN p_id INT)
-BEGIN
-    DECLARE error_message VARCHAR(255);
-
-    -- error handling
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    START TRANSACTION;
-        DELETE FROM Users WHERE userID = p_id;
-
-        IF ROW_COUNT() = 0 THEN
-            SET error_message = CONCAT('No matching record found in Users for id: ', p_id);
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
-        END IF;
-    COMMIT;
-END //
-
-
--- DELETE BrewMethod Procedure
-CREATE PROCEDURE sp_DeleteBrewMethod(IN p_id INT)
-BEGIN
-    DECLARE error_message VARCHAR(255);
-
-    -- error handling
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    START TRANSACTION;
-        DELETE FROM BrewMethods WHERE brewMethodID = p_id;
-
-        IF ROW_COUNT() = 0 THEN
-            SET error_message = CONCAT('No matching record found in BrewMethods for ID: ', p_id);
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
-        END IF;
-    COMMIT;
-END //
-
-
--- DELETE Coffee Review Procedure
-CREATE PROCEDURE sp_DeleteCoffeeReview(IN p_id INT)
-BEGIN
-    DECLARE error_message VARCHAR(255);
-
-    -- error handling
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        RESIGNAL;
-    END;
-
-    START TRANSACTION;
-        DELETE FROM CoffeeReviews WHERE coffeeReviewID = p_id;
-
-        IF ROW_COUNT() = 0 THEN
-            SET error_message = CONCAT('No matching record found in Coffee Reviews for id: ', p_id);
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
-        END IF;
-    COMMIT;
-END //
-
 
 
 DELIMITER ;
