@@ -617,7 +617,7 @@ console.log(`UPDATE BrewMethods. ID: ${data.update_brew_method_id} Name: ${rows.
 
 // UPDATE CoffeeReviews
 
-app.put('/coffee-reviews/:id', async (req, res) => {
+app.post('/coffee-reviews/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const {

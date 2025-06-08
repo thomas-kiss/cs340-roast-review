@@ -73,8 +73,8 @@ const UpdateCoffeeReviewForm = ({ selectedCoffeeReview, backendURL, refreshRevie
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${backendURL}/coffee-reviews/update`, {
-                method: 'PUT',
+            const response = await fetch(`${backendURL}/coffee-reviews/${formData.coffeeReviewID}`, {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
