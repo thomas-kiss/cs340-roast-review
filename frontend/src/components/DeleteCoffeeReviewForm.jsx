@@ -20,6 +20,8 @@ AI Source URL: https://chatgpt.com
 
 const DeleteCoffeeReviewForm = ({ rowObject, backendURL, refreshData }) => {
 
+    console.log('Delete form rowObject:', rowObject);
+
     const handleDelete = async (e) => {
         e.preventDefault();
 
