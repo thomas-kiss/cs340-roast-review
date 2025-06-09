@@ -1,4 +1,13 @@
 /*
+Citation for use of AI Tools
+Date: 06/08/2025
+Scope: Procedure Order
+Prompts: "How can I roubleshoot - the Review Delete is not working after I added review update procedure. The front end and PL statement
+are verified working correctly. I belive it is a back end issue"
+AI Source URL: https://chatgpt.com
+*/
+
+/*
 Citation for all DELETE, UPDATE, and CREATE routes, and RESET Database
 Last Update Date: 06/07/2025
 Adapted from provided canvas code:

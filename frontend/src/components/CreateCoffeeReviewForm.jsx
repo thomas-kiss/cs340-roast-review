@@ -1,5 +1,15 @@
 /*
 Citation for use of AI Tools
+Date: 06/05/2025
+Scope: Code copied from AI tool to allow for the Create form drop downs
+Prompts: "I need to implement CREATE functionality that populates the dynamic drop downs Brand Name, Roast Name, Brew Method and User. Note that 
+the brand name and roast name must be filter (in both directions). If brand A is chosen only display roast names of brand A. If roast A is chosen only display
+brands of roast A"
+AI Source URL: https://chatgpt.com
+*/
+
+/*
+Citation for use of AI Tools
 Date: 05/21/2025
 Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective 
 Create and Update forms
