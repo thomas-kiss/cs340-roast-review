@@ -87,8 +87,8 @@ DROP TABLE IF EXISTS CoffeeBeansVarietals;
 
 CREATE TABLE CoffeeBeansVarietals (
     coffeeBeanVarietalID int auto_increment not Null, 
-    coffeeBeanID int,
-    varietalID int,
+    coffeeBeanID int not NULL,
+    varietalID int not NULL,
     PRIMARY KEY (coffeeBeanVarietalID),
     FOREIGN KEY (coffeeBeanID) REFERENCES CoffeeBeans (coffeeBeanID) 
     ON DELETE CASCADE,
