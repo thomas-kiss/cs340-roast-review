@@ -615,6 +615,25 @@ console.log(`UPDATE BrewMethods. ID: ${data.update_brew_method_id} Name: ${rows.
 });
 
 
+// DELETE Coffee Reviews 
+
+app.post('/coffee-reviews/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteCoffeeReview(?);`;
+        await db.query(query, [data.delete_coffeeReviewID]);
+
+        console.log(`DELETE Coffee Review. ID: ${data.delete_coffeeReviewID} `);
+
+        res.status(200).json({ message: 'Coffee Review deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete coffee review:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the coffee review.' });
+    }
+});
+
+
 // UPDATE CoffeeReviews
 
 app.post('/coffee-reviews/:id', async (req, res) => {
@@ -655,25 +674,6 @@ app.post('/users/delete', async function (req, res) {
     } catch (error) {
         console.error('Error executing delete user:', error);
         res.status(500).json({ error: 'An error occurred while deleting the user.' });
-    }
-});
-
-
-// DELETE Coffee Reviews 
-
-app.post('/coffee-reviews/delete', async function (req, res) {
-    try {
-        const data = req.body;
-        const query = `CALL sp_DeleteCoffeeReview(?);`;
-        await db.query(query, [data.delete_coffeeReviewID]);
-
-        console.log(`DELETE Coffee Review. ID: ${data.delete_coffeeReviewID} `);
-
-        res.status(200).json({ message: 'Coffee Review deleted successfully' });
-
-    } catch (error) {
-        console.error('Error executing delete coffee review:', error);
-        res.status(500).json({ error: 'An error occurred while deleting the coffee review.' });
     }
 });
 
