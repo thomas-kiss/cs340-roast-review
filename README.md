@@ -7,7 +7,7 @@ Date/Term: Spring 2025 </br>
 **Citations**
  </br>
 Citation for use of CS340 Starter Code </br>
-All code within folders 'frontend' and 'backend' is based on the CS 340 starter code, with the exceptions of AI generated and modified code, as noted throughout the code. </br>
+All code within folders 'frontend' and 'backend' is based on the CS340 starter code, with the exceptions of AI generated and modified code, as noted throughout the code. </br>
  </br>
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 </br>
  </br>
