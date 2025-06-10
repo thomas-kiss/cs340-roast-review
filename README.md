@@ -228,3 +228,12 @@ selected should update to the applicable brand or roast names. [code snippet]", 
 can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?", "500 error, debugging help. procedure is functional, confirm with sql queries"</br>
 Source URL: https://chatgpt.com</br>
 </br>
+**frontend/src/index.css and frontend/src/App.css**
+Date: 06/09/2025</br>
+CSS style sheet copied from AI with minimal adjustments </br>
+Prompts: "react app, want to edit CSS. Generate a clean modern, minimal, cafe inspired style sheet.", "the forms have text areas as well 
+as other inputs. need handling for these", "handling for buttons", "text boxes unaligned floating too high, account for alignment", 
+"I don't like the recent changes made. revert back to this as the working code [code snippet]", "form is too large on page. handling without creating
+a new class in the jsx file" </br>
+AI Source URL: https://chatgpt.com</br>
+</br>
