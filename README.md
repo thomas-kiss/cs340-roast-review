@@ -57,6 +57,15 @@ can we adjust to be in the PROC instead?", "if I need to query all roast names a
 "500 error, debugging help. procedure is functional, confirm with sql queries" </br>
 Source URL: https://chatgpt.com </br>
 </br>
+**DDL.SQL**</br>
+Date: 05/01/25</br>
+Scope: Data for Messenger Coffee Co coffee Beans extracted from source URL and used in insert statement.</br>
+Source URL: https://messengercoffee.co/products</br>
+</br>
+Date: 05/01/25</br>
+Scope: Data for Cafe Britt coffee beans extracted from source URL and used in insert statement.</br>
+Source URL: https://www.cafebritt.com/collections/gourmet-coffee/products/costa-rican-tres-rios-valdivia-coffee</br>
+</br>
 
 **BrewMethodPage.jsx, CoffeeBeanPage.jsx, CoffeeBeanVarietalPage.jsx, CoffeeReviewPage.jsx, UserPage.jsx, VarietalPage.jsx in frontend/srcp/pages**
 </br>
