@@ -1,3 +1,12 @@
+/*
+Citation for use of AI Tools
+Date: 6/6/2025
+Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code. 
+Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
+the dyanmic delete form but it's currently erroring out. provide debugging suggestions."
+AI Source URL: https://chatgpt.com
+*/
+
 /* Citation for use of AI Tools
 Date: 05/21/2025
 Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
@@ -9,14 +18,6 @@ beans. it needs to scale to accomodate multiple delete forms.", "page not refres
 AI Source URL: https://chatgpt.com
 */
 
-/*
-Citation for use of AI Tools
-Date: 6/6/2025
-Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code. 
-Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
-the dyanmic delete form but it's currently erroring out. provide debugging suggestions."
-AI Source URL: https://chatgpt.com
-*/
 
 const DeleteCoffeeBeanForm = ({ rowObject, backendURL, refreshData }) => {
 

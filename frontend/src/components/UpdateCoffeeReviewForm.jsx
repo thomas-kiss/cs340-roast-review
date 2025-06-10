@@ -1,5 +1,15 @@
 /*
 Citation for use of AI Tools
+Date: 06/08/2025
+Scope: Code copied from AI tool to allow for the Update form drop downs and update functionality
+Prompts: "I need to implement UPDATE functionality that populates the form with the review data. Brew Method , Coffee Bean and User
+must be dynamic drop downs. Note that Coffee Beans should be a combination of the brand name - roast name so that you can select the correct choice
+when there are multiple beans with the same roast name."
+AI Source URL: https://chatgpt.com
+*/
+
+/*
+Citation for use of AI Tools
 Date: 05/21/2025
 Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective 
 Create and Update forms
@@ -14,9 +24,6 @@ AI Source URL: https://chatgpt.com
 Citation for use of AI Tools 
 Date: 05/15/2025
 Adapted from the code in UpdateCoffeeBeanForm.jsx (see below citation)
-*/
-/*Citation for use of AI Tools
-Date: 05/14/2025
 Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm
 Note: This was done after the CoffeeBeans page and UpdateCoffeeBeanForm was created, and after the Update button was worked into the table component
 “how to create an update button that would dynamically open a form and pass along relevant details”

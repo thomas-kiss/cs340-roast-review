@@ -1,3 +1,14 @@
+/*Citation for use of AI Tools
+Date: 06/07/25
+Adapted from AI Code 
+Scope: Copied from AI Code as indicated with in-line comments.
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries"
+Source URL: https://chatgpt.com
+*/
 /*
 Citation for use of AI Tools
 Date: 05/22/2025
@@ -7,6 +18,7 @@ options, but the default value was null.
 Prompts: "my update form is populating the selectedRow, and the dropdowns are populated 
 with the database names, but the value for the Names are not being auto selected at the first value [code snippet]"
 "troubleshooting errors, defaults aren't piping in","console log shows values, still not populating"
+Source URL: https://chatgpt.com
 */
 
 /*
@@ -28,15 +40,6 @@ Prompts: “how to create an update button that would dynamically open a form an
 “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
 “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
 “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
-AI Source URL: https://chatgpt.com
-*/
-
-/*
-Citation for use of AI Tools 
-Date: 06/06/2025
-Prompts used to combine BrandName and UserName dropdowns
-Prompts: "How can I take these two forms that work and combine them into one drop down that is brandname - roastname? [code snippet]", "are there other ways to accomplish 
-that same thing"
 AI Source URL: https://chatgpt.com
 */
 

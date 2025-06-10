@@ -1,5 +1,15 @@
 /*
 Citation for use of AI Tools
+Date: 06/05/2025
+Scope: Code copied from AI tool to allow for the Create form drop downs
+Prompts: "I need to implement CREATE functionality that populates the dynamic drop downs Brand Name, Roast Name, Brew Method and User. Note that 
+the brand name and roast name must be filter (in both directions). If brand A is chosen only display roast names of brand A. If roast A is chosen only display
+brands of roast A"
+AI Source URL: https://chatgpt.com
+*/
+
+/*
+Citation for use of AI Tools
 Date: 05/21/2025
 Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective 
 Create and Update forms
@@ -7,15 +17,6 @@ Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms:
 "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
 can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
 steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
-AI Source URL: https://chatgpt.com
-*/
-
-/* Citation for use of AI Tools
-Date: 05/21/2025
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
-Code was attempted then fed into the AI for assistance. 
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
-"here's how I updated code, but delete button isn't showing. troubleshooting walk through"
 AI Source URL: https://chatgpt.com
 */
 
