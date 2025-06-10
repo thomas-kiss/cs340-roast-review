@@ -1,4 +1,3 @@
-
 /*
 Citation for PL/SQL wrapper
 Date: 05/20/2025
@@ -23,6 +22,8 @@ BEGIN
     
 SET FOREIGN_KEY_CHECKS = 0; 
 
+
+---- User table creation
 DROP TABLE IF EXISTS Users; 
 
 CREATE TABLE Users (
@@ -39,6 +40,8 @@ CREATE TABLE Users (
     UNIQUE KEY userID_UNIQUE (userID)
 ); 
 
+
+---- BrewMethods table creation
 DROP TABLE IF EXISTS BrewMethods; 
 
 CREATE TABLE BrewMethods ( 
@@ -50,7 +53,7 @@ CREATE TABLE BrewMethods (
     UNIQUE KEY brewMethodID_UNIQUE (brewMethodID)
 ); 
 
-
+---- CoffeeBeans table creation
 DROP TABLE IF EXISTS CoffeeBeans; 
 
 CREATE TABLE CoffeeBeans (
@@ -65,6 +68,7 @@ CREATE TABLE CoffeeBeans (
     UNIQUE KEY coffeeBeanID_UNIQUE (coffeeBeanID)
 ); 
 
+---- Varietals table creation
 DROP TABLE IF EXISTS Varietals; 
 
 CREATE TABLE Varietals (
@@ -74,6 +78,8 @@ CREATE TABLE Varietals (
     UNIQUE KEY varietalID_UNIQUE (varietalID), 
     UNIQUE KEY name_UNIQUE (name)
 );
+
+---- CoffeeBeansVarietals table creation
 
 DROP TABLE IF EXISTS CoffeeBeansVarietals; 
 
@@ -89,6 +95,8 @@ CREATE TABLE CoffeeBeansVarietals (
     UNIQUE KEY coffeeBeanVarietalID (coffeeBeanVarietalID) 
 ); 
 
+
+---- CoffeeReviews table creation
 DROP TABLE IF EXISTS CoffeeReviews; 
 
 CREATE TABLE CoffeeReviews (
@@ -111,7 +119,7 @@ CREATE TABLE CoffeeReviews (
 ); 
 
 DELIMITER ;
-
+--- User data insert
 INSERT INTO Users(
     userName,
     email, 
@@ -145,6 +153,8 @@ VALUES (
     '2020-08-25 05:23:56'
 ); 
 
+
+--- BrewMethods data insert
 INSERT INTO BrewMethods (
     name, 
     description
@@ -162,6 +172,7 @@ VALUES (
     'coffee grounds are steeped in cold water for multiple hours, then the grounds are separated from the coffee'
 );
 
+--- CoffeeBeans data insert 
 INSERT INTO CoffeeBeans (
     brandName, 
     roastName, 
@@ -207,6 +218,7 @@ Source URL: https://www.cafebritt.com/collections/gourmet-coffee/products/costa-
     'Allspice, Orange Citrus, Plum'
 ); 
 
+--- Varietals data insert
 INSERT INTO Varietals ( 
     name
 )
@@ -223,10 +235,13 @@ VALUES (
     'Orange Bourbon'
 ); 
 
+
+--- CoffeeBeansVarietals data insert
 INSERT INTO CoffeeBeansVarietals ( 
     coffeeBeanID, 
     varietalID
 )
+--- must look up the FKs based on relevant details
 VALUES (
     (SELECT coffeeBeanID from CoffeeBeans WHERE roastName = 'Maria Reyes Washed'), 
     (SELECT varietalID from Varietals WHERE name = 'Pacas')
@@ -244,7 +259,7 @@ VALUES (
     (SELECT coffeeBeanID from CoffeeBeans where roastName = 'Elkin Guzman Hydro-Honey Natural'), 
     (SELECT varietalID from Varietals where name = 'Orange Bourbon')
 );
-
+--- CoffeeReviews data insert
 INSERT INTO CoffeeReviews (
     reviewDate,
     aroma, 
@@ -257,6 +272,7 @@ INSERT INTO CoffeeReviews (
     brewMethodID, 
     userID
 )
+--- must look up the FKs based on relevant details
 VALUES (
     '2025-01-01', 
     10,
