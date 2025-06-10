@@ -5,7 +5,8 @@ Course: CS340 </br>
 Date/Term: Spring 2025 </br>
 
 **Citations**
- </br>
+ </br></br>
+ 
 **Citation for use of CS340 Starter Code** </br>
 Code within frontend/main.jsx, frontend/index.css, frontend/App.css was copied from the CS340 Starter Code </br>
  </br>
@@ -28,7 +29,7 @@ Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code
 
 
  
-Citation for use of AI Tools  </br>
+**Citation for use of AI Tools**  </br>
 Date: 05/08/2025  </br>
 Prompts used to troubleshoot the forever process for production build:  </br>
 “Npm run production stopping, how to get error logs”  </br>
@@ -37,7 +38,22 @@ Prompts used to troubleshoot the forever process for production build:  </br>
 “Dependencies check for path-to-regexp errors”  </br>
 AI source URL: https://chatgpt.com/ </br>
  </br>
-Citation for use of AI Tools </br>
+
+**Citation for use of AI Tools**</br>
+Date: 06/07/25 </br>
+Adapted from AI Code </br> 
+Scope: Within PL.SQL. Adapted the sp_CreateCoffeeBeanVarietal proc based on AI Code.  </br>
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries" </br>
+Source URL: https://chatgpt.com </br>
+*/
+
+
+ 
+**Citation for use of AI Tools** </br>
 Date: 05/07/2025 </br>
 Description of prompts used to help generate the Coffee Reviews page and component .jsx files (this was done after a working project containing the Users and Brew Methods pages/components was completed): </br>
 Asked the model to hold responses while providing the following: DDL.sql file, the Users and Brew Methods pages/components, and server.jsx file) </br>
