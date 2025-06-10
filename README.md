@@ -7,10 +7,27 @@ Date/Term: Spring 2025 </br>
 **Citations**
  </br>
 Citation for use of CS340 Starter Code </br>
-All code within folders 'frontend' and 'backend' is based on the CS340 starter code, with the exceptions of AI generated and modified code, as noted throughout the code. </br>
+Code within frontend/main.jsx, frontend/index.css, frontend/App.css was copied from the CS340 Starter Code </br>
  </br>
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 </br>
  </br>
+
+ 
+Citation for use of CS340 Starter Code </br>
+Code within frontend and backend folders, with the exception of the specific files above, were adapted and modified from the 
+CS340 Starter Code.</br>
+ </br>
+Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 </br>
+ </br>
+
+
+Citation for use of CS340 Starter Code 
+CUD operations within the PL.SQL file were adapted based on the CS340 Starter Code. 
+Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968 </br>
+ </br>
+
+
+ 
 Citation for use of AI Tools  </br>
 Date: 05/08/2025  </br>
 Prompts used to troubleshoot the forever process for production build:  </br>
