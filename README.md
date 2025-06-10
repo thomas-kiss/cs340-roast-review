@@ -185,8 +185,80 @@ Note: This was done after the update button was already added to the Table row, 
 “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
 “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
 “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
+AI Source URL: https://chatgpt.com</br>
+</br>
+
+**allupdate forms**
+/*Citation for use of AI Tools
+Date: 05/14/2025
+Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm
+Note: This was done after the CoffeeBeans page and UpdateCoffeeBeanForm was created, and after the Update button was worked into the table component
+“how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
+“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
+“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
 AI Source URL: https://chatgpt.com
 */
+**varietal update**
+/* Citation for use of AI Tools
+Date: 05/30/2025
+Prompts used to adjust the UpdateVarietalsForm and debug code issues
+"I udpated the code for the udpate varietal form so that the data could actually be updated via the stored procedure on the backend database, 
+but nothing is populating in the boxes like it did before [old code snippet] [new code snippet]", "500 error on submit, debugging steps"
+*/
+**coffeereview udpate**
+/*
+Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective 
+Create and Update forms
+Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
+"Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
+can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
+AI Source URL: https://chatgpt.com
+*/
+**coffeebeanvarieatl update**
+/*Citation for use of AI Tools
+Date: 06/07/25
+Adapted from AI Code 
+Scope: Copied from AI Code as indicated with in-line comments.
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries", ""
+Source URL: https://chatgpt.com
+*/
+
+/*
+Citation for use of AI Tools
+Date: 05/22/2025
+Scope: Code copied from AI tool to allow for the Update form drop downs
+to default to the value of the selected Row. Drop downs were already coded and populating with 
+options, but the default value was null. 
+Prompts: "my update form is populating the selectedRow, and the dropdowns are populated 
+with the database names, but the value for the Names are not being auto selected at the first value [code snippet]"
+"troubleshooting errors, defaults aren't piping in","console log shows values, still not populating"
+*/
+
+/*
+Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.
+Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
+"Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
+can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
+AI Source URL: https://chatgpt.com
+*/
+
+
+
+
+
+
+
 
 **backend/server.js** </br>
 Date: 06/07/25
