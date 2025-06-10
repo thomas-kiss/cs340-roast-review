@@ -6,14 +6,14 @@ Date/Term: Spring 2025 </br>
 
 **Citations**
  </br>
-Citation for use of CS340 Starter Code </br>
+**Citation for use of CS340 Starter Code** </br>
 Code within frontend/main.jsx, frontend/index.css, frontend/App.css was copied from the CS340 Starter Code </br>
  </br>
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 </br>
  </br>
 
  
-Citation for use of CS340 Starter Code </br>
+**Citation for use of CS340 Starter Code** </br>
 Code within frontend and backend folders, with the exception of the specific files above, were adapted and modified from the 
 CS340 Starter Code.</br>
  </br>
@@ -21,7 +21,7 @@ Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code
  </br>
 
 
-Citation for use of CS340 Starter Code 
+**Citation for use of CS340 Starter Code** </br>
 CUD operations within the PL.SQL file were adapted based on the CS340 Starter Code. 
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968 </br>
  </br>
