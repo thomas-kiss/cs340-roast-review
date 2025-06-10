@@ -208,14 +208,6 @@ Prompts: "my update form is populating the selectedRow, and the dropdowns are po
 "troubleshooting errors, defaults aren't piping in","console log shows values, still not populating" </br>
 AI Source URL: https://chatgpt.com</br>
 </br>
-Date: 05/21/2025</br>
-Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.</br>
-Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
-"Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
-can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
-steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"</br>
-AI Source URL: https://chatgpt.com</br>
-</br>
 **backend/server.js** </br>
 Date: 06/08/2025</br>
 Scope: Procedure Order </br>
