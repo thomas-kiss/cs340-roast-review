@@ -120,7 +120,7 @@ can I modify the code? [code snippet]", "the data pulling in is all null but has
 steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"</br>
 AI Source URL: https://chatgpt.com</br>
 
-**DeleteBrewMethodForm.jsx, DeleteCoffeeBeanForm.jsx, DeleteCoffeeBeanVarietal.jsx, DeleteCoffeeReview.jsx, DeleteUserForm.jsx, DeleteVarietalForm.jsx in frontend/src/components** 
+**DeleteBrewMethodForm.jsx, DeleteCoffeeBeanForm.jsx, DeleteCoffeeBeanVarietal.jsx, DeleteCoffeeReview.jsx, DeleteUserForm.jsx, DeleteVarietalForm.jsx, TableRow.jsx in frontend/src/components** 
 Date: 05/21/2025 </br>
 Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. </br>
 Code was attempted then fed into the AI for assistance. </br>
@@ -148,12 +148,7 @@ Prompts used to modify the DeleteForm reference</br>
 pages and multiple delete forms. Will this proposed option work at that scale?"</br>
 AI Source URL: https://chatgpt.com</br>
 </br>
-Date: 05/21/2025</br>
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
-Code was attempted then fed into the AI for assistance. </br>
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]","here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"</br>
-AI Source URL: https://chatgpt.com</br>
-</br>
+
 Date: 05/14/2025</br>
 Prompts used to modify the Update button
 Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
