@@ -7,29 +7,39 @@ Date/Term: Spring 2025 </br>
 **Citations**
  </br></br>
  
-**Citation for use of CS340 Starter Code** </br>
+**Citations for use of CS340 Starter Code** </br>
+
+
 Code within frontend/main.jsx, frontend/index.css, frontend/App.css was copied from the CS340 Starter Code </br>
  </br>
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 </br>
  </br>
 
- 
-**Citation for use of CS340 Starter Code** </br>
 Code within frontend and backend folders, with the exception of the specific files above, were adapted and modified from the 
 CS340 Starter Code.</br>
- </br>
+</br>
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 </br>
  </br>
-
-
-**Citation for use of CS340 Starter Code** </br>
-CUD operations within the PL.SQL file were adapted based on the CS340 Starter Code. 
+ 
+CUD operations within the PL.SQL file were adapted based on the CS340 Starter Code. </br>
+</br>
 Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968 </br>
  </br>
 
 
+PL/SQL Wrapper within the DDL.sql file were copied from the canvas code. The contents inside of that PL/SQL Wrapper is original code, with the exception of the SET statements as mentioned below.  </br>
+</br>
+Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] https://canvas.oregonstate.edu/courses/1999601/assignments/10006390?module_item_id=25352972 </br>
+
+SET statements in the DDL.sql file were copied from the canvas code. </br>
+Safonte, D., Curry, M. (May 2025) CS 340 Starter Code (Version 1.0) [Source code] 
+https://canvas.oregonstate.edu/courses/1999601/assignments/10006385?module_item_id=25352941
+
+
  
-**Citation for use of AI Tools**  </br>
+**Citations for use of AI Tools**  </br>
+</br>
+General Use </br>
 Date: 05/08/2025  </br>
 Prompts used to troubleshoot the forever process for production build:  </br>
 “Npm run production stopping, how to get error logs”  </br>
@@ -37,9 +47,9 @@ Prompts used to troubleshoot the forever process for production build:  </br>
 “Route issues with path-to-regexp” </br>
 “Dependencies check for path-to-regexp errors”  </br>
 AI source URL: https://chatgpt.com/ </br>
- </br>
+</br>
 
-**Citation for use of AI Tools**</br>
+PL.SQL </br>
 Date: 06/07/25 </br>
 Adapted from AI Code </br> 
 Scope: Within PL.SQL. Adapted the sp_CreateCoffeeBeanVarietal proc based on AI Code.  </br>
@@ -51,8 +61,61 @@ can we adjust to be in the PROC instead?", "if I need to query all roast names a
 Source URL: https://chatgpt.com </br>
 */
 
+frontend/src/pages/BrewMethodPage.jsx </br>
+Date: 05/21/2025 </br>
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. </br>
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through" </br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+Date: 05/14/2025 </br>
+Adapted from the ai adapted code in CoffeeBeans.jsx. See relevant citation under COffeeBans.jsx section.</br>
+</br>
 
- 
+Date: 6/6/2025</br>
+Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code.  </br>
+Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain the dyanmic delete form but it's currently erroring out. provide debugging suggestions."</br>
+AI Source URL: https://chatgpt.com </br>
+</br>
+
+frontend/src/pages/CoffeeBeansPage.jsx </br>
+Date: 05/14/2025 </br>
+Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. </br> 
+Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
+“how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
+“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
+“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?” </br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+Date: 05/21/2025</br>
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. </br>
+Code was attempted then fed into the AI for assistance. </br>
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but 
+receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee 
+beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete" </br>
+AI Source URL: https://chatgpt.com </br>
+</br>
+Date: 6/6/2025</br>
+Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code.  </br>
+Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
+the dyanmic delete form but it's currently erroring out. provide debugging suggestions." </br>
+AI Source URL: https://chatgpt.com </br>
+</br>
+
+
+
+
+
+
+
+
+
+
+
+
 **Citation for use of AI Tools** </br>
 Date: 05/07/2025 </br>
 Description of prompts used to help generate the Coffee Reviews page and component .jsx files (this was done after a working project containing the Users and Brew Methods pages/components was completed): </br>
