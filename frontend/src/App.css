@@ -1,30 +1,51 @@
 /*
-Citation for use of CS340 Starter Code 
-Date: 05/07/2036
-Adapted from CS340 Starter App Code
-Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+Citation for use of AI Tools
+Date: 06/09/2025
+CSS style sheet copied from AI with minimal adjustments 
+Prompts: "react app, want to edit CSS. Generate a clean modern, minimal, cafe inspired style sheet.", "the forms have text areas as well 
+as other inputs. need handling for these", "handling for buttons", "text boxes unaligned floating too high, account for alignment", 
+"I don't like the recent changes made. revert back to this as the working code [code snippet]", "form is too large on page. handling without creating
+a new class in the jsx file"
+AI Source URL: https://chatgpt.com
 */
-
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #fdfaf6;
 }
 
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
+  transition: filter 0.3s ease;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 1.5em #8d7966aa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 1.5em #61dafbaa);
 }
 
+.card {
+  padding: 2em;
+  background-color: #fffaf3;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.read-the-docs {
+  color: #7b6e65;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Optional: Keep the React logo spinning for flair */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -38,12 +59,4 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
