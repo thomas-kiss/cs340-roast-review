@@ -92,6 +92,101 @@ AI Source URL: https://chatgpt.com </br>
 </br>
 
 
+**frontend/src/components/CreateCoffeeBeanVarietalForm.jsx** 
+
+
+/*Citation for use of AI Tools
+Date: 06/07/25
+Adapted from AI Code 
+Scope: Copied from AI Code as indicated with in-line comments.
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries", ""
+Source URL: https://chatgpt.com
+*/
+
+**frontend/src/components/CreateCoffeeBeanVarietalForm.jsx and frontend/src/components/CreateCoffeeReviewForm.jsx** 
+/*
+Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.
+Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
+"Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
+can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
+AI Source URL: https://chatgpt.com
+*/
+
+**frontend/src/components/CreateCoffeeReviewForm.jsx**
+**DeleteBrewMethodForm.jsx, DeleteCoffeeBeanForm.jsx, DeleteCoffeeBeanVarietal.jsx, DeleteCoffeeReview.jsx, DeleteUserForm.jsx, DeleteVarietalFrom.jsx in frontend/src/components** 
+/* Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. 
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but 
+receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee 
+beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"
+AI Source URL: https://chatgpt.com
+*/
+
+**frontend/src/compoents/DeleteUserForm.jsx**
+/* Citation for use of AI Tools
+Date: 05/30/2025
+Prompts used to rewrite the DeleteUserForm to match clean style with minimal UI for deletion only
+AI Source URL: https://chatgpt.com
+*/
+
+**frontend/src/components/Navigation.jsx**
+/*
+Citation for RESET BUTTON
+Date: 05/21/2025
+Adapted React Native code:
+Source URL: https://reactnative.dev/docs/button
+*/
+
+**frontend/src/components/TableRow.jsx**
+
+/* Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. 
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through"
+AI Source URL: https://chatgpt.com
+*/
+
+/*Citation for use of AI Tools
+Date: 05/21/2025
+Prompts used to modify the DeleteForm reference
+"How to modify existing code to route dynamically to different Delete forms [code snippet]" "I have multiple 
+pages and multiple delete forms. Will this proposed option work at that scale?"
+AI Source URL: https://chatgpt.com
+*/
+
+/* Citation for use of AI Tools
+Date: 05/21/2025
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. 
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
+"here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but 
+receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee 
+beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"
+AI Source URL: https://chatgpt.com
+*/
+
+/*Citation for use of AI Tools
+Date: 05/14/2025
+Prompts used to modify the Update button
+Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.
+“how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
+“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
+“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
+AI Source URL: https://chatgpt.com
+*/
 
 **backend/server.js** </br>
 Date: 06/07/25
