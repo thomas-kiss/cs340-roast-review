@@ -1,22 +1,6 @@
 /*
-Citation for CREATE BrewMethod, CREATE CoffeeReviews and CREATE Users Procedure 
+Citation for all CREATE, UPDATE, and DELETE procedures 
 Date: 06/06/2025
-Adapted from provided canvas code:
-Implementing CUD operations in your app
-Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
-*/
-
-/*
-Citation for DELETE BrewMethod and DELETE User Procedures 
-Date: 06/02/2025
-Adapted from provided canvas code:
-Implementing CUD operations in your app
-Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
-*/
-
-/*
-Citation for UPDATE Varietals Procedures
-Date: 05/30/2025
 Adapted from provided canvas code:
 Implementing CUD operations in your app
 Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
@@ -468,4 +452,3 @@ END //
 
 
 DELIMITER ;
-
