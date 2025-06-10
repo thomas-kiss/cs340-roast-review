@@ -3,6 +3,7 @@ Citation for use of AI Tools
 Date: 06/08/2025
 Scope: Procedure Order
 Prompts: "How can I troubleshoot - the Review Delete is not working after I added review update procedure. The front end and PL statement
+
 are verified working correctly. I belive it is a back end issue"
 AI Source URL: https://chatgpt.com
 */
@@ -600,10 +601,8 @@ app.post('/users/update', async function (req, res) {
 
 app.post('/brew-methods/update', async function (req, res) {
     try {
-        // Parse frontend form information
         const data = req.body;
 
-        // Create and execute our query
         const query1 = 'CALL sp_UpdateBrewMethod(?, ?, ?);';
         const query2 = 'SELECT name, description FROM BrewMethods WHERE brewMethodID = ?;';
     
@@ -620,34 +619,12 @@ app.post('/brew-methods/update', async function (req, res) {
 console.log(`UPDATE BrewMethods. ID: ${data.update_brew_method_id} Name: ${rows.name}`);
 
 
-        // Send success status to frontend
         res.status(200).json({ message: 'Brew Method updated successfully' });
     } catch (error) {
         console.error('Error executing queries:', error);
-        // Send a generic error message to the browser
         res.status(500).send(
             `An error occurred while executing the database queries: ${error.message}`
         );
-    }
-});
-
-
-// DELETE Users 
-
-app.post('/users/delete', async function (req, res) {
-    try {
-        const data = req.body;
-        const query = `CALL sp_DeleteUser(?);`;
-        await db.query(query, [data.delete_user_id]);
-
-        console.log(`DELETE Users. ID: ${data.delete_user_id} ` +
-            `Username: ${data.delete_user_name}`);
-
-        res.status(200).json({ message: 'User deleted successfully' });
-
-    } catch (error) {
-        console.error('Error executing delete user:', error);
-        res.status(500).json({ error: 'An error occurred while deleting the user.' });
     }
 });
 
@@ -667,6 +644,50 @@ app.post('/coffee-reviews/delete', async function (req, res) {
     } catch (error) {
         console.error('Error executing delete coffee review:', error);
         res.status(500).json({ error: 'An error occurred while deleting the coffee review.' });
+    }
+});
+
+
+// UPDATE CoffeeReviews
+
+app.post('/coffee-reviews/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const {
+      userID, coffeeBeanID, brewMethodID, reviewDate,
+      aroma, flavor, afterTaste, body, acidity, reviewNotes
+    } = req.body;
+
+    const query = `CALL sp_UpdateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    await db.query(query, [
+      id, reviewDate, aroma, flavor, afterTaste, body, acidity,
+      reviewNotes, coffeeBeanID, brewMethodID, userID
+    ]);
+
+    res.status(200).json({ message: 'Coffee review updated successfully' });
+  } catch (err) {
+    console.error('Error updating coffee review:', err);
+    res.status(500).json({ error: 'Failed to update coffee review' });
+  }
+});
+
+
+// DELETE Users 
+
+app.post('/users/delete', async function (req, res) {
+    try {
+        const data = req.body;
+        const query = `CALL sp_DeleteUser(?);`;
+        await db.query(query, [data.delete_user_id]);
+
+        console.log(`DELETE Users. ID: ${data.delete_user_id} ` +
+            `Username: ${data.delete_user_name}`);
+
+        res.status(200).json({ message: 'User deleted successfully' });
+
+    } catch (error) {
+        console.error('Error executing delete user:', error);
+        res.status(500).json({ error: 'An error occurred while deleting the user.' });
     }
 });
 
