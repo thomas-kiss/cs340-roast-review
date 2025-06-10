@@ -261,6 +261,15 @@ AI Source URL: https://chatgpt.com
 
 
 **backend/server.js** </br>
+/*
+Citation for use of AI Tools
+Date: 06/08/2025
+Scope: Procedure Order
+Prompts: "How can I troubleshoot - the Review Delete is not working after I added review update procedure. The front end and PL statement
+are verified working correctly. I belive it is a back end issue"
+AI Source URL: https://chatgpt.com
+*/
+
 Date: 06/07/25
 Adapted from AI Code 
 Scope: CREATE coffeebeansvarietals, READ CoffeeBeansVarietals - BrandName, READ CoffeeBeansVarietals - RoastName
