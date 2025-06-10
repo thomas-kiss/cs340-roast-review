@@ -99,7 +99,7 @@ app.get('/coffee-reviews', async (req, res) => {
   try {
     const query = `
       SELECT 
-CoffeeReviews.coffeeReviewID AS "Review ID",
+            CoffeeReviews.coffeeReviewID AS "Review ID",
             CoffeeReviews.reviewDate AS "Review Date",
             CoffeeReviews.aroma AS "Aroma",
             CoffeeReviews.flavor AS "Flavor",
@@ -139,8 +139,7 @@ app.get('/coffeebeans', async (req, res) => {
             roastName as "Roast Name", 
             singleOriginCountry as "Origin", 
             roastLevel as "Roast Level", 
-            providedTastingNotes as 
-            "Provided Tasting Notes"
+            providedTastingNotes as "Provided Tasting Notes"
             FROM CoffeeBeans
             ORDER BY coffeeBeanID ASC;
         `;
@@ -420,7 +419,7 @@ app.post('/coffee-reviews', async (req, res) => {
         } = req.body;
 
         if (!data.reviewDate || !data.aroma || !data.flavor || !data.afterTaste || !data.body || !data.acidity || !data.reviewNotes || !data.coffeeBeanID || !data.brewMethodID || !data.userID ) {
-            return res.status(400).json({ error: 'userName, email, and joinDate are required' });
+            return res.status(400).json({ error: 'reviewDate, aroma, flavor, afterTaste, body, acidity, reviewNotes, a coffee bean, brew method, and user are all required' });
         }
 
         const query = `CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @new_id);`;
