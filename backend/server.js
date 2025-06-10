@@ -42,7 +42,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45583;
+const PORT = 45581;
 
 // ########################################
 // ########## ROUTE HANDLERS
@@ -262,8 +262,8 @@ app.post('/brew-methods/create', async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.name || !data.description) {
-            return res.status(400).json({ error: 'Name and description are required' });
+        if (!data.name) {
+            return res.status(400).json({ error: 'Name is required' });
         }
 
         const query = `CALL sp_CreateBrewMethod(?, ?, @new_id);`;
@@ -314,7 +314,7 @@ app.post('/coffeebeans/create', async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.brandName || !data.roastName || !data.singleOriginCountry || !data.roastLevel || !data.providedTastingNotes) {
+        if (!data.brandName || !data.roastName) {
             return res.status(400).json({ error: 'Brand Name and Roast Name are required' });
         }
 
@@ -366,8 +366,8 @@ app.post('/users/create', async (req, res) => {
     try {
         const data = req.body;
 
-        if (!data.userName || !data.email || !data.firstName || !data.lastName) {
-            return res.status(400).json({ error: 'userName, email, firstName, and lastName are required' });
+        if (!data.userName || !data.email || !data.joinDate) {
+            return res.status(400).json({ error: 'userName, email, and joinDate are required' });
         }
 
         // Optional: location and joinDate can be provided or set defaults
@@ -417,6 +417,10 @@ app.post('/coffee-reviews', async (req, res) => {
             acidity,
             reviewNotes
         } = req.body;
+
+        if (!data.reviewDate || !data.aroma || !data.flavor || !data.afterTaste || !data.body || !data.acidity || !data.reviewNotes || !data.coffeeBeanID || !data.brewMethodID || !data.userID ) {
+            return res.status(400).json({ error: 'userName, email, and joinDate are required' });
+        }
 
         const query = `CALL sp_CreateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @new_id);`;
         
@@ -764,6 +768,30 @@ app.post('/coffeebeansvarietals/delete', async function (req, res) {
 });
 
 
+// UPDATE CoffeeReviews
+
+app.post('/coffee-reviews/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const {
+      userID, coffeeBeanID, brewMethodID, reviewDate,
+      aroma, flavor, afterTaste, body, acidity, reviewNotes
+    } = req.body;
+
+    const query = `CALL sp_UpdateCoffeeReview(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+    await db.query(query, [
+      id, reviewDate, aroma, flavor, afterTaste, body, acidity,
+      reviewNotes, coffeeBeanID, brewMethodID, userID
+    ]);
+
+    res.status(200).json({ message: 'Coffee review updated successfully' });
+  } catch (err) {
+    console.error('Error updating coffee review:', err);
+    res.status(500).json({ error: 'Failed to update coffee review' });
+  }
+});
+
+
 // RESET Database
 
 app.post('/reset', async (req, res) => {
@@ -783,3 +811,6 @@ app.post('/reset', async (req, res) => {
 app.listen(PORT, function () {
     console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');
 });
+
+
+
