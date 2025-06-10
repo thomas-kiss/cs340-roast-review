@@ -93,7 +93,7 @@ function CreateCoffeeReviewForm({ backendURL, refreshCoffeeReviews, coffeeBeans,
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='cuForm' onSubmit={handleSubmit}>
       <h2>Create Coffee Review</h2>
 
       <label htmlFor="reviewDate">Review Date:</label>

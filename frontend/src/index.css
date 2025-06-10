@@ -1,22 +1,168 @@
 /*
-Citation for use of CS340 Starter Code 
-Date: 05/07/2036
-Copied from CS340 Starter App Code
-Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+Citation for use of AI Tools
+Date: 06/09/2025
+CSS style sheet copied from AI with minimal adjustments 
+Prompts: "react app, want to edit CSS. Generate a clean modern, minimal, cafe inspired style sheet.", "the forms have text areas as well 
+as other inputs. need handling for these", "handling for buttons", "text boxes unaligned floating too high, account for alignment", 
+"I don't like the recent changes made. revert back to this as the working code [code snippet]", "form is too large on page. handling without creating
+a new class in the jsx file"
+AI Source URL: https://chatgpt.com
 */
 
-
-h1, h2 { margin-left: 16px;}
-table {border-collapse: collapse;margin-left: 32px;}
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
+/* General Typography */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  color: #3e3e3e;
+  background-color: #fdfaf6;
+  margin: 0;
+  padding: 0;
 }
-th {background-color: #f2f2f2;}
-tr:nth-child(even) {background-color: #f9f9f9;}
-.cuForm { margin-left: 32px;}
-input, select { margin-bottom: 4px;margin-right: 12px;}
-nav {background-color: #cecece;padding: 16px;}
-a {margin-left: 16px;}
-.homepageDescription {margin-left: 32px;}
+
+h1, h2 {
+  margin-left: 24px;
+  color: #4b382a;
+  font-weight: 600;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  margin: 24px auto;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  background-color: #fffdf9;
+}
+
+th, td {
+  border: 1px solid #e3dcd2;
+  padding: 14px;
+  text-align: center;
+}
+
+th {
+  background-color: #f3e9dc;
+  color: #3e3e3e;
+  font-weight: 500;
+}
+
+tr:nth-child(even) {
+  background-color: #faf6f0;
+}
+
+/* Form Styling */
+.cuForm {
+  margin: 32px auto;
+  width: fit-content;
+  padding: 20px;
+  background-color: #fffdf9;
+  border: 1px solid #e9e1d4;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  max-width: 1700px;
+}
+
+input,
+select,
+textarea {
+  margin-bottom: 10px;
+  margin-right: 12px;
+  padding: 10px 14px;
+  border: 1px solid #dcd2c0;
+  border-radius: 6px;
+  background-color: #fffaf3;
+  font-size: 1rem;
+  color: #3e3e3e;
+  font-family: 'Helvetica Neue', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #a38a6e;
+  box-shadow: 0 0 0 3px rgba(163, 138, 110, 0.2);
+}
+
+/* Navigation */
+nav {
+  background-color: #d9c9b5;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+a {
+  margin-left: 16px;
+  text-decoration: none;
+  color: #5c4438;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #3e2f25;
+}
+
+/* Homepage Description */
+.homepageDescription {
+  margin-left: 32px;
+  font-size: 1.1rem;
+  color: #5a4a3d;
+}
+
+textarea {
+  vertical-align: middle;
+  resize: none; /* Prevents it from stretching vertically */
+  height: 40px;  /* Same height as input/select for alignment */
+  line-height: 1.4;
+}
+.cuForm label {
+  display: inline-block;
+  min-width: 120px; /* ensures alignment and spacing */
+  margin-bottom: 8px;
+  vertical-align: middle;
+  color: #4b382a;
+  font-weight: 500;
+}
+
+.cuForm input,
+.cuForm select,
+.cuForm textarea {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 12px;
+  margin-right: 24px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #dcd2c0;
+  border-radius: 6px;
+  background-color: #fffaf3;
+  color: #3e3e3e;
+  font-family: 'Helvetica Neue', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+button {
+  background-color: #a38a6e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-family: 'Helvetica Neue', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-right: 8px;
+}
+
+button:hover {
+  background-color: #8a735d;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(163, 138, 110, 0.3);
+}

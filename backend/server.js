@@ -417,7 +417,7 @@ app.post('/coffee-reviews', async (req, res) => {
             reviewNotes
         } = req.body;
 
-        if (!data.reviewDate || !data.aroma || !data.flavor || !data.afterTaste || !data.body || !data.acidity || !data.reviewNotes || !data.coffeeBeanID || !data.brewMethodID || !data.userID ) {
+        if (!reviewDate || !aroma || !flavor || !afterTaste || !body || !acidity || !reviewNotes || !coffeeBeanID || !brewMethodID || !userID ) {
             return res.status(400).json({ error: 'reviewDate, aroma, flavor, afterTaste, body, acidity, reviewNotes, a coffee bean, brew method, and user are all required' });
         }
 
