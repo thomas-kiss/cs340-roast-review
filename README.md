@@ -58,20 +58,8 @@ can we adjust to be in the PROC instead?", "if I need to query all roast names a
 Source URL: https://chatgpt.com </br>
 </br>
 **frontend/src/pages/BrewMethodPage.jsx** </br>
-Date: 05/21/2025 </br>
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
-Code was attempted then fed into the AI for assistance. </br>
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
-"here's how I updated code, but delete button isn't showing. troubleshooting walk through" </br>
-AI Source URL: https://chatgpt.com</br>
-</br>
 Date: 05/14/2025 </br>
-Adapted from the ai adapted code in CoffeeBeans.jsx. See relevant citation under CoffeeBans.jsx section.</br>
-</br>
-Date: 6/6/2025</br>
-Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code.  </br>
-Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain the dyanmic delete form but it's currently erroring out. provide debugging suggestions."</br>
-AI Source URL: https://chatgpt.com </br>
+Adapted from the ai adapted code in CoffeeBeans.jsx. See relevant citation under CoffeeBeans.jsx section.</br>
 </br>
 
 **frontend/src/pages/CoffeeBeanPage.jsx** </br>
@@ -80,17 +68,6 @@ Prompts used to allow the Update form to show up dynamically, and to pass the re
 Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
 “how to create an update button that would dynamically open a form and pass along relevant details” “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist” “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?” </br>
 AI Source URL: https://chatgpt.com</br>
-</br>
-Date: 05/21/2025</br>
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. </br>
-Code was attempted then fed into the AI for assistance. </br>
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]", "here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete" </br>
-AI Source URL: https://chatgpt.com </br>
-</br>
-Date: 6/6/2025</br>
-Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code.  </br>
-Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain the dyanmic delete form but it's currently erroring out. provide debugging suggestions." </br>
-AI Source URL: https://chatgpt.com </br>
 </br>
 **frontend/src/pages/CoffeeBeanVarietalPage.jsx** </br>
 Date: 05/21/2025</br>
@@ -108,12 +85,6 @@ AI Source URL: https://chatgpt.com</br>
 </br>
 
 **frontend/src/pages/CoffeeBeanReviewPage.jsx** </br>
-Date: 05/21/2025</br>
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. </br>
-Code was attempted then fed into the AI for assistance. </br>
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]","here's how I updated code, but delete button isn't showing. troubleshooting walk through"</br>
-AI Source URL: https://chatgpt.com</br>
-</br>
 Date: 05/21/2025</br>
 Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective Create and Update forms</br>
 Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values" </br>
