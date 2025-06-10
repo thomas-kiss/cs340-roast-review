@@ -91,215 +91,144 @@ Prompt: “refactor to match format and functionality of existing CoffeeBeans pa
 AI Source URL: https://chatgpt.com </br>
 </br>
 
-
-**frontend/src/components/CreateCoffeeBeanVarietalForm.jsx** 
-
-
-/*Citation for use of AI Tools
-Date: 06/07/25
-Adapted from AI Code 
-Scope: Copied from AI Code as indicated with in-line comments.
-Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
-based on selecting roast or brand. User can select in either order. The dropdown not 
+**frontend/src/components/CreateCoffeeBeanVarietalForm.jsx** </br>
+Date: 06/07/25 </br>
+Adapted from AI Code </br> 
+Scope: Copied from AI Code as indicated with in-line comments.</br>
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic based on selecting roast or brand. User can select in either order. The dropdown not 
 selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
 can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
-"500 error, debugging help. procedure is functional, confirm with sql queries", ""
-Source URL: https://chatgpt.com
-*/
+"500 error, debugging help. procedure is functional, confirm with sql queries" </br>
+Source URL: https://chatgpt.com </br>
+</br>
 
-**frontend/src/components/CreateCoffeeBeanVarietalForm.jsx and frontend/src/components/CreateCoffeeReviewForm.jsx** 
-/*
-Citation for use of AI Tools
-Date: 05/21/2025
-Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.
+**frontend/src/components/CreateCoffeeBeanReviewForm.jsx** </br>
+Date: 06/05/2025</br>
+Scope: Code copied from AI tool to allow for the Create form drop downs</br>
+Prompts: "I need to implement CREATE functionality that populates the dynamic drop downs Brand Name, Roast Name, Brew Method and User. Note that 
+the brand name and roast name must be filter (in both directions). If brand A is chosen only display roast names of brand A. If roast A is chosen only display
+brands of roast A"</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+
+**CreateCoffeeBeanVarietalForm.jsx and CreateCoffeeReviewForm.jsx in frontend/src/components/** </br>
+Date: 05/21/2025 </br>
+Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.</br>
 Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
 "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
 can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
-steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
-AI Source URL: https://chatgpt.com
-*/
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"</br>
+AI Source URL: https://chatgpt.com</br>
 
-**frontend/src/components/CreateCoffeeReviewForm.jsx**
-**DeleteBrewMethodForm.jsx, DeleteCoffeeBeanForm.jsx, DeleteCoffeeBeanVarietal.jsx, DeleteCoffeeReview.jsx, DeleteUserForm.jsx, DeleteVarietalFrom.jsx in frontend/src/components** 
-/* Citation for use of AI Tools
-Date: 05/21/2025
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
-Code was attempted then fed into the AI for assistance. 
+**DeleteBrewMethodForm.jsx, DeleteCoffeeBeanForm.jsx, DeleteCoffeeBeanVarietal.jsx, DeleteCoffeeReview.jsx, DeleteUserForm.jsx, DeleteVarietalForm.jsx in frontend/src/components** 
+Date: 05/21/2025 </br>
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. </br>
+Code was attempted then fed into the AI for assistance. </br>
 Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
 "here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but 
 receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee 
-beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"
-AI Source URL: https://chatgpt.com
-*/
-
-**frontend/src/compoents/DeleteUserForm.jsx**
-/* Citation for use of AI Tools
-Date: 05/30/2025
+beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+**frontend/src/compoents/DeleteUserForm.jsx**</br>
+Date: 05/30/2025</br>
 Prompts used to rewrite the DeleteUserForm to match clean style with minimal UI for deletion only
 AI Source URL: https://chatgpt.com
 */
 
-**frontend/src/components/Navigation.jsx**
-/*
-Citation for RESET BUTTON
-Date: 05/21/2025
-Adapted React Native code:
-Source URL: https://reactnative.dev/docs/button
-*/
-
-**frontend/src/components/TableRow.jsx**
-
-/* Citation for use of AI Tools
-Date: 05/21/2025
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
-Code was attempted then fed into the AI for assistance. 
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
-"here's how I updated code, but delete button isn't showing. troubleshooting walk through"
-AI Source URL: https://chatgpt.com
-*/
-
-/*Citation for use of AI Tools
-Date: 05/21/2025
-Prompts used to modify the DeleteForm reference
+**frontend/src/components/Navigation.jsx**</br>
+Date: 05/21/2025</br>
+Adapted React Native code:</br>
+Source URL: https://reactnative.dev/docs/button</br>
+</br>
+**frontend/src/components/TableRow.jsx**</br>
+Date: 05/21/2025</br>
+Prompts used to modify the DeleteForm reference</br>
 "How to modify existing code to route dynamically to different Delete forms [code snippet]" "I have multiple 
-pages and multiple delete forms. Will this proposed option work at that scale?"
-AI Source URL: https://chatgpt.com
-*/
-
-/* Citation for use of AI Tools
-Date: 05/21/2025
-Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
-Code was attempted then fed into the AI for assistance. 
-Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]",
-"here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but 
-receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee 
-beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"
-AI Source URL: https://chatgpt.com
-*/
-
-/*Citation for use of AI Tools
-Date: 05/14/2025
-Prompts used to modify the Update button
-Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.
-“how to create an update button that would dynamically open a form and pass along relevant details”
-“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
-“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
-“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
+pages and multiple delete forms. Will this proposed option work at that scale?"</br>
 AI Source URL: https://chatgpt.com</br>
 </br>
+Date: 05/21/2025</br>
+Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
+Code was attempted then fed into the AI for assistance. </br>
+Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]","here's how I updated code, but delete button isn't showing. troubleshooting walk through", "n is not a function error", "preflight request sending 204 but receiving a 500 after for GET.", "In current code, is DeleteCoffeeBeanForm being bypassed? [code snippets]", "table row should not be specific to deleting coffee beans. it needs to scale to accomodate multiple delete forms.", "page not refreshing after successful delete"</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+Date: 05/14/2025</br>
+Prompts used to modify the Update button
+Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
+Prompts: “how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist” “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?” </br>
+AI Source URL: https://chatgpt.com </br>
+</br>
 
-**allupdate forms**
-/*Citation for use of AI Tools
-Date: 05/14/2025
-Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm
-Note: This was done after the CoffeeBeans page and UpdateCoffeeBeanForm was created, and after the Update button was worked into the table component
-“how to create an update button that would dynamically open a form and pass along relevant details”
-“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
-“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
-“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
-AI Source URL: https://chatgpt.com
-*/
-**varietal update**
-/* Citation for use of AI Tools
-Date: 05/30/2025
-Prompts used to adjust the UpdateVarietalsForm and debug code issues
-"I udpated the code for the udpate varietal form so that the data could actually be updated via the stored procedure on the backend database, 
-but nothing is populating in the boxes like it did before [old code snippet] [new code snippet]", "500 error on submit, debugging steps"
-*/
-**coffeereview udpate**
-/*
-Citation for use of AI Tools
-Date: 05/21/2025
+**UpdateBrewMethodForm.jsx, UpdateCoffeeBeanForm.jsx, UpdateCoffeeBeanVarietal.jsx, UpdateCoffeeReview.jsx, UpdateUserForm.jsx, UpdateVarietalForm.jsx in frontend/src/components** </br>
+Date: 05/14/2025 </br>
+Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm </br>
+Note: This was done after the CoffeeBeans page and UpdateCoffeeBeanForm was created, and after the Update button was worked into the table component</br>
+Prompts: “how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist” “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+**frontend/src/components/UpdateVarietalForm.jsx**</br>
+Date: 05/30/2025</br>
+Prompts used to adjust the UpdateVarietalsForm and debug code issues</br>
+"I udpated the code for the udpate varietal form so that the data could actually be updated via the stored procedure on the backend database, but nothing is populating in the boxes like it did before [old code snippet] [new code snippet]", "500 error on submit, debugging steps"</br>
+
+**frontend/src/components/UpdateCoffeeReviewForm.jsx**</br>
+Date: 06/08/2025</br>
+Scope: Code copied from AI tool to allow for the Update form drop downs and update functionality
+Prompts: "I need to implement UPDATE functionality that populates the form with the review data. Brew Method , Coffee Bean and User
+must be dynamic drop downs. Note that Coffee Beans should be a combination of the brand name - roast name so that you can select the correct choice when there are multiple beans with the same roast name."</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+Date: 05/21/2025</br>
 Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective 
-Create and Update forms
+Create and Update forms </br>
 Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
 "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
 can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
-steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
-AI Source URL: https://chatgpt.com
-*/
-**coffeebeanvarieatl update**
-/*Citation for use of AI Tools
-Date: 06/07/25
-Adapted from AI Code 
-Scope: Copied from AI Code as indicated with in-line comments.
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"</br>
+AI Source URL: https://chatgpt.com</br>
+
+**frontend/src/components/UpdateCoffeeBeanVarietalForm.jsx**</br>
+Date: 06/07/25</br>
+Adapted from AI Code </br>
+Scope: Copied from AI Code as indicated with in-line comments.</br>
 Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
 based on selecting roast or brand. User can select in either order. The dropdown not 
 selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
-can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
-"500 error, debugging help. procedure is functional, confirm with sql queries", ""
-Source URL: https://chatgpt.com
-*/
-
-/*
-Citation for use of AI Tools
-Date: 05/22/2025
-Scope: Code copied from AI tool to allow for the Update form drop downs
-to default to the value of the selected Row. Drop downs were already coded and populating with 
-options, but the default value was null. 
-Prompts: "my update form is populating the selectedRow, and the dropdowns are populated 
-with the database names, but the value for the Names are not being auto selected at the first value [code snippet]"
-"troubleshooting errors, defaults aren't piping in","console log shows values, still not populating"
-*/
-
-/*
-Citation for use of AI Tools
-Date: 05/21/2025
-Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?","500 error, debugging help. procedure is functional, confirm with sql queries" </br>
+Source URL: https://chatgpt.com </br>
+</br>
+Date: 05/22/2025</br>
+Scope: Code copied from AI tool to allow for the Update form drop downs to default to the value of the selected Row. Drop downs were already coded and populating with 
+options, but the default value was null. </br>
+Prompts: "my update form is populating the selectedRow, and the dropdowns are populated with the database names, but the value for the Names are not being auto selected at the first value [code snippet]"
+"troubleshooting errors, defaults aren't piping in","console log shows values, still not populating" </br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+Date: 05/21/2025</br>
+Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm.</br>
 Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: 
 "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how
 can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting
-steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
-AI Source URL: https://chatgpt.com
-*/
-
-
-
-
-
-
-
-
+steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
 **backend/server.js** </br>
-/*
-Citation for use of AI Tools
-Date: 06/08/2025
-Scope: Procedure Order
+Date: 06/08/2025</br>
+Scope: Procedure Order </br>
 Prompts: "How can I troubleshoot - the Review Delete is not working after I added review update procedure. The front end and PL statement
-are verified working correctly. I belive it is a back end issue"
-AI Source URL: https://chatgpt.com
-*/
-
-Date: 06/07/25
-Adapted from AI Code 
-Scope: CREATE coffeebeansvarietals, READ CoffeeBeansVarietals - BrandName, READ CoffeeBeansVarietals - RoastName
+are verified working correctly. I belive it is a back end issue"</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+Date: 06/07/25</br>
+Adapted from AI Code </br>
+Scope: CREATE coffeebeansvarietals, READ CoffeeBeansVarietals - BrandName, READ CoffeeBeansVarietals - RoastName</br>
 Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
 based on selecting roast or brand. User can select in either order. The dropdown not 
 selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
-can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
-"500 error, debugging help. procedure is functional, confirm with sql queries", ""
-Source URL: https://chatgpt.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-**Citation for use of AI Tools** </br>
-Date: 05/07/2025 </br>
-Description of prompts used to help generate the Coffee Reviews page and component .jsx files (this was done after a working project containing the Users and Brew Methods pages/components was completed): </br>
-Asked the model to hold responses while providing the following: DDL.sql file, the Users and Brew Methods pages/components, and server.jsx file) </br>
-“How should I  approach creation of the Coffee Reviews files based on the existing User and Brew Methods files” </br>
-“For a better UX I would like to allow the user to select the roastName, BrewMethods.name, and Users.userName instead of the IDs. It will be difficult to tell what the IDs correspond to without these names” </br>
-“I would like the user to select these values from a drop down” </br>
-“How can we leverage these to populate the IDs when adding or updating a coffee review. Be sure to consider the DDL provided earlier”  </br>
-AI source URL: https://chatgpt.com/ </br>
-
-
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?", "500 error, debugging help. procedure is functional, confirm with sql queries"</br>
+Source URL: https://chatgpt.com</br>
+</br>
