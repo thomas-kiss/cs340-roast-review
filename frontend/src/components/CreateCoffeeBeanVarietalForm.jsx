@@ -1,8 +1,14 @@
-/*
-Citation for use of CS340 Starter Code 
-Date: 05/07/2025
-Adapted from CS340 Starter App Code
-Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+
+/*Citation for use of AI Tools
+Date: 06/07/25
+Adapted from AI Code 
+Scope: Copied from AI Code as indicated with in-line comments.
+Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
+based on selecting roast or brand. User can select in either order. The dropdown not 
+selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
+can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
+"500 error, debugging help. procedure is functional, confirm with sql queries"
+Source URL: https://chatgpt.com
 */
 
 /*
@@ -15,16 +21,12 @@ can I modify the code? [code snippet]", "the data pulling in is all null but has
 steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values"
 AI Source URL: https://chatgpt.com
 */
-/*Citation for use of AI Tools
-Date: 06/07/25
-Adapted from AI Code 
-Scope: Copied from AI Code as indicated with in-line comments.
-Prompts: "I have this existing working code, but I'd like to modify it to make brandname and roastname dynamic
-based on selecting roast or brand. User can select in either order. The dropdown not 
-selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
-can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
-"500 error, debugging help. procedure is functional, confirm with sql queries", ""
-Source URL: https://chatgpt.com
+
+/*
+Citation for use of CS340 Starter Code 
+Date: 05/07/2025
+Adapted from CS340 Starter App Code
+Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
 import React, { useState, useEffect } from 'react';

@@ -31,7 +31,7 @@ Prompts: "I have this existing working code, but I'd like to modify it to make b
 based on selecting roast or brand. User can select in either order. The dropdown not 
 selected should update to the applicable brand or roast names. [code snippet]", "I don't want the frontend to query for the FKs, 
 can we adjust to be in the PROC instead?", "if I need to query all roast names and sometimes a filtered list, how would I adjust my server file?",
-"500 error, debugging help. procedure is functional, confirm with sql queries", ""
+"500 error, debugging help. procedure is functional, confirm with sql queries"
 Source URL: https://chatgpt.com
 */
 

@@ -1,11 +1,7 @@
 /*
 Citation for use of AI Tools 
 Date: 05/15/2025
-Adapted from the code in UpdateCoffeeBeanForm.jsx (see below citation)
-*/
-
-/*Citation for use of AI Tools
-Date: 05/14/2025
+Adapted from the code in UpdateCoffeeBeanForm.jsx
 Prompts used to dynamically pre-populate the UpdateCoffeeBeanForm
 Note: This was done after the CoffeeBeans page and UpdateCoffeeBeanForm was created, and after the Update button was worked into the table component
 “how to create an update button that would dynamically open a form and pass along relevant details”

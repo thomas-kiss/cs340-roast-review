@@ -1,13 +1,12 @@
-/*Citation for use of AI Tools
-Date: 05/14/2025
-Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. 
-Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.
-“how to create an update button that would dynamically open a form and pass along relevant details”
-“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
-“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
-“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
+/*
+Citation for use of AI Tools
+Date: 6/6/2025
+Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code. 
+Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
+the dyanmic delete form but it's currently erroring out. provide debugging suggestions."
 AI Source URL: https://chatgpt.com
 */
+
 /* Citation for use of AI Tools
 Date: 05/21/2025
 Scope: Modified code from AI tools to enable the delete button to dynamically grab the relevant delete form. 
@@ -19,12 +18,14 @@ beans. it needs to scale to accomodate multiple delete forms.", "page not refres
 AI Source URL: https://chatgpt.com
 */
 
-/*
-Citation for use of AI Tools
-Date: 6/6/2025
-Scope: Modified existing code to accommodate Delete CUD operation. Code was adapted from AI code. 
-Prompts: "Using React, I have a tablerow component, multiple delete forms, and multiple pages that show table data. I want the table row to contain
-the dyanmic delete form but it's currently erroring out. provide debugging suggestions."
+/*Citation for use of AI Tools
+Date: 05/14/2025
+Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. 
+Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.
+“how to create an update button that would dynamically open a form and pass along relevant details”
+“I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
+“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” 
+“selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”
 AI Source URL: https://chatgpt.com
 */
 
