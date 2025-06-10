@@ -11,7 +11,7 @@ Source URL:https://canvas.oregonstate.edu/courses/1999601/pages/exploration-impl
 Citation for RESET BUTTON
 Date: 05/21/2025
 Adapted React Native code:
-Source URLhttps://reactnative.dev/docs/button
+Source URL: https://reactnative.dev/docs/button
 */
 
 
