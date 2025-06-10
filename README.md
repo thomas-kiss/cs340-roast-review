@@ -57,66 +57,6 @@ can we adjust to be in the PROC instead?", "if I need to query all roast names a
 "500 error, debugging help. procedure is functional, confirm with sql queries" </br>
 Source URL: https://chatgpt.com </br>
 </br>
-**frontend/src/pages/BrewMethodPage.jsx** </br>
-Date: 05/14/2025 </br>
-Adapted from the ai adapted code in CoffeeBeans.jsx. See relevant citation under CoffeeBeans.jsx section.</br>
-</br>
-
-**frontend/src/pages/CoffeeBeanPage.jsx** </br>
-Date: 05/14/2025 </br>
-Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. </br> 
-Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
-“how to create an update button that would dynamically open a form and pass along relevant details” “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist” “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?” </br>
-AI Source URL: https://chatgpt.com</br>
-</br>
-**frontend/src/pages/CoffeeBeanVarietalPage.jsx** </br>
-Date: 05/21/2025</br>
-Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm. </br>
-Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values" </br>
-AI Source URL: https://chatgpt.com</br>
-</br>
-
-Date: 05/14/2025 </br>
-Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. </br>
-Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
-Prompts: “how to create an update button that would dynamically open a form and pass along relevant details” “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
-“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.”  “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”</br>
-AI Source URL: https://chatgpt.com</br>
-</br>
-
-**frontend/src/pages/CoffeeBeanReviewPage.jsx** </br>
-Date: 05/21/2025</br>
-Scope: Code was adapted from code solutions provided for the CoffeeBeansVarietalsPage and respective Create and Update forms</br>
-Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values" </br>
-AI Source URL: https://chatgpt.com </br>
-</br>
-Date: 05/15/2025</br>
-Scope: adapted from AI Code </br>
-Prompt: “refactor to match format and functionality of existing CoffeeBeans page in React” </br>
-AI Source URL: https://chatgpt.com </br>
-</br>
-Date: 05/14/2025 </br>
-Adapted from the ai adapted code in CoffeeBeans.jsx. See relevant citation under CoffeeBans.jsx section.</br>
-</br>
-Date: 05/14/2025 </br>
-Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. </br>
-Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
-“how to create an update button that would dynamically open a form and pass along relevant details” “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist”
-“I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.”  “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating .What could be wrong? What are some debugging options?”</br>
-AI Source URL: https://chatgpt.com </br>
-</br>
-
-**frontend/src/pages/UserPage.jsx** </br>
-Date: 05/14/2025 </br>
-Adapted from the ai adapted code in CoffeeBeans.jsx. See relevant citation under CoffeeBans.jsx section.</br>
-</br>
-Date: 05/14/2025</br>
-Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. </br>
-Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
-“how to create an update button that would dynamically open a form and pass along relevant details” “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist” “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”</br>
-AI Source URL: https://chatgpt.com</br>
-</br>
-
 
 **BrewMethodPage.jsx, CoffeeBeanPage.jsx, CoffeeBeanVarietalPage.jsx, CoffeeReviewPage.jsx, UserPage.jsx, VarietalPage.jsx in frontend/srcp/pages**
 </br>
@@ -130,6 +70,28 @@ Scope: Modified code from AI tools to enable the delete button to dynamically gr
 Prompts: "previously this code hard-coded the delete form. I am trying to make it dynamic with props but it's not yet working [code snippet]","here's how I updated code, but delete button isn't showing. troubleshooting walk through" </br>
 AI Source URL: https://chatgpt.com</br>
 </br>
+Date: 05/14/2025</br>
+Prompts used to allow the Update form to show up dynamically, and to pass the record's details to the update form so that it can pre-populated. </br>
+Note: This was done after the update button was already added to the Table row, but not dynamic nor attached to the form.</br>
+“how to create an update button that would dynamically open a form and pass along relevant details” “I currently have a tablerow component that houses the record and the update button, an updatecoffeebean Form, and a CoffeeBeans page where the table and form exist” “I want the form to look the same as my current form, but I want it to dynamically pop up on the page pre-populated once I select a row and hit the update button.” “selectedCoffeeBean is being passed to the form but nothing is showing up for the deconstructed variables and nothing is pre-populating.What could be wrong? What are some debugging options?”</br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+
+**CoffeeBeanVarietalPage.jsx and CoffeeReviewPage.jsx in frontend/src/pages/** </br>
+Date: 05/21/2025</br>
+Scope: Code was copied and modified for CoffeeBeansVarietalPage, CreateCoffeeBeanVarietalForm, and UpdateCoffeeBeanVarietalForm. </br>
+Prompts used for the CoffeeBeansVarietalsPage and its Create and Update forms: "Within these existing drop downs, I want to pipe in the dynamic data for the coffee beans and varietals. how can I modify the code? [code snippet]", "the data pulling in is all null but has the number of data points needed. troubleshooting steps" "how to prevent the drop downs from loading before we receive the data" "how can I select only DISTINCT values" </br>
+AI Source URL: https://chatgpt.com</br>
+</br>
+
+**frontend/src/pages/CoffeeBeanReviewPage.jsx** </br>
+Date: 05/15/2025</br>
+Scope: adapted from AI Code </br>
+Prompt: “refactor to match format and functionality of existing CoffeeBeans page in React” </br>
+AI Source URL: https://chatgpt.com </br>
+</br>
+
+
 
 **backend/server.js** </br>
 Date: 06/07/25
