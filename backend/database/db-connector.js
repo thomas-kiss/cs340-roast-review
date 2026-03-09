@@ -10,13 +10,16 @@ Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web
 let mysql = require('mysql2')
 
 // Create a 'connection pool' using the provided credentials
+// Credentials are loaded from environment variables so they are not hardcoded
+// in source code. Set these in a .env file locally or in your hosting provider's
+// environment variable settings (e.g. Render dashboard for production).
 const pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit   : 10,
-    host              : 'classmysql.engr.oregonstate.edu',
-    user              : 'cs340_kisst',
-    password          : 'WMdnD2lmY2wE',
-    database          : 'cs340_kisst'
+    host              : process.env.DB_HOST,
+    user              : process.env.DB_USER,
+    password          : process.env.DB_PASSWORD,
+    database          : process.env.DB_NAME
 }).promise(); // This makes it so we can use async / await rather than callbacks
 
 // Export it for use in our application

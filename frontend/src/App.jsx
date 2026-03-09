@@ -23,9 +23,11 @@ import CoffeeBeanVarietalPage from './pages/CoffeeBeanVarietalPage'
 import Navigation from './components/Navigation';
 
 
-// Define the backend port and URL for API requests
-const backendPort = 45581;  // Use the port you assigned to the backend server, this would normally go in a .env file
-const backendURL = `http://classwork.engr.oregonstate.edu:${backendPort}`;
+// Backend URL is set via a Vite environment variable (VITE_BACKEND_URL) so the
+// frontend can point to different servers in development vs. production without
+// changing source code. Set this in a .env file locally or in Vercel's environment
+// variable settings for the deployed app.
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 function App() {
 

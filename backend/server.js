@@ -30,6 +30,10 @@ Source URL: https://chatgpt.com
 // ########################################
 // ########## SETUP
 
+// Load environment variables from .env file for local development.
+// In production (Render), these are set via the hosting dashboard instead.
+require('dotenv').config();
+
 // Database
 const db = require('./database/db-connector');
 
@@ -43,7 +47,9 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 45581;
+// PORT is set via environment variable in production (Render assigns it automatically).
+// Falls back to 45581 for local development to match the original OSU setup.
+const PORT = process.env.PORT || 45581;
 
 // ########################################
 // ########## ROUTE HANDLERS

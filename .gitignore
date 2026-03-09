@@ -1,0 +1,13 @@
+# Dependencies - installed locally via npm install, not committed to git
+node_modules/
+
+# Environment variable files - contain secrets like DB passwords, never commit these
+.env
+.env.local
+.env.production
+
+# Vite build output
+dist/
+
+# OS files
+.DS_Store
