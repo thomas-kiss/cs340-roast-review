@@ -118,7 +118,6 @@ CREATE TABLE CoffeeReviews (
     UNIQUE KEY coffeeReviewID_UNIQUE (coffeeReviewID)
 ); 
 
-DELIMITER ;
 --- User data insert
 INSERT INTO Users(
     userName,
