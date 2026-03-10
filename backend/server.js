@@ -43,7 +43,9 @@ const app = express();
 
 // Middleware
 const cors = require('cors');
-app.use(cors({ credentials: true, origin: "*" }));
+// credentials:true + origin:"*" is invalid per CORS spec — browsers block it.
+// Using origin:"*" without credentials allows all origins for a public read/write API.
+app.use(cors({ origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
