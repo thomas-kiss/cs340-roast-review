@@ -26,7 +26,9 @@ Date/Term: Spring 2025
 
 ## ER Diagram
 
-![ER Diagram](ER.svg)
+The schema is normalized to Third Normal Form (3NF).
+
+![ER Diagram](ER.png)
 
 ## Citations
 
